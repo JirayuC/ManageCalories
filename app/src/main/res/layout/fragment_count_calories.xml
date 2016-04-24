@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/textTimer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btnPause"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="37dp"
+        android:textSize="40sp"
+        android:textColor="#000000"
+        android:text="00:00:00" />
+    <TextView
+        android:id="@+id/duration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textTimer"
+        android:layout_centerHorizontal="true"
+        android:textColor="#000000"
+        android:textSize="20dp"
+        android:text="DURATION"
+        />
+
+    <Button
+        android:background="#FFA500"
+        android:id="@+id/btnPause"
+        android:layout_width="90dp"
+        android:layout_height="45dp"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/btnStart"
+        android:text="Pause" />
+
+    <Button
+    android:id="@+id/btnStart"
+    android:layout_width="90dp"
+    android:layout_height="45dp"
+        android:background="@color/colorPrimaryDark"
+    android:layout_alignParentLeft="true"
+    android:layout_centerVertical="true"
+    android:layout_marginLeft="48dp"
+    android:text="Start" />
+
+    <Button
+        android:id="@+id/btnStop"
+        android:background="#FF0000"
+        android:layout_width="90dp"
+        android:layout_height="45dp"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/btnPause"
+        android:text="Stop" />
+
+    <TextView
+        android:id="@+id/textCalories"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btnPause"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:textSize="40sp"
+        android:textColor="#000000"
+        android:text="0" />
+
+    <TextView
+        android:id="@+id/calo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textCalories"
+        android:layout_centerHorizontal="true"
+        android:textSize="15dp"
+        android:text="CALORIES"
+        />
+
+
+</RelativeLayout>

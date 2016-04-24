@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="8dp">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/card_view"
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        card_view:cardCornerRadius="4dp"
+        card_view:cardElevation="2dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/layoutRelative"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#77FFFFFF"
+                >
+
+
+
+                <TextView
+                    android:id="@+id/tvProgramName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/item_listview_authorIcon"
+                    android:gravity="center"
+                    android:layout_marginTop="15dp"
+                    android:text="แสดงสถิติการออกกำลังกาย"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="19sp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/tvTotal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvProgramName"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginTop="15dp"
+                    android:gravity="center_horizontal"
+                    android:paddingLeft="4dip"
+                    android:text="ออกกำลังกายรวม : 0"
+                    android:textColor="@color/jet"
+                    android:textSize="13sp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/tvSuc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvTotal"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center_horizontal"
+                    android:paddingLeft="4dip"
+                    android:text="สำเร็จ : 0"
+                    android:textColor="@color/jet"
+                    android:textSize="13sp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/tvNoSuc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvSuc"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center_horizontal"
+                    android:paddingLeft="4dip"
+                    android:text="ไม่สำเร็จ : 0"
+                    android:textColor="@color/jet"
+                    android:textSize="13sp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/tvMiss"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvNoSuc"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center_horizontal"
+
+                    android:text="พลาด : 0"
+                    android:textColor="@color/jet"
+                    android:textSize="13sp"
+                    android:textStyle="bold"/>
+
+
+
+
+
+                <TextView
+                    android:layout_marginTop="80dp"
+                    android:id="@+id/tvCompleate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvMiss"
+                    android:gravity="center_horizontal"
+
+                    android:text="0%"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="30sp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/dateNext"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvCompleate"
+                    android:layout_marginBottom="8dp"
+
+                    android:gravity="center_horizontal"
+
+                    android:paddingLeft="4dip"
+                    android:text="เสร็จสิ้น"
+                    android:textColor="@color/jet"
+                    android:textSize="13sp"
+                    android:textStyle="bold"/>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+
+    </android.support.v7.widget.CardView>
+</LinearLayout>

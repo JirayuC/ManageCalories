@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginLeft="24dp"
+        android:textColor="#2196F3"
+        android:textSize="15dp"
+        android:text="จำนวนสัปดาห์"/>
+
+    <NumberPicker
+        android:id="@+id/numberPicker1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="64dp" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/numberPicker1"
+        android:layout_marginTop="80dp"
+        android:layout_toLeftOf="@+id/button1"
+        android:layout_marginRight="8dp"
+        style="?android:attr/borderlessButtonStyle"
+
+        android:text="Cancel"
+        android:textColor="#2196F3"/>
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/button2"
+        android:layout_marginRight="8dp"
+        android:layout_alignParentRight="true"
+        style="?android:attr/borderlessButtonStyle"
+
+        android:textColor="#2196F3"
+        android:text="SET" />
+</RelativeLayout>

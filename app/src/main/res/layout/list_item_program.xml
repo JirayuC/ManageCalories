@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    >
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/card_view"
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        card_view:cardCornerRadius="4dp"
+        card_view:cardElevation="2dp">
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            
+            <RelativeLayout
+                android:id="@+id/layoutRelative"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#77FFFFFF"
+                android:paddingRight="24dp">
+                
+                <ImageView
+                    android:id="@+id/item_listview_authorIcon"
+                    android:layout_width="50dip"
+                    android:layout_height="50dip"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="5dp"
+                    android:padding="3dp"
+                    android:scaleType="fitStart"
+                    android:src="@drawable/logo"/>
+
+                <TextView
+                    android:id="@+id/tvProgramName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/item_listview_authorIcon"
+                    android:gravity="center_vertical"
+                    android:text="วิ่ง 20 km"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="19sp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/tvId"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvProgramName"
+                    android:layout_marginBottom="8dp"
+                    android:layout_toRightOf="@+id/item_listview_authorIcon"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="4dip"
+                    android:text="Date.."
+                    android:textColor="@color/jet"
+                    android:textSize="13sp"
+                    android:textStyle="bold"/>
+                
+            </RelativeLayout>
+            <ImageView
+                android:id="@+id/ivImg"
+                android:layout_width="match_parent"
+                android:layout_height="170sp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/marathon"/>
+        </LinearLayout>
+        
+        
+    </android.support.v7.widget.CardView>
+
+
+
+
+</LinearLayout>

@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/iron"
+            android:gravity="center_horizontal"
+            android:text="วันออกกำลังกาย"
+            android:textSize="15dp" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            >
+
+            <CheckBox
+                android:id="@+id/ck1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dip"
+                android:button="@drawable/selector_btn_check_holo_light"
+                android:text="อาทิตย์" />
+
+            <CheckBox
+                android:id="@+id/ck2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dip"
+                android:layout_marginLeft="15dp"
+                android:layout_toRightOf="@+id/ck1"
+                android:button="@drawable/selector_btn_check_holo_light"
+                android:text="จันทร์" />
+
+            <CheckBox
+                android:id="@+id/ck3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/ck2"
+                android:button="@drawable/selector_btn_check_holo_light"
+                android:text="อังคาร" />
+
+            <CheckBox
+                android:id="@+id/ck4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="6dp"
+                android:layout_toRightOf="@+id/ck3"
+                android:button="@drawable/selector_btn_check_holo_light"
+                android:text="พุธ" />
+
+
+            <CheckBox
+                android:id="@+id/ck5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/ck1"
+                android:layout_marginRight="5dip"
+                android:button="@drawable/selector_btn_check_holo_light"
+                android:text="พฤหัสบดี" />
+
+            <CheckBox
+                android:id="@+id/ck6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/ck5"
+                android:layout_marginLeft="3dp"
+                android:layout_below="@+id/ck2"
+
+                android:button="@drawable/selector_btn_check_holo_light"
+                android:text="ศุกร์" />
+
+            <CheckBox
+                android:id="@+id/ck7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/ck6"
+                android:layout_marginLeft="14dp"
+                android:layout_below="@+id/ck2"
+
+                android:button="@drawable/selector_btn_check_holo_light"
+                android:text="เสาร์" />
+
+            <CheckBox
+                android:id="@+id/ck8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/ck7"
+                android:layout_marginLeft="17dp"
+                android:layout_below="@+id/ck2"
+                android:button="@drawable/selector_btn_check_holo_light"
+                android:text="ไม่มีกำหนด" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center_horizontal"
+            android:text="เลือกวันออกกำลังกายของคุณ"
+            android:textColor="@color/colorPrimaryDark" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:gravity="left"
+            android:text="ภาพรวมโปรแกรม"
+            android:textColor="@color/colorPrimaryDark" />
+
+
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="100dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp">
+
+                <EditText
+                    android:id="@+id/input_program_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="ชื่อโปรแกรม"
+                    android:inputType="textCapWords" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="100dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp">
+
+                <EditText
+                    android:id="@+id/input_goal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="เป้าหมาย(แคลอรี่)"
+                    android:inputType="number" />
+            </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="100dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp">
+            <EditText android:id="@+id/input_week"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="false"
+
+                android:hint="จำนวนสัปดาห์" />
+        </android.support.design.widget.TextInputLayout>
+
+
+        <Button
+            android:id="@+id/btnDate"
+            android:background="@color/colorPrimaryDark"
+            android:layout_width="wrap_content"
+            android:padding="5dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:text="วันที่เริ่ม"
+            android:onClick="showDatePickerDialog" />
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/btn_create_program"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#FFA500"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="24dp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginRight="24dp"
+            android:padding="12dp"
+            android:textColor="@color/white"
+            android:text="สร้างโปรแกรม"
+            android:gravity="center"/>
+
+
+
+    </LinearLayout>
+
+</ScrollView>
