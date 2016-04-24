@@ -39,7 +39,7 @@
         <activity
             android:name=".activity.ActivityInfoActivity"
             android:theme="@style/AppThemeWithActionBar" />
-        <activity android:name=".activity.CaloriesCountActivity"></activity>
+        <activity android:name=".activity.CaloriesCountActivity" />
     </application>
 
 </manifest>
