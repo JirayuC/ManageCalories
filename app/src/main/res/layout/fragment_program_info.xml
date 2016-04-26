@@ -91,15 +91,6 @@
                 android:button="@drawable/selector_btn_check_holo_light"
                 android:text="เสาร์" />
 
-            <CheckBox
-                android:id="@+id/ck8"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/ck7"
-                android:layout_marginLeft="17dp"
-                android:layout_below="@+id/ck2"
-                android:button="@drawable/selector_btn_check_holo_light"
-                android:text="ไม่มีกำหนด" />
 
         </RelativeLayout>
 

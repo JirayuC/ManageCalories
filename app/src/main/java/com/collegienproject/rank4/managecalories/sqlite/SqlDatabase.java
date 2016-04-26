@@ -238,16 +238,13 @@ public class SqlDatabase {
 
     public ArrayList<ProgramDao>  getProgramList() {
         //Open connection to read only
-
+        ArrayList<ProgramDao> listPrg = new ArrayList<ProgramDao>();
         SQLiteDatabase db = mHelper.getReadableDatabase();
 
         String selectQuery =  "SELECT  " +
                 COLUMN_PROGRAMID + "," +
                 COLUMN_PROGRAMNAME +
-                " FROM " + TABLE_PROGRAM;
-
-
-        ArrayList<ProgramDao> listPrg = new ArrayList<>();
+                " FROM " + TABLE_PROGRAM ;
 
         Cursor cursor = db.rawQuery(selectQuery, null);
         // looping through all rows and adding to list

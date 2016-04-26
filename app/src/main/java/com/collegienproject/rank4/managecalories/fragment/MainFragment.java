@@ -13,7 +13,10 @@ import android.widget.ListView;
 import com.collegienproject.rank4.managecalories.R;
 import com.collegienproject.rank4.managecalories.activity.ProgramInfoActivity;
 import com.collegienproject.rank4.managecalories.adapter.ProgramListAdapter;
+import com.collegienproject.rank4.managecalories.dao.ProgramDao;
 import com.collegienproject.rank4.managecalories.sqlite.SqlDatabase;
+
+import java.util.ArrayList;
 
 
 /**
@@ -23,8 +26,6 @@ public class MainFragment extends Fragment {
     ListView listView;
     ProgramListAdapter listAdapter;
     SqlDatabase db;
-
-
 
     public MainFragment() {
         super();
@@ -65,11 +66,14 @@ public class MainFragment extends Fragment {
         // Init 'View' instance(s) with rootView.findViewById here
         // Note: State of variable initialized here could not be saved
         //       in onSavedInstanceState
-
         listView = (ListView) rootView.findViewById(R.id.listView);
 
-        listAdapter = new ProgramListAdapter();
+        ArrayList<ProgramDao> detail;
+        detail = db.getProgramList();
+        listAdapter = new ProgramListAdapter(detail,getActivity());
         listView.setAdapter(listAdapter);
+
+
         FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.addButton);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override

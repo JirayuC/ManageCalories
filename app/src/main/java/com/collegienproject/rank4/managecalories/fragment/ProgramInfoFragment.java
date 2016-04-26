@@ -26,6 +26,7 @@ import com.collegienproject.rank4.managecalories.sqlite.SqlDatabase;
 
 import java.text.DateFormat;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -38,7 +39,7 @@ public class ProgramInfoFragment extends Fragment implements NumberPicker.OnValu
 
     EditText textNameprg, goalNum, weekNum;
     Button btnCreateprg, btnDate;
-    CheckBox cb1,cb2,cb3,cb4,cb5,cb6,cb7,cb8;
+    CheckBox cb1,cb2,cb3,cb4,cb5,cb6,cb7;
     String check;
 
     public ProgramInfoFragment() {
@@ -87,7 +88,6 @@ public class ProgramInfoFragment extends Fragment implements NumberPicker.OnValu
         cb5 = (CheckBox) rootView.findViewById(R.id.ck5 );
         cb6 = (CheckBox) rootView.findViewById(R.id.ck6 );
         cb7 = (CheckBox) rootView.findViewById(R.id.ck7 );
-        cb8 = (CheckBox) rootView.findViewById(R.id.ck8);
         textNameprg = (EditText) rootView.findViewById(R.id.input_program_name);
         btnCreateprg = (Button) rootView.findViewById(R.id.btn_create_program);
         btnDate = (Button) rootView.findViewById(R.id.btnDate);
@@ -171,33 +171,6 @@ public class ProgramInfoFragment extends Fragment implements NumberPicker.OnValu
             }
         });
 
-        cb8.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
-                    cb1.setEnabled(false);
-                    cb2.setEnabled(false);
-                    cb3.setEnabled(false);
-                    cb4.setEnabled(false);
-                    cb5.setEnabled(false);
-                    cb6.setEnabled(false);
-                    cb7.setEnabled(false);
-                    weekNum.setEnabled(false);
-                }else {
-                    cb1.setEnabled(true);
-                    cb2.setEnabled(true);
-                    cb3.setEnabled(true);
-                    cb4.setEnabled(true);
-                    cb5.setEnabled(true);
-                    cb6.setEnabled(true);
-                    cb7.setEnabled(true);
-                    weekNum.setEnabled(true);
-                }
-            }
-        });
-
-
-
 
         btnDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -217,13 +190,25 @@ public class ProgramInfoFragment extends Fragment implements NumberPicker.OnValu
                     String goal = goalNum.getText().toString();
                     String week = weekNum.getText().toString();
 
+                    DateFormat df = DateFormat.getDateInstance(DateFormat.FULL, Locale.US);
+
+                    int Week = Integer.parseInt(week);
+                    Date strdate = df.parse(prgDateStart);
+                    Calendar c = Calendar.getInstance();
+                    ArrayList<Date> dateActivityList = new ArrayList<Date>();
+
+                    for (int i = 0; i < Week*12; i++)
+                    {
+                        c.add(Calendar.DATE,i);
+                    }
+
                     SqlDatabase db = new SqlDatabase(getActivity());
                     db.open();
 
                     ProgramDao prg = new ProgramDao();
                     prg.setProgram_name(prgName);
 
-                    DateFormat df = DateFormat.getDateInstance(DateFormat.FULL, Locale.US);
+
 
                     try {
                         Date date1 = df.parse(prgDateStart);
