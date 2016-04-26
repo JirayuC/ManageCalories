@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.collegienproject.rank4.managecalories.dao.DateDao;
 import com.collegienproject.rank4.managecalories.dao.ProgramDao;
 import com.collegienproject.rank4.managecalories.dao.UserDao;
 
@@ -264,5 +265,25 @@ public class SqlDatabase {
         return listPrg;
 
     }
+
+    public void addDate(DateDao date){
+
+        DateFormat df = DateFormat.getDateInstance(DateFormat.FULL, Locale.US);
+        try {
+            ContentValues dt = new ContentValues();
+            dt.put(COLUMN_DATETIME, df.format(date.getDatetime()));
+            dt.put(COLUMN_DATEGROUP, date.getDate_group());
+
+            mDatabase.insert(TABLE_DATESET, COLUMN_DATEID ,dt);
+
+            Log.d("Database operation", "One Row Inserted...");
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+
+    }
+
+
 
 }

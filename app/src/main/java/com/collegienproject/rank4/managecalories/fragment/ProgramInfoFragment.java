@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.collegienproject.rank4.managecalories.R;
 import com.collegienproject.rank4.managecalories.activity.ActivityInfoActivity;
+import com.collegienproject.rank4.managecalories.dao.DateDao;
 import com.collegienproject.rank4.managecalories.dao.ProgramDao;
 import com.collegienproject.rank4.managecalories.sqlite.SqlDatabase;
 
@@ -190,25 +191,36 @@ public class ProgramInfoFragment extends Fragment implements NumberPicker.OnValu
                     String goal = goalNum.getText().toString();
                     String week = weekNum.getText().toString();
 
-                    DateFormat df = DateFormat.getDateInstance(DateFormat.FULL, Locale.US);
 
+
+                    DateFormat df = DateFormat.getDateInstance(DateFormat.FULL, Locale.US);
                     int Week = Integer.parseInt(week);
                     Date strdate = df.parse(prgDateStart);
                     Calendar c = Calendar.getInstance();
                     ArrayList<Date> dateActivityList = new ArrayList<Date>();
 
-                    for (int i = 0; i < Week*12; i++)
+                    for (int i = 0; i < Week * 12; i++)
                     {
                         c.add(Calendar.DATE,i);
+                        if(cb1.isChecked()== Calendar.DAY_OF_WEEK){
+                            cb1.setChecked(false);
+                        }
                     }
+
+
+
+
 
                     SqlDatabase db = new SqlDatabase(getActivity());
                     db.open();
 
+                    DateDao dat = new DateDao();
+                    dat.setDatetime(dateActivityList);
+                    db.addDate(dat);
+
+
                     ProgramDao prg = new ProgramDao();
                     prg.setProgram_name(prgName);
-
-
 
                     try {
                         Date date1 = df.parse(prgDateStart);
