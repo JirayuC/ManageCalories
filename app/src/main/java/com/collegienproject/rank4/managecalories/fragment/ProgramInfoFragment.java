@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Intent;
+import android.database.SQLException;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -13,7 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.NumberPicker;
@@ -102,7 +102,7 @@ public class ProgramInfoFragment extends Fragment implements NumberPicker.OnValu
             }
         });
 
-        cb1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        /*cb1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
@@ -170,7 +170,7 @@ public class ProgramInfoFragment extends Fragment implements NumberPicker.OnValu
                 }
 
             }
-        });
+        });*/
 
 
         btnDate.setOnClickListener(new View.OnClickListener() {
@@ -192,22 +192,57 @@ public class ProgramInfoFragment extends Fragment implements NumberPicker.OnValu
                     String week = weekNum.getText().toString();
 
 
-
                     DateFormat df = DateFormat.getDateInstance(DateFormat.FULL, Locale.US);
                     int Week = Integer.parseInt(week);
                     Date strdate = df.parse(prgDateStart);
                     Calendar c = Calendar.getInstance();
+                    c.setTime(strdate);
                     ArrayList<Date> dateActivityList = new ArrayList<Date>();
 
-                    for (int i = 0; i < Week * 12; i++)
+                    for (int i = 0; i < Week * 7; i++)
                     {
-                        c.add(Calendar.DATE,i);
-                        if(cb1.isChecked()== Calendar.DAY_OF_WEEK){
-                            cb1.setChecked(false);
+                        c.add(Calendar.DATE,1);
+                        if(cb1.isChecked()){
+                            if (c.get(Calendar.DAY_OF_WEEK )== 1){
+                                dateActivityList.add(c.getTime());
+                            }
+                        }
+
+                        if(cb2.isChecked()){
+                            if (c.get(Calendar.DAY_OF_WEEK )== 2){
+                                dateActivityList.add(c.getTime());
+                            }
+                        }
+
+                        if(cb3.isChecked()){
+                            if (c.get(Calendar.DAY_OF_WEEK )== 3){
+                                dateActivityList.add(c.getTime());
+                            }
+                        }
+
+                        if(cb4.isChecked()){
+                            if (c.get(Calendar.DAY_OF_WEEK )== 4){
+                                dateActivityList.add(c.getTime());
+                            }
+                        }
+
+                        if(cb5.isChecked()){
+                            if (c.get(Calendar.DAY_OF_WEEK )== 5){
+                                dateActivityList.add(c.getTime());
+                            }
+                        }
+
+                        if(cb6.isChecked()){
+                            if (c.get(Calendar.DAY_OF_WEEK )== 6){
+                                dateActivityList.add(c.getTime());
+                            }
+                        }
+                        if(cb1.isChecked()){
+                            if (c.get(Calendar.DAY_OF_WEEK )== 7){
+                                dateActivityList.add(c.getTime());
+                            }
                         }
                     }
-
-
 
 
 
@@ -237,10 +272,13 @@ public class ProgramInfoFragment extends Fragment implements NumberPicker.OnValu
 
 
 
-                }catch (Exception e){
+                }catch (SQLException e){
                     didItWork = false;
                     Log.e("ProgramInfoActivity", "Database didn't upgrade when button pressed");
-                }finally {
+
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                } finally {
                     if(didItWork){
                         Toast.makeText(getContext(), "created Program Successful", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(getActivity(),ActivityInfoActivity.class);

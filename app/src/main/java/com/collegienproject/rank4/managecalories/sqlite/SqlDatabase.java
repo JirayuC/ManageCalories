@@ -22,7 +22,7 @@ import java.util.Locale;
  */
 public class SqlDatabase {
 
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 3;
     private static final String DATABASE_NAME = "Calories.db";
 
 
@@ -92,8 +92,7 @@ public class SqlDatabase {
     private static final  String CREATE_DATESET_TABLE =
             "CREATE TABLE DateSet(" +
                     "Date_id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                    "Date_time DATE," +
-                    "Date_GROUP INTEGER);";
+                    "Date_time DATE);";
 
     private static final  String CREATE_DATEFORACTIVITY_TABLE =
             "CREATE TABLE DateForActivity(" +
@@ -122,8 +121,6 @@ public class SqlDatabase {
                 db.execSQL(CREATE_USER_TABLE);
                 db.execSQL(CREATE_PROGRAM_TABLE);
                 db.execSQL(CREATE_DATESET_TABLE);
-                db.execSQL(CREATE_DATEFORACTIVITY_TABLE);
-                db.execSQL(CREATE_ACTIVITY_TABLE);
                 Log.d("Database operations","Table created...");
             }catch (SQLException e){
                 e.printStackTrace();
@@ -136,6 +133,7 @@ public class SqlDatabase {
 
             db.execSQL("DROP TABLE IF EXISTS " + TABLE_USERS);
             db.execSQL("DROP TABLE IF EXISTS " + TABLE_PROGRAM);
+            db.execSQL("DROP TABLE IF EXISTS " + TABLE_DATESET);
             onCreate(db);
 }
 
@@ -272,7 +270,7 @@ public class SqlDatabase {
         try {
             ContentValues dt = new ContentValues();
             dt.put(COLUMN_DATETIME, df.format(date.getDatetime()));
-            dt.put(COLUMN_DATEGROUP, date.getDate_group());
+
 
             mDatabase.insert(TABLE_DATESET, COLUMN_DATEID ,dt);
 

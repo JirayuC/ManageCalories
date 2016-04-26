@@ -1,6 +1,5 @@
 package com.collegienproject.rank4.managecalories.adapter;
 
-import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -20,10 +19,10 @@ public class ProgramListAdapter extends BaseAdapter {
     ArrayList<ProgramDao> programList;
     SqlDatabase db;
 
-    public ProgramListAdapter(ArrayList<ProgramDao> detail, FragmentActivity activity){
+   /* public ProgramListAdapter(ArrayList<ProgramDao> detail, FragmentActivity activity){
 
 
-    }
+    }*/
     @Override
     public int getCount() {
         if(programList == null){

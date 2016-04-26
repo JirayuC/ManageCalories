@@ -13,10 +13,7 @@ import android.widget.ListView;
 import com.collegienproject.rank4.managecalories.R;
 import com.collegienproject.rank4.managecalories.activity.ProgramInfoActivity;
 import com.collegienproject.rank4.managecalories.adapter.ProgramListAdapter;
-import com.collegienproject.rank4.managecalories.dao.ProgramDao;
 import com.collegienproject.rank4.managecalories.sqlite.SqlDatabase;
-
-import java.util.ArrayList;
 
 
 /**
@@ -68,9 +65,9 @@ public class MainFragment extends Fragment {
         //       in onSavedInstanceState
         listView = (ListView) rootView.findViewById(R.id.listView);
 
-        ArrayList<ProgramDao> detail;
-        detail = db.getProgramList();
-        listAdapter = new ProgramListAdapter(detail,getActivity());
+        /*ArrayList<ProgramDao> detail;
+        detail = db.getProgramList();*/
+        listAdapter = new ProgramListAdapter();
         listView.setAdapter(listAdapter);
 
 
