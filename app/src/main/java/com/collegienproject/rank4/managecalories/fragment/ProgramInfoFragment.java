@@ -195,13 +195,13 @@ public class ProgramInfoFragment extends Fragment implements NumberPicker.OnValu
                     DateFormat df = DateFormat.getDateInstance(DateFormat.FULL, Locale.US);
                     int Week = Integer.parseInt(week);
                     Date strdate = df.parse(prgDateStart);
-                    Calendar c = Calendar.getInstance();
+                    Calendar c = Calendar.getInstance(Locale.US);
                     c.setTime(strdate);
                     ArrayList<Date> dateActivityList = new ArrayList<Date>();
 
                     for (int i = 0; i < Week * 7; i++)
                     {
-                        c.add(Calendar.DATE,1);
+
                         if(cb1.isChecked()){
                             if (c.get(Calendar.DAY_OF_WEEK )== 1){
                                 dateActivityList.add(c.getTime());
@@ -242,6 +242,8 @@ public class ProgramInfoFragment extends Fragment implements NumberPicker.OnValu
                                 dateActivityList.add(c.getTime());
                             }
                         }
+
+                        c.add(Calendar.DATE,1);
                     }
 
 
@@ -249,9 +251,14 @@ public class ProgramInfoFragment extends Fragment implements NumberPicker.OnValu
                     SqlDatabase db = new SqlDatabase(getActivity());
                     db.open();
 
-                    DateDao dat = new DateDao();
-                    dat.setDatetime(dateActivityList);
-                    db.addDate(dat);
+                    for(int i=0; i < dateActivityList.size(); i++){
+                        Date date = dateActivityList.get(i);
+                        //เอา date ยัดลง sqlite
+
+                        DateDao dat = new DateDao();
+                        dat.setDatetime(date);
+                        db.addDate(dat);
+                    }
 
 
                     ProgramDao prg = new ProgramDao();

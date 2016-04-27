@@ -22,7 +22,7 @@ import java.util.Locale;
  */
 public class SqlDatabase {
 
-    private static final int DATABASE_VERSION = 3;
+    private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "Calories.db";
 
 
@@ -47,7 +47,7 @@ public class SqlDatabase {
     private static  final String TABLE_DATESET = "DateSet";
     public static final String COLUMN_DATEID = "Date_id";
     public static final String COLUMN_DATETIME = "Date_time";
-    public static final String COLUMN_DATEGROUP = "Date_GROUP";
+    public static final String COLUMN_DATEGROUP = "Date_group_id";
 
     private static  final String TABLE_DATEFORACTIVITY = "DateForActivity";
     public static final String COLUMN_DATEIDGROUP = "Date_id";
@@ -86,13 +86,14 @@ public class SqlDatabase {
                     "Start_date DATE NOT NULL, " +
                     "Week_num INTEGER, " +
                     "Goal INTEGER," +
-                    "Set_id INTEGER, " +
-                    "FOREIGN KEY(Set_id)REFERENCES DateSet(Date_id) );";
+                    "Set_id INTEGER AUTOINCREMENT, " +
+                    "FOREIGN KEY(Set_id)REFERENCES DateSet(Date_group_id) );";
 
-    private static final  String CREATE_DATESET_TABLE =
+    private static final String CREATE_DATESET_TABLE =
             "CREATE TABLE DateSet(" +
                     "Date_id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                    "Date_time DATE);";
+                    "Date_time DATE" +
+                    "Date_group_id INTEGER);";
 
     private static final  String CREATE_DATEFORACTIVITY_TABLE =
             "CREATE TABLE DateForActivity(" +
@@ -205,9 +206,9 @@ public class SqlDatabase {
             cv.put(COLUMN_GOAL,prg.getGoal());
             cv.put(COLUMN_WEEKNUM,prg.getWeek_num());
 
-            mDatabase.insert(TABLE_PROGRAM, COLUMN_PROGRAMID ,cv);
-
+            mDatabase.insert(TABLE_PROGRAM, COLUMN_PROGRAMID,cv);
             Log.d("Database operation", "One Row Inserted...");
+
 
         }catch (SQLException e){
             e.printStackTrace();
@@ -266,15 +267,19 @@ public class SqlDatabase {
 
     public void addDate(DateDao date){
 
+
         DateFormat df = DateFormat.getDateInstance(DateFormat.FULL, Locale.US);
         try {
-            ContentValues dt = new ContentValues();
-            dt.put(COLUMN_DATETIME, df.format(date.getDatetime()));
 
 
-            mDatabase.insert(TABLE_DATESET, COLUMN_DATEID ,dt);
+                ContentValues dt = new ContentValues();
+                dt.put(COLUMN_DATETIME, df.format(date.getDatetime()));
 
-            Log.d("Database operation", "One Row Inserted...");
+
+                mDatabase.insert(TABLE_DATESET, COLUMN_DATEID , dt);
+
+                Log.d("Database operation", "One Row Inserted...");
+
 
         }catch (SQLException e){
             e.printStackTrace();

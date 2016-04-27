@@ -1,14 +1,13 @@
 package com.collegienproject.rank4.managecalories.dao;
 
-import java.util.ArrayList;
 import java.util.Date;
 
 /**
  * Created by JirayuPC on 26 เม.ย. 2559.
  */
-public class DateDao {
+public class DateDao{
     private int Date_id;
-    private ArrayList<Date> datetime;
+    private Date datetime;
     private int date_group;
 
     public DateDao(){
@@ -23,11 +22,11 @@ public class DateDao {
         Date_id = date_id;
     }
 
-    public ArrayList<Date> getDatetime() {
+    public Date getDatetime() {
         return datetime;
     }
 
-    public void setDatetime(ArrayList<Date> datetime) {
+    public void setDatetime(Date datetime) {
         this.datetime = datetime;
     }
 
