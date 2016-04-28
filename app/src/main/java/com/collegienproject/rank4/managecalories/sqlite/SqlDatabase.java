@@ -85,15 +85,20 @@ public class SqlDatabase {
                     "Program_name TEXT NOT NULL, " +
                     "Start_date DATE NOT NULL, " +
                     "Week_num INTEGER, " +
-                    "Goal INTEGER," +
-                    "Set_id INTEGER AUTOINCREMENT, " +
-                    "FOREIGN KEY(Set_id)REFERENCES DateSet(Date_group_id) );";
+                    "Goal INTEGER);";
 
     private static final String CREATE_DATESET_TABLE =
             "CREATE TABLE DateSet(" +
                     "Date_id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                    "Date_time DATE" +
-                    "Date_group_id INTEGER);";
+                    "Date_time DATE);";
+
+    private static final  String CREATE_DATEFORPROGRAM_TABLE =
+            "CREATE TABLE DateForProgram(" +
+                    "DFPid INTEGER PRIMARY KEY AUTOINCREMENT," +
+                    "DateDFP_id INTEGER, " +
+                    "FOREIGN KEY(DateDFP_id)REFERENCES DateSet(Date_id)," +
+                    "ProgramDFP_id INTEGER, " +
+                    "FOREIGN KEY(ProgramDFP_id)REFERENCES UserProgram(Program_id));";
 
     private static final  String CREATE_DATEFORACTIVITY_TABLE =
             "CREATE TABLE DateForActivity(" +
@@ -270,7 +275,6 @@ public class SqlDatabase {
 
         DateFormat df = DateFormat.getDateInstance(DateFormat.FULL, Locale.US);
         try {
-
 
                 ContentValues dt = new ContentValues();
                 dt.put(COLUMN_DATETIME, df.format(date.getDatetime()));

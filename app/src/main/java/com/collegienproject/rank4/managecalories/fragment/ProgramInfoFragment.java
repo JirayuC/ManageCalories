@@ -41,7 +41,6 @@ public class ProgramInfoFragment extends Fragment implements NumberPicker.OnValu
     EditText textNameprg, goalNum, weekNum;
     Button btnCreateprg, btnDate;
     CheckBox cb1,cb2,cb3,cb4,cb5,cb6,cb7;
-    String check;
 
     public ProgramInfoFragment() {
         super();
@@ -102,77 +101,6 @@ public class ProgramInfoFragment extends Fragment implements NumberPicker.OnValu
             }
         });
 
-        /*cb1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
-                    check = "Sunday";
-                }
-
-            }
-        });
-
-        cb2.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
-                    check = "Monday";
-                }
-
-            }
-        });
-
-        cb3.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
-                    check = "Tuesday";
-                }
-
-            }
-        });
-
-        cb4.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
-                    check = "Wednesday";
-                }
-
-            }
-        });
-
-        cb5.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
-                    check = "Thursday";
-                }
-
-            }
-        });
-
-        cb6.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
-                    check = "Friday";
-                }
-
-            }
-        });
-
-        cb7.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
-                    check = "Saturday";
-                }
-
-            }
-        });*/
-
-
         btnDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -184,6 +112,12 @@ public class ProgramInfoFragment extends Fragment implements NumberPicker.OnValu
         btnCreateprg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                if (!validate()) {
+                    onCreateFailed();
+                    return;
+                }
+
                 boolean didItWork = true;
                 try {
                     String prgName = textNameprg.getText().toString();
@@ -290,10 +224,76 @@ public class ProgramInfoFragment extends Fragment implements NumberPicker.OnValu
                         Toast.makeText(getContext(), "created Program Successful", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(getActivity(),ActivityInfoActivity.class);
                         startActivity(intent);
+                        getActivity().finish();
+
                     }
                 }
             }
         });
+    }
+
+    private boolean validate() {
+        boolean valid = true;
+
+        String prgName = textNameprg.getText().toString();
+        String prgDateStart = btnDate.getText().toString();
+        String goal = goalNum.getText().toString();
+        String week = weekNum.getText().toString();
+
+        if (prgName.isEmpty() || prgName.length() < 3) {
+            textNameprg.setError("กรุณากรอกข้อมูล");
+            valid = false;
+        } else {
+            textNameprg.setError(null);
+        }
+
+        if (prgDateStart.isEmpty()) {
+            btnDate.setError("กรุณาเลือกวันเริ่มออกกำลังกาย");
+            valid = false;
+        } else {
+            btnDate.setError(null);
+        }
+
+        if (goal.isEmpty()) {
+            goalNum.setError("กรุณากรอกข้อมูลเป้าหมายแคลอรี่");
+            valid = false;
+        } else {
+            goalNum.setError(null);
+        }
+
+        if (week.isEmpty()) {
+            weekNum.setError("กรุณาเลือกจำนวนสัปดาห์");
+            valid = false;
+        } else {
+            weekNum.setError(null);
+        }
+
+        if(cb1.isChecked()||cb2.isChecked()||cb3.isChecked()||cb4.isChecked()||cb5.isChecked()||cb6.isChecked()||cb7.isChecked()){
+            cb1.setError(null);
+            cb2.setError(null);
+            cb3.setError(null);
+            cb4.setError(null);
+            cb5.setError(null);
+            cb6.setError(null);
+            cb7.setError(null);
+
+        }
+        else {
+            Toast.makeText(getContext(), "กรุณาเลือกวันออกกำลังกาย", Toast.LENGTH_SHORT).show();
+            valid = false;
+
+        }
+
+
+        return valid;
+    }
+
+    private void onCreateFailed() {
+        Toast.makeText(getContext(),
+                "ข้อมูลไม่สมบูรณ์",
+                Toast.LENGTH_SHORT)
+                .show();
+        btnCreateprg.setEnabled(true);
     }
 
 

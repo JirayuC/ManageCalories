@@ -87,6 +87,7 @@
                 android:layout_toRightOf="@+id/ck6"
                 android:layout_marginLeft="14dp"
                 android:layout_below="@+id/ck2"
+                android:layout_marginRight="20dp"
 
                 android:button="@drawable/selector_btn_check_holo_light"
                 android:text="เสาร์" />

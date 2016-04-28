@@ -34,9 +34,11 @@
             android:windowSoftInputMode="stateHidden" />
         <activity android:name=".activity.ShowDateListActivity" />
         <activity
+            android:label="@string/create_program"
             android:name=".activity.ProgramInfoActivity"
             android:windowSoftInputMode="stateHidden" />
         <activity
+            android:label="@string/info_activity"
             android:name=".activity.ActivityInfoActivity"
             android:theme="@style/AppThemeWithActionBar" />
         <activity android:name=".activity.CaloriesCountActivity" />

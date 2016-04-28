@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -40,6 +41,7 @@ public class SignupFragment extends Fragment{
     EditText heightNum;
     RadioGroup sexText;
     Button signupButton;
+    Menu menu;
 
 
     public SignupFragment() {
@@ -90,6 +92,8 @@ public class SignupFragment extends Fragment{
         weightNum = (EditText) rootView.findViewById(R.id.input_weight);
         heightNum = (EditText) rootView.findViewById(R.id.input_height);
         sexText = (RadioGroup) rootView.findViewById(R.id.rgSex);
+        menu = (Menu) rootView.findViewById(R.id.miSaveuser);
+
 
 
         dateDialog.setOnClickListener(new View.OnClickListener() {

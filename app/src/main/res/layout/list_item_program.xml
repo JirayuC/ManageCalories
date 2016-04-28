@@ -63,12 +63,7 @@
                     android:textStyle="bold"/>
                 
             </RelativeLayout>
-            <ImageView
-                android:id="@+id/ivImg"
-                android:layout_width="match_parent"
-                android:layout_height="170sp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/marathon"/>
+
         </LinearLayout>
         
         

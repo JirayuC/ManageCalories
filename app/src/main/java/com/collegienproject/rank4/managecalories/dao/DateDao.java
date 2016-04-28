@@ -8,7 +8,6 @@ import java.util.Date;
 public class DateDao{
     private int Date_id;
     private Date datetime;
-    private int date_group;
 
     public DateDao(){
 
@@ -30,11 +29,5 @@ public class DateDao{
         this.datetime = datetime;
     }
 
-    public int getDate_group() {
-        return date_group;
-    }
 
-    public void setDate_group(int date_group) {
-        this.date_group = date_group;
-    }
 }
