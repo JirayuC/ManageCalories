@@ -41,7 +41,6 @@ public class ProgramInfoFragment extends Fragment implements NumberPicker.OnValu
     EditText textNameprg, goalNum, weekNum;
     Button btnCreateprg, btnDate;
     CheckBox cb1,cb2,cb3,cb4,cb5,cb6,cb7;
-    String check;
 
     public ProgramInfoFragment() {
         super();
@@ -101,76 +100,6 @@ public class ProgramInfoFragment extends Fragment implements NumberPicker.OnValu
                 show();
             }
         });
-
-        /*cb1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
-                    check = "Sunday";
-                }
-
-            }
-        });
-
-        cb2.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
-                    check = "Monday";
-                }
-
-            }
-        });
-
-        cb3.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
-                    check = "Tuesday";
-                }
-
-            }
-        });
-
-        cb4.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
-                    check = "Wednesday";
-                }
-
-            }
-        });
-
-        cb5.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
-                    check = "Thursday";
-                }
-
-            }
-        });
-
-        cb6.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
-                    check = "Friday";
-                }
-
-            }
-        });
-
-        cb7.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
-                    check = "Saturday";
-                }
-
-            }
-        });*/
 
 
         btnDate.setOnClickListener(new View.OnClickListener() {
