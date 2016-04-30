@@ -6,14 +6,24 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
 import com.collegienproject.rank4.managecalories.R;
+import com.collegienproject.rank4.managecalories.adapter.ShowDateListAdapter;
+import com.collegienproject.rank4.managecalories.dao.DateDao;
+import com.collegienproject.rank4.managecalories.sqlite.DatabaseHelper;
+
+import java.util.ArrayList;
 
 
 /**
  * Created by nuuneoi on 11/16/2014.
  */
 public class PlanDateListFragment extends Fragment {
+
+    ListView listView;
+    ShowDateListAdapter listAdapter;
+    DatabaseHelper dateList;
 
     public PlanDateListFragment() {
         super();
@@ -53,6 +63,13 @@ public class PlanDateListFragment extends Fragment {
         // Init 'View' instance(s) with rootView.findViewById here
         // Note: State of variable initialized here could not be saved
         //       in onSavedInstanceState
+
+        listView = (ListView) rootView.findViewById(R.id.listViewPlanDate);
+        dateList = new DatabaseHelper(getActivity());
+        ArrayList<DateDao> detail;
+        detail = (ArrayList<DateDao>) dateList.getDateList();
+        listAdapter = new ShowDateListAdapter(detail,getActivity());
+        listView.setAdapter(listAdapter);
     }
 
     @Override

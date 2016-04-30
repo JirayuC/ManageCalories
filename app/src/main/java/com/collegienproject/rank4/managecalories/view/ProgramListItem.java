@@ -17,7 +17,7 @@ import com.inthecheesefactory.thecheeselibrary.view.state.BundleSavedState;
 public class ProgramListItem extends BaseCustomViewGroup {
 
     TextView tvProgramName;
-    TextView tvId;
+    TextView tvDate;
 
     public ProgramListItem(Context context) {
         super(context);
@@ -54,7 +54,7 @@ public class ProgramListItem extends BaseCustomViewGroup {
     private void initInstances() {
         // findViewById here
         tvProgramName = (TextView) findViewById(R.id.tvProgramName);
-        tvId =(TextView) findViewById(R.id.tvId);
+        tvDate =(TextView) findViewById(R.id.tvDate);
     }
 
     private void initWithAttrs(AttributeSet attrs, int defStyleAttr, int defStyleRes) {
@@ -98,8 +98,8 @@ public class ProgramListItem extends BaseCustomViewGroup {
         tvProgramName.setText(text);
     }
 
-    public void setIdText(int num){
-        tvId.setId(num);
+    public void setDateText(String date){
+        tvDate.setText(date);
     }
 
 }

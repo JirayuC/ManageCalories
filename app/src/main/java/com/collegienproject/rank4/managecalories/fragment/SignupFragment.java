@@ -18,7 +18,7 @@ import android.widget.Toast;
 
 import com.collegienproject.rank4.managecalories.R;
 import com.collegienproject.rank4.managecalories.dao.UserDao;
-import com.collegienproject.rank4.managecalories.sqlite.SqlDatabase;
+import com.collegienproject.rank4.managecalories.sqlite.DatabaseHelper;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -32,7 +32,8 @@ import java.util.Locale;
  * Created by nuuneoi on 11/16/2014.
  */
 public class SignupFragment extends Fragment{
-    
+
+    DatabaseHelper db;
     EditText nameText;
     EditText emailText;
     EditText dateDialog;
@@ -153,9 +154,9 @@ public class SignupFragment extends Fragment{
                     String height = heightNum.getText().toString();
 
 
-                    SqlDatabase dbEntry = new SqlDatabase(getActivity());
+                    db = new DatabaseHelper(getActivity());
 
-                    dbEntry.open();
+
 
                     UserDao user = new UserDao();
                     user.setUser_name(name);
@@ -177,9 +178,9 @@ public class SignupFragment extends Fragment{
                         e.printStackTrace();
                     }
 
-                    dbEntry.addUser(user);
+                    db.addUser(user);
 
-                    dbEntry.close();
+                    db.closeDB();
 
 
 

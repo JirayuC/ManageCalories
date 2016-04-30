@@ -8,9 +8,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.collegienproject.rank4.managecalories.R;
+import com.collegienproject.rank4.managecalories.dao.ProgramDao;
 import com.collegienproject.rank4.managecalories.fragment.MainFragment;
 
-public class MainActivity extends AppCompatActivity  {
+import java.util.ArrayList;
+
+public class MainActivity extends AppCompatActivity
+        implements MainFragment.FragmentListener {
 
     android.support.v7.widget.Toolbar toolbar;
 
@@ -64,5 +68,11 @@ public class MainActivity extends AppCompatActivity  {
 
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onProgramItemClicked(ArrayList<ProgramDao> list) {
+        Intent intent = new Intent(MainActivity.this, ActivityInfoActivity.class);
+        startActivity(intent);
     }
 }

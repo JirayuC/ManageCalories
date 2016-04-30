@@ -13,14 +13,17 @@ import com.collegienproject.rank4.managecalories.dao.ProgramDao;
 import com.collegienproject.rank4.managecalories.dao.UserDao;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 /**
- * Created by JirayuPC on 06 เม.ย. 2559.
+ * Created by JirayuPC on 30 เม.ย. 2559.
  */
-public class SqlDatabase {
+public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "Calories.db";
@@ -44,10 +47,15 @@ public class SqlDatabase {
     public static final String COLUMN_GOAL = "Goal";
 
 
+    private static  final String TABLE_DATEFORPROGRAM = "DateForProgram";
+
     private static  final String TABLE_DATESET = "DateSet";
     public static final String COLUMN_DATEID = "Date_id";
     public static final String COLUMN_DATETIME = "Date_time";
-    public static final String COLUMN_DATEGROUP = "Date_group_id";
+
+    public static final String COLUMN_DATEDFPID = "DateDFP_id";
+    public static final String COLUMN_PROGRAMDFPID = "ProgramDFP_id";
+
 
     private static  final String TABLE_DATEFORACTIVITY = "DateForActivity";
     public static final String COLUMN_DATEIDGROUP = "Date_id";
@@ -58,17 +66,7 @@ public class SqlDatabase {
     public static final String COLUMN_ACTIVITYID = "Activity_id";
     public static final String COLUMN_ACTIVITYNAME = "Activity_name";
 
-    public static final String COLUMNS[] = {COLUMN_USEREMAIL, COLUMN_USERPASSWORD};
 
-    public static final int NAME_COLUMN = 1;
-
-    private DbHelper mHelper;
-
-    private final Context mContext;
-
-    private SQLiteDatabase mDatabase;
-    // TODO: Create public field for each column in your table.
-    // SQL Statement to create a new database.
     private static final String CREATE_USER_TABLE =
             "CREATE TABLE UserProfile(" +
                     "User_email TEXT PRIMARY KEY NOT NULL," +
@@ -96,9 +94,9 @@ public class SqlDatabase {
             "CREATE TABLE DateForProgram(" +
                     "DFPid INTEGER PRIMARY KEY AUTOINCREMENT," +
                     "DateDFP_id INTEGER, " +
-                    "FOREIGN KEY(DateDFP_id)REFERENCES DateSet(Date_id)," +
-                    "ProgramDFP_id INTEGER, " +
-                    "FOREIGN KEY(ProgramDFP_id)REFERENCES UserProgram(Program_id));";
+                    // "FOREIGN KEY(DateDFP_id)REFERENCES DateSet(Date_id)," +
+                    "ProgramDFP_id INTEGER);";
+    // "FOREIGN KEY(ProgramDFP_id)REFERENCES UserProgram(Program_id));";
 
     private static final  String CREATE_DATEFORACTIVITY_TABLE =
             "CREATE TABLE DateForActivity(" +
@@ -114,74 +112,36 @@ public class SqlDatabase {
                     "Activity_name TEXT);";
 
 
-    private static class DbHelper extends SQLiteOpenHelper {
-
-        public DbHelper(Context context) {
-            super(context, DATABASE_NAME, null, DATABASE_VERSION);
-        }
-
-        @Override
-        //Set up database here
-        public void onCreate(SQLiteDatabase db) {
-            try {
-                db.execSQL(CREATE_USER_TABLE);
-                db.execSQL(CREATE_PROGRAM_TABLE);
-                db.execSQL(CREATE_DATESET_TABLE);
-                Log.d("Database operations","Table created...");
-            }catch (SQLException e){
-                e.printStackTrace();
-            }
-
-        }
-
-        @Override
-        public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
-            db.execSQL("DROP TABLE IF EXISTS " + TABLE_USERS);
-            db.execSQL("DROP TABLE IF EXISTS " + TABLE_PROGRAM);
-            db.execSQL("DROP TABLE IF EXISTS " + TABLE_DATESET);
-            onCreate(db);
-}
-
+    public DatabaseHelper(Context context) {
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
-
-    public SqlDatabase(Context c) {
-        mContext = c;
-    }
-
-    public SqlDatabase open() throws SQLException {
-        //Set up the helper with the context
-        mHelper = new DbHelper(mContext);
-        //Open the database with our helper
-        try
-        {
-            mDatabase = mHelper.getWritableDatabase();
-        }
-        catch (SQLException e){
+    @Override
+    public void onCreate(SQLiteDatabase db) {
+        try {
+            db.execSQL(CREATE_USER_TABLE);
+            db.execSQL(CREATE_PROGRAM_TABLE);
+            db.execSQL(CREATE_DATESET_TABLE);
+            db.execSQL(CREATE_DATEFORPROGRAM_TABLE);
+            Log.d("Database operations","Table created...");
+        }catch (SQLException e){
             e.printStackTrace();
         }
-
-        return this;
     }
 
-    public SqlDatabase close() {
-        try
-        {
-            mHelper.close();
-        }catch (SQLException e)
-        {
-            e.printStackTrace();
-        }
-
-       return this;
+    @Override
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_USERS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_PROGRAM);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_DATESET);
+        onCreate(db);
     }
 
 
     public void addUser(UserDao user){
 
         Log.d("addUser", user.toString());
-
+        SQLiteDatabase db = this.getWritableDatabase();
         DateFormat df = new SimpleDateFormat("dd MMMM yyyy");
         try{
             ContentValues values = new ContentValues();
@@ -193,7 +153,7 @@ public class SqlDatabase {
             values.put(COLUMN_USERHEIGHT, user.getUser_height());
             values.put(COLUMN_SEX, user.getUser_sex());
 
-            mDatabase.insert(TABLE_USERS, null, values);
+            db.insert(TABLE_USERS, null, values);
         }catch (SQLException e){
             e.printStackTrace();
         }
@@ -201,8 +161,9 @@ public class SqlDatabase {
 
     }
 
-    public void addProgram(ProgramDao prg){
-
+    public int addProgram(ProgramDao prg , int[] date_pri){
+        int program_pri = -1;
+        SQLiteDatabase db = this.getWritableDatabase();
         DateFormat df = DateFormat.getDateInstance(DateFormat.FULL, Locale.US);
         try {
             ContentValues cv = new ContentValues();
@@ -211,54 +172,47 @@ public class SqlDatabase {
             cv.put(COLUMN_GOAL,prg.getGoal());
             cv.put(COLUMN_WEEKNUM,prg.getWeek_num());
 
-            mDatabase.insert(TABLE_PROGRAM, COLUMN_PROGRAMID,cv);
+            program_pri = (int) db.insert(TABLE_PROGRAM, COLUMN_PROGRAMID,cv);
+            for(int i : date_pri){
+                createDatePrg(program_pri,i);
+            }
+
             Log.d("Database operation", "One Row Inserted...");
 
 
         }catch (SQLException e){
             e.printStackTrace();
         }
-
+        return program_pri;
     }
 
-    public Cursor getAllProgram()
-    {
-        String[] columns={COLUMN_PROGRAMID,COLUMN_PROGRAMNAME};
 
-        return mDatabase.query(TABLE_PROGRAM,columns,null,null,null,null,null);
-    }
 
-    public void deleteProgram(ProgramDao pg){
+    public List<ProgramDao> getProgramList() {
 
-        try {
-            mDatabase.delete(TABLE_PROGRAM, COLUMN_PROGRAMID+" =?", new String[]{String.valueOf(pg.getProgram_id())});
-
-            mDatabase.close();
-        }catch (SQLException e){
-            e.printStackTrace();
-        }
-
-        Log.d("deleteUser", pg.toString());
-    }
-
-    public ArrayList<ProgramDao>  getProgramList() {
         //Open connection to read only
-        ArrayList<ProgramDao> listPrg = new ArrayList<ProgramDao>();
-        SQLiteDatabase db = mHelper.getReadableDatabase();
+        List<ProgramDao> listPrg = new ArrayList<ProgramDao>();
+        SQLiteDatabase db = this.getReadableDatabase();
 
         String selectQuery =  "SELECT  " +
-                COLUMN_PROGRAMID + "," +
-                COLUMN_PROGRAMNAME +
+                COLUMN_PROGRAMNAME + "," +
+                COLUMN_STARTDATE +
                 " FROM " + TABLE_PROGRAM ;
 
         Cursor cursor = db.rawQuery(selectQuery, null);
         // looping through all rows and adding to list
-
+        DateFormat df = DateFormat.getDateInstance(DateFormat.FULL, Locale.US);
         if (cursor!=null && cursor.moveToFirst()) {
             do {
                 ProgramDao prg = new ProgramDao();
-                prg.setProgram_id(cursor.getInt(cursor.getColumnIndex(COLUMN_PROGRAMID)));
                 prg.setProgram_name(cursor.getString(cursor.getColumnIndex(COLUMN_PROGRAMNAME)));
+                Date date = null;
+                try {
+                    date = df.parse(cursor.getString(cursor.getColumnIndex(COLUMN_STARTDATE)));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                prg.setStart_date(date);
                 listPrg.add(prg);
 
             } while (cursor.moveToNext());
@@ -270,27 +224,80 @@ public class SqlDatabase {
 
     }
 
-    public void addDate(DateDao date){
+    public int addDate(DateDao date){
 
-
+        int date_pri = -1;
+        SQLiteDatabase db = this.getWritableDatabase();
         DateFormat df = DateFormat.getDateInstance(DateFormat.FULL, Locale.US);
         try {
 
-                ContentValues dt = new ContentValues();
-                dt.put(COLUMN_DATETIME, df.format(date.getDatetime()));
+            ContentValues dt = new ContentValues();
+            dt.put(COLUMN_DATETIME, df.format(date.getDatetime()));
 
+            date_pri =  (int) db.insert(TABLE_DATESET, COLUMN_DATEID , dt);
+            //Log.d("ADebugTag", "Vzxczxcxzczxczxczxczxczxczxczxczxczxczxczxczxczxczxczxczxczxcalue: " + Float.toString(x));
 
-                mDatabase.insert(TABLE_DATESET, COLUMN_DATEID , dt);
-
-                Log.d("Database operation", "One Row Inserted...");
+            Log.d("Database operation", "One Row Inserted...");
 
 
         }catch (SQLException e){
             e.printStackTrace();
         }
+        return date_pri ;
 
     }
 
+    public int createDatePrg(long Program_id, long date_id ){
 
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_DATEDFPID,date_id);
+        values.put(COLUMN_PROGRAMDFPID,Program_id);
+        int id = (int)db.insert(TABLE_DATEFORPROGRAM,null,values);
 
+        return id;
+
+    }
+
+    public void closeDB() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        if (db != null && db.isOpen())
+            db.close();
+    }
+
+    public List<DateDao> getDateList() {
+
+        //Open connection to read only
+        List<DateDao> listDate = new ArrayList<DateDao>();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String selectQuery =  "SELECT  " +
+                COLUMN_DATEID + "," +
+                COLUMN_DATETIME +
+                " FROM " + TABLE_DATESET ;
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        // looping through all rows and adding to list
+        DateFormat df = DateFormat.getDateInstance(DateFormat.FULL, Locale.US);
+        if (cursor!=null && cursor.moveToFirst()) {
+            do {
+                DateDao dat = new DateDao();
+                dat.setDate_id(cursor.getInt(cursor.getColumnIndex(COLUMN_DATEID)));
+                Date date = null;
+                try {
+                    date = df.parse(cursor.getString(cursor.getColumnIndex(COLUMN_DATETIME)));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                dat.setDatetime(date);
+                listDate.add(dat);
+
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+        return listDate;
+
+    }
 }

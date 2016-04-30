@@ -1,28 +1,32 @@
 package com.collegienproject.rank4.managecalories.adapter;
 
+import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.BaseAdapter;
 
+import com.collegienproject.rank4.managecalories.R;
 import com.collegienproject.rank4.managecalories.dao.ProgramDao;
-import com.collegienproject.rank4.managecalories.sqlite.SqlDatabase;
 import com.collegienproject.rank4.managecalories.view.ProgramListItem;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by JirayuPC on 09 เม.ย. 2559.
  */
 public class ProgramListAdapter extends BaseAdapter {
 
+    List<ProgramDao> programList = new ArrayList<ProgramDao>();
 
-    ArrayList<ProgramDao> programList;
-    SqlDatabase db;
+    int lastPosition = -1;
+    public ProgramListAdapter(List<ProgramDao> myList, FragmentActivity activity) {
+            this.programList = myList;
 
-   /* public ProgramListAdapter(ArrayList<ProgramDao> detail, FragmentActivity activity){
+    }
 
-
-    }*/
     @Override
     public int getCount() {
         if(programList == null){
@@ -40,7 +44,7 @@ public class ProgramListAdapter extends BaseAdapter {
 
     @Override
     public long getItemId(int position) {
-        return position;
+        return 0;
     }
 
     @Override
@@ -52,11 +56,16 @@ public class ProgramListAdapter extends BaseAdapter {
             item = new ProgramListItem(parent.getContext());
 
 
-        ProgramDao program = programList.get(position);
-        item.setIdText(program.getProgram_id());
+        ProgramDao program = (ProgramDao) getItem(position);
+        item.setDateText(String.valueOf(program.getStart_date()));
         item.setNameText(program.getProgram_name());
 
-
+        if(position> lastPosition) {
+            Animation anim = AnimationUtils.loadAnimation(parent.getContext(),
+                    R.anim.up_from_bottom);
+            item.startAnimation(anim);
+            lastPosition = position;
+        }
         return item;
     }
 

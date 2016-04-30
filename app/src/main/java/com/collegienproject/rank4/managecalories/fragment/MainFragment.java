@@ -8,12 +8,16 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.collegienproject.rank4.managecalories.R;
 import com.collegienproject.rank4.managecalories.activity.ProgramInfoActivity;
 import com.collegienproject.rank4.managecalories.adapter.ProgramListAdapter;
-import com.collegienproject.rank4.managecalories.sqlite.SqlDatabase;
+import com.collegienproject.rank4.managecalories.dao.ProgramDao;
+import com.collegienproject.rank4.managecalories.sqlite.DatabaseHelper;
+
+import java.util.ArrayList;
 
 
 /**
@@ -22,7 +26,13 @@ import com.collegienproject.rank4.managecalories.sqlite.SqlDatabase;
 public class MainFragment extends Fragment {
     ListView listView;
     ProgramListAdapter listAdapter;
-    SqlDatabase db;
+    DatabaseHelper myList ;
+
+    public interface FragmentListener{
+        void onProgramItemClicked(ArrayList<ProgramDao> list);
+    }
+
+
 
     public MainFragment() {
         super();
@@ -64,11 +74,21 @@ public class MainFragment extends Fragment {
         // Note: State of variable initialized here could not be saved
         //       in onSavedInstanceState
         listView = (ListView) rootView.findViewById(R.id.listView);
-
-        /*ArrayList<ProgramDao> detail;
-        detail = db.getProgramList();*/
-        listAdapter = new ProgramListAdapter();
+        myList = new DatabaseHelper(getActivity());
+        ArrayList<ProgramDao> detail;
+        detail = (ArrayList<ProgramDao>) myList.getProgramList();
+        listAdapter = new ProgramListAdapter(detail,getActivity());
         listView.setAdapter(listAdapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                ArrayList<ProgramDao> list = (ArrayList<ProgramDao>) myList.getProgramList();
+                FragmentListener listener = (FragmentListener) getActivity();
+                listener.onProgramItemClicked(list);
+                
+
+            }
+        });
 
 
         FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.addButton);
@@ -98,5 +118,6 @@ public class MainFragment extends Fragment {
     private void onRestoreInstanceState(Bundle savedInstanceState) {
         // Restore Instance (Fragment level's variables) State here
     }
+
 
 }

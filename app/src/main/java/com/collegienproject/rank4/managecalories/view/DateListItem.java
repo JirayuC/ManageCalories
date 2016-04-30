@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.AttributeSet;
+import android.widget.TextView;
 
 import com.collegienproject.rank4.managecalories.R;
 import com.inthecheesefactory.thecheeselibrary.view.BaseCustomViewGroup;
@@ -15,6 +16,7 @@ import com.inthecheesefactory.thecheeselibrary.view.state.BundleSavedState;
  */
 public class DateListItem extends BaseCustomViewGroup {
 
+    TextView tvdateid, tvdatetime;
     public DateListItem(Context context) {
         super(context);
         initInflate();
@@ -48,6 +50,8 @@ public class DateListItem extends BaseCustomViewGroup {
     }
 
     private void initInstances() {
+        tvdateid = (TextView) findViewById(R.id.tvIdDate);
+        tvdatetime = (TextView) findViewById(R.id.tvDateTime);
         // findViewById here
     }
 
@@ -90,7 +94,7 @@ public class DateListItem extends BaseCustomViewGroup {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         int width = MeasureSpec.getSize(widthMeasureSpec);
-        int height = width * 2 / 3;
+        int height = width * 1 / 2;
         int newHeightMeasureSpec = MeasureSpec.makeMeasureSpec(
                 height,
                 MeasureSpec.EXACTLY
@@ -100,4 +104,14 @@ public class DateListItem extends BaseCustomViewGroup {
         //หลอกตัวเอง
         setMeasuredDimension(width, height);
     }
+
+    public void setIdDate(String text){
+        tvdateid.setText(text);
+    }
+
+    public void setDateText(String date){
+
+        tvdatetime.setText(date);
+    }
+
 }

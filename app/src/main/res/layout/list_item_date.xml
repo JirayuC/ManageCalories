@@ -2,26 +2,20 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#80000000">
 
-    <ImageView
-        android:id="@+id/ivImg"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="centerCrop"
-        android:src="@drawable/mock"
-        />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="#80000000"
         android:layout_alignParentBottom="true"
         android:padding="16dp"
         >
 
         <TextView
-            android:id="@+id/tvName"
+            android:id="@+id/tvIdDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:maxLines="2"
@@ -31,7 +25,7 @@
             android:text="gl;dkf'gkdk a;'kdf;l'gk;'adkf;k ;l'akdf';gka;dl'fk ka;ld'fgkal;'dfk "
             />
         <TextView
-            android:id="@+id/tvDate"
+            android:id="@+id/tvDateTime"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:maxLines="2"

@@ -23,13 +23,14 @@ import com.collegienproject.rank4.managecalories.R;
 import com.collegienproject.rank4.managecalories.activity.ActivityInfoActivity;
 import com.collegienproject.rank4.managecalories.dao.DateDao;
 import com.collegienproject.rank4.managecalories.dao.ProgramDao;
-import com.collegienproject.rank4.managecalories.sqlite.SqlDatabase;
+import com.collegienproject.rank4.managecalories.sqlite.DatabaseHelper;
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 
@@ -38,6 +39,7 @@ import java.util.Locale;
  */
 public class ProgramInfoFragment extends Fragment implements NumberPicker.OnValueChangeListener{
 
+    DatabaseHelper db;
     EditText textNameprg, goalNum, weekNum;
     Button btnCreateprg, btnDate;
     CheckBox cb1,cb2,cb3,cb4,cb5,cb6,cb7;
@@ -171,7 +173,7 @@ public class ProgramInfoFragment extends Fragment implements NumberPicker.OnValu
                                 dateActivityList.add(c.getTime());
                             }
                         }
-                        if(cb1.isChecked()){
+                        if(cb7.isChecked()){
                             if (c.get(Calendar.DAY_OF_WEEK )== 7){
                                 dateActivityList.add(c.getTime());
                             }
@@ -182,16 +184,16 @@ public class ProgramInfoFragment extends Fragment implements NumberPicker.OnValu
 
 
 
-                    SqlDatabase db = new SqlDatabase(getActivity());
-                    db.open();
+                    db = new DatabaseHelper(getActivity());
 
+                    List<Integer> date_pri = new ArrayList<Integer>();
                     for(int i=0; i < dateActivityList.size(); i++){
                         Date date = dateActivityList.get(i);
                         //เอา date ยัดลง sqlite
 
                         DateDao dat = new DateDao();
                         dat.setDatetime(date);
-                        db.addDate(dat);
+                        date_pri.add(db.addDate(dat));
                     }
 
 
@@ -204,12 +206,15 @@ public class ProgramInfoFragment extends Fragment implements NumberPicker.OnValu
                     }catch (ParseException e){
                         e.printStackTrace();
                     }
-
+                    //int[] temp = new int[date_pri.size()] ;
+                    //x =  date_pri.toArray(x);
+                    //int[] array = list.stream().mapToInt(i->i).toArray();
+                    int[] temp = convertIntegers(date_pri);
                     prg.setGoal(Integer.parseInt(goal));
                     prg.setWeek_num(Integer.parseInt(week));
-                    db.addProgram(prg);
+                    db.addProgram(prg,temp);
 
-                    db.close();
+                    db.closeDB();
 
 
 
@@ -231,7 +236,15 @@ public class ProgramInfoFragment extends Fragment implements NumberPicker.OnValu
             }
         });
     }
-
+    public static int[] convertIntegers(List<Integer> integers)
+    {
+        int[] ret = new int[integers.size()];
+        for (int i=0; i < ret.length; i++)
+        {
+            ret[i] = integers.get(i).intValue();
+        }
+        return ret;
+    }
     private boolean validate() {
         boolean valid = true;
 
