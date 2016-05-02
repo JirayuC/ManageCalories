@@ -140,6 +140,7 @@ public class CaloriesCountFragment extends Fragment {
         @Override
         public void run() {
 
+
         }
     };
 

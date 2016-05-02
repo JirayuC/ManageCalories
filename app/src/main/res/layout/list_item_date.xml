@@ -1,18 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#80000000">
+    >
+
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/card_view"
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        card_view:cardCornerRadius="4dp"
+        card_view:cardElevation="2dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="5dp"
+        >
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_alignParentBottom="true"
-        android:padding="16dp"
-        >
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/layoutRelative"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#77FFFFFF"
+            android:paddingRight="24dp"
+            android:padding="10dp">
 
         <TextView
             android:id="@+id/tvIdDate"
@@ -21,20 +40,28 @@
             android:maxLines="2"
             android:ellipsize="end"
             android:textSize="24sp"
-            android:textColor="#ffffff"
-            android:text="gl;dkf'gkdk a;'kdf;l'gk;'adkf;k ;l'akdf';gka;dl'fk ka;ld'fgkal;'dfk "
+            android:textColor="#000000"
+            android:text="akdf';gkafgkal;'dfk "
             />
         <TextView
             android:id="@+id/tvDateTime"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:maxLines="2"
+            android:layout_below="@+id/tvIdDate"
             android:ellipsize="end"
             android:textSize="18sp"
-            android:textColor="#ffffff"
-            android:text="123456789 4562654897/7 4564654964897 435 6548974897"
+            android:textColor="#000000"
+            android:text="6548974897"
             />
+
+        </RelativeLayout>
 
     </LinearLayout>
 
-</RelativeLayout>
+    <View
+        android:background="@drawable/selactor_overlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</android.support.v7.widget.CardView>
+</LinearLayout>

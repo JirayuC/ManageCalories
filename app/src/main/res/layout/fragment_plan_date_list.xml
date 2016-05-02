@@ -9,7 +9,10 @@
     <ListView
         android:id="@+id/listViewPlanDate"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:divider="@null"
+        android:drawSelectorOnTop="true"
+        android:listSelector="@android:color/transparent">
 
     </ListView>
 

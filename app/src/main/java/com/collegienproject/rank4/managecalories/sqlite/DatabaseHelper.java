@@ -70,7 +70,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String CREATE_USER_TABLE =
             "CREATE TABLE UserProfile(" +
                     "User_email TEXT PRIMARY KEY NOT NULL," +
-                    "User_password TEXT NOT NULL," +
                     "User_sex TEXT NOT NULL, " +
                     "User_name TEXT NOT NULL, " +
                     "User_weight REAL NOT NULL, " +
@@ -102,9 +101,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             "CREATE TABLE DateForActivity(" +
                     "DFA_id INTEGER PRIMARY KEY AUTOINCREMENT," +
                     "DateDFA_id INTEGER, " +
-                    "FOREIGN KEY(DateDFA_id)REFERENCES DateSet(Date_id)," +
-                    "ActivityDFA_id INTEGER, " +
-                    "FOREIGN KEY(ActivityDFA_id)REFERENCES DateSet(Activity_id));";
+                    /*"FOREIGN KEY(DateDFA_id)REFERENCES DateSet(Date_id)," +*/
+                    "ActivityDFA_id INTEGER);";
+                    /*"FOREIGN KEY(ActivityDFA_id)REFERENCES DateSet(Activity_id));";*/
 
     private static final  String CREATE_ACTIVITY_TABLE =
             "CREATE TABLE Activity(" +
@@ -147,7 +146,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             ContentValues values = new ContentValues();
             values.put(COLUMN_USERNAME, user.getUser_name());
             values.put(COLUMN_USEREMAIL, user.getUser_email());
-            values.put(COLUMN_USERPASSWORD, user.getUser_password());
             values.put(COLUMN_BIRTHDATE, df.format(user.getUser_birthdate()));
             values.put(COLUMN_USERWEIGHT, user.getUser_weight());
             values.put(COLUMN_USERHEIGHT, user.getUser_height());
@@ -159,6 +157,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
 
 
+    }
+
+    public int updateUser(UserDao user){
+        DateFormat df = new SimpleDateFormat("dd MMMM yyyy");
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_USERNAME, user.getUser_name());
+        values.put(COLUMN_USEREMAIL, user.getUser_email());
+        values.put(COLUMN_BIRTHDATE, df.format(user.getUser_birthdate()));
+        values.put(COLUMN_USERWEIGHT, user.getUser_weight());
+        values.put(COLUMN_USERHEIGHT, user.getUser_height());
+        values.put(COLUMN_SEX, user.getUser_sex());
+
+        return db.update(TABLE_USERS,values,COLUMN_USEREMAIL +"=?",
+                new String[]{String.valueOf(user.getUser_email())});
     }
 
     public int addProgram(ProgramDao prg , int[] date_pri){

@@ -37,7 +37,6 @@ public class SignupFragment extends Fragment{
     EditText nameText;
     EditText emailText;
     EditText dateDialog;
-    EditText passwordText;
     EditText weightNum;
     EditText heightNum;
     RadioGroup sexText;
@@ -88,7 +87,6 @@ public class SignupFragment extends Fragment{
         nameText = (EditText) rootView.findViewById(R.id.input_name);
         emailText = (EditText) rootView.findViewById(R.id.input_email);
         dateDialog = (EditText) rootView.findViewById(R.id.input_birthdate);
-        passwordText = (EditText) rootView.findViewById(R.id.input_password);
         signupButton = (Button) rootView.findViewById(R.id.btn_signup);
         weightNum = (EditText) rootView.findViewById(R.id.input_weight);
         heightNum = (EditText) rootView.findViewById(R.id.input_height);
@@ -148,7 +146,6 @@ public class SignupFragment extends Fragment{
 
                     String name = nameText.getText().toString();
                     String email = emailText.getText().toString();
-                    String password = passwordText.getText().toString();
                     String date = dateDialog.getText().toString();
                     String weight = weightNum.getText().toString();
                     String height = heightNum.getText().toString();
@@ -162,7 +159,6 @@ public class SignupFragment extends Fragment{
                     user.setUser_name(name);
                     user.setUser_sex(userGender);
                     user.setUser_email(email);
-                    user.setUser_password(password);
 
                     float weightCon = Float.parseFloat(weight);
                     user.setUser_weight(weightCon);
@@ -236,7 +232,6 @@ public class SignupFragment extends Fragment{
 
         String name = nameText.getText().toString();
         String email = emailText.getText().toString();
-        String password = passwordText.getText().toString();
         String date = dateDialog.getText().toString();
 
         if (name.isEmpty() || name.length() < 3) {
@@ -251,13 +246,6 @@ public class SignupFragment extends Fragment{
             valid = false;
         } else {
             emailText.setError(null);
-        }
-
-        if (password.isEmpty() || password.length() < 4 || password.length() > 10) {
-            passwordText.setError("between 4 and 10 alphanumeric characters");
-            valid = false;
-        } else {
-            passwordText.setError(null);
         }
 
         if (date.isEmpty()) {

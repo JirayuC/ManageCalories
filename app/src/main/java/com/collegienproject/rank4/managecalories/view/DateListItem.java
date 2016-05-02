@@ -91,19 +91,6 @@ public class DateListItem extends BaseCustomViewGroup {
         // Restore State from bundle here
     }
 
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        int width = MeasureSpec.getSize(widthMeasureSpec);
-        int height = width * 1 / 2;
-        int newHeightMeasureSpec = MeasureSpec.makeMeasureSpec(
-                height,
-                MeasureSpec.EXACTLY
-        );
-        //หลอกลูก
-        super.onMeasure(widthMeasureSpec, newHeightMeasureSpec);
-        //หลอกตัวเอง
-        setMeasuredDimension(width, height);
-    }
 
     public void setIdDate(String text){
         tvdateid.setText(text);

@@ -23,7 +23,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textCapWords"
-                android:hint="Name" />
+                android:hint="ชื่อ" />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -35,7 +35,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="number"
-                android:hint="Weight" />
+                android:hint="น้ำหนัก(kg)" />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -47,7 +47,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="number"
-                android:hint="Height" />
+                android:hint="ส่วนสูง(cm)" />
         </android.support.design.widget.TextInputLayout>
 
         <RadioGroup
@@ -61,7 +61,7 @@
             >
             <RadioButton
                 android:id="@+id/rbMale"
-                android:text="Male"
+                android:text="ชาย"
                 android:textColor="@color/colorPrimary"
                 android:paddingLeft="10dp"
                 android:layout_weight="1"
@@ -71,7 +71,7 @@
             <RadioButton
 
                 android:id="@+id/rbFemale"
-                android:text="Female"
+                android:text="หญิง"
                 android:textColor="@color/colorPrimary"
                 android:paddingLeft="10dp"
                 android:layout_weight="1"
@@ -101,21 +101,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:focusable="false"
-                android:hint="Birthdate" />
+                android:hint="วันเกิด" />
         </android.support.design.widget.TextInputLayout>
 
         <!-- Password Label -->
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp">
-            <EditText android:id="@+id/input_password"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textPassword"
-                android:hint="Password"/>
-        </android.support.design.widget.TextInputLayout>
 
 
         <!-- Signup Button -->
@@ -127,7 +116,7 @@
             android:layout_marginBottom="24dp"
             android:padding="12dp"
             android:textColor="@color/white"
-            android:text="Create Account"
+            android:text="บันทึกข้อมูล"
             android:gravity="center"/>
 
 

@@ -1,31 +1,26 @@
 package com.collegienproject.rank4.managecalories.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import com.collegienproject.rank4.managecalories.R;
-import com.collegienproject.rank4.managecalories.activity.CreateActActivity;
 
 
 /**
  * Created by nuuneoi on 11/16/2014.
  */
-public class TodaySummaryFragment extends Fragment {
+public class CreateActFragment extends Fragment {
 
-    Button btnSaveplay;
-
-    public TodaySummaryFragment() {
+    public CreateActFragment() {
         super();
     }
 
-    public static TodaySummaryFragment newInstance() {
-        TodaySummaryFragment fragment = new TodaySummaryFragment();
+    public static CreateActFragment newInstance() {
+        CreateActFragment fragment = new CreateActFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -43,7 +38,7 @@ public class TodaySummaryFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_today_summary, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_create_act, container, false);
         initInstances(rootView, savedInstanceState);
         return rootView;
     }
@@ -58,14 +53,6 @@ public class TodaySummaryFragment extends Fragment {
         // Init 'View' instance(s) with rootView.findViewById here
         // Note: State of variable initialized here could not be saved
         //       in onSavedInstanceState
-        btnSaveplay = (Button) rootView.findViewById(R.id.btn_savePlay);
-        btnSaveplay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(),CreateActActivity.class);
-                startActivity(intent);
-            }
-        });
     }
 
     @Override

@@ -12,7 +12,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         card_view:cardCornerRadius="4dp"
-        card_view:cardElevation="2dp">
+        card_view:cardElevation="2dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginLeft="5dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -32,11 +34,10 @@
                     android:id="@+id/tvProgramName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/item_listview_authorIcon"
                     android:gravity="center"
                     android:text="เหลือการออกกำลังกาย 20 วัน"
-
-                    android:layout_marginTop="15dp"
+                    android:layout_below="@+id/dateNext"
+                    android:layout_marginTop="20dp"
                     android:textColor="@color/colorPrimaryDark"
                     android:textSize="19sp"
                     android:textStyle="bold"/>
@@ -47,7 +48,6 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tvProgramName"
                     android:layout_marginBottom="8dp"
-                    android:layout_toRightOf="@+id/item_listview_authorIcon"
                     android:gravity="center_horizontal"
                     android:paddingLeft="4dip"
                     android:text="อ. 1 เม.ย. - จ. 20 เม.ย."

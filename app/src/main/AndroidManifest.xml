@@ -29,16 +29,18 @@
             android:name=".activity.SignupActivity"
             android:theme="@style/AppTheme.Dark"
             android:windowSoftInputMode="stateHidden" />
-        <activity android:name=".activity.ShowDateListActivity" />
         <activity
-            android:label="@string/create_program"
             android:name=".activity.ProgramInfoActivity"
+            android:label="@string/create_program"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:label="@string/info_activity"
             android:name=".activity.ActivityInfoActivity"
+            android:label="@string/info_activity"
             android:theme="@style/AppThemeWithActionBar" />
-        <activity android:name=".activity.CaloriesCountActivity" />
+        <activity android:name=".activity.CaloriesCountActivity"
+            android:theme="@style/AppThemeWithActionBar"/>
+        <activity android:name=".activity.CreateActActivity"
+            android:theme="@style/AppThemeWithActionBar"/>
     </application>
 
 </manifest>

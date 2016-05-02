@@ -18,13 +18,14 @@ import java.util.List;
  * Created by JirayuPC on 09 เม.ย. 2559.
  */
 public class ProgramListAdapter extends BaseAdapter {
+    FragmentActivity activity;
 
     List<ProgramDao> programList = new ArrayList<ProgramDao>();
 
     int lastPosition = -1;
     public ProgramListAdapter(List<ProgramDao> myList, FragmentActivity activity) {
             this.programList = myList;
-
+            this.activity = activity;
     }
 
     @Override

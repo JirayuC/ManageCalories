@@ -85,7 +85,6 @@ public class MainFragment extends Fragment {
                 ArrayList<ProgramDao> list = (ArrayList<ProgramDao>) myList.getProgramList();
                 FragmentListener listener = (FragmentListener) getActivity();
                 listener.onProgramItemClicked(list);
-                
 
             }
         });
@@ -98,11 +97,7 @@ public class MainFragment extends Fragment {
                 Intent intent = new Intent(getContext(), ProgramInfoActivity.class);
                 startActivity(intent);
 
-               /* Intent intent = new Intent(getContext(), ActivityInfoActivity.class);
-                startActivity(intent);*/
 
-                 /*Intent intent = new Intent(getContext(), ShowDateListActivity.class);
-                startActivity(intent);*/
 
             }
         });
