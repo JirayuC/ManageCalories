@@ -9,10 +9,16 @@ import com.collegienproject.rank4.managecalories.fragment.CreateActFragment;
 
 public class CreateActActivity extends AppCompatActivity {
 
+
+    public int Date_id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_act);
+
+        Bundle bundle = getIntent().getExtras();
+        Date_id = bundle.getInt("Date_id",0);
+
 
         initInstances();
         if (savedInstanceState == null) {

@@ -15,5 +15,7 @@
     <color name="white">#FFFFFF</color>
     <color name="apptheme_color">#33b5e5</color>
     <color name="overlay_color">#80000000</color>
+
+    <color name="today_color">#8000ff51</color>
 </resources>
 

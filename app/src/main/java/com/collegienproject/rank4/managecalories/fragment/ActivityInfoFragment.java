@@ -71,7 +71,7 @@ public class ActivityInfoFragment extends Fragment {
             public Fragment getItem(int position) {
                 switch (position){
                     case 0:
-                        return TodaySummaryFragment.newInstance();
+                        return TodaySummaryFragment.newInstance(model);
                     case 1:
                         return PlanDateListFragment.newInstance(model);
                     case 2:
@@ -102,6 +102,7 @@ public class ActivityInfoFragment extends Fragment {
         });
 
         slidingTabLayout = (SlidingTabLayout) rootView.findViewById(R.id.slidingTabLayout);
+        slidingTabLayout.setDistributeEvenly(true);
         slidingTabLayout.setViewPager(viewPager);
 
 

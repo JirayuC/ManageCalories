@@ -1,6 +1,7 @@
 package com.collegienproject.rank4.managecalories.adapter;
 
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -12,6 +13,7 @@ import com.collegienproject.rank4.managecalories.dao.DateDao;
 import com.collegienproject.rank4.managecalories.view.DateListItem;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -56,6 +58,13 @@ public class ShowDateListAdapter extends BaseAdapter{
         DateDao date = (DateDao) getItem(position);
         item.setIdDate(String.valueOf(date.getDate_id()));
         item.setDateText(date.getDatetime());
+
+
+        Date now = new Date();
+        Date date_activity = DateList.get(position).getDatetime();
+        if(date_activity.getDate() == now.getDate()){
+            item.setColorToday();
+        }
 
         if(position> lastPosition) {
             Animation anim = AnimationUtils.loadAnimation(parent.getContext(),

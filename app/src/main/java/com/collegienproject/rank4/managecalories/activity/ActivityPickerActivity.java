@@ -9,10 +9,15 @@ import com.collegienproject.rank4.managecalories.fragment.ActivityPickerFragment
 
 public class ActivityPickerActivity extends AppCompatActivity {
 
+    public int Date_id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_activity_picker);
+
+        Bundle bundle = getIntent().getExtras();
+        Date_id = bundle.getInt("Date_id",0);
+
         initInstances();
 
         if (savedInstanceState == null) {

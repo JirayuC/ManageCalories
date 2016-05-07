@@ -1,16 +1,21 @@
 package com.collegienproject.rank4.managecalories.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.Toast;
 
 import com.collegienproject.rank4.managecalories.R;
+import com.collegienproject.rank4.managecalories.activity.ActivityPickerActivity;
 import com.collegienproject.rank4.managecalories.adapter.ActPickerListAdapter;
+import com.collegienproject.rank4.managecalories.sqlite.DatabaseHelper;
 
 
 /**
@@ -19,6 +24,8 @@ import com.collegienproject.rank4.managecalories.adapter.ActPickerListAdapter;
 public class ActivityPickerFragment extends Fragment {
 
     GridView gridView;
+    DatabaseHelper db;
+    Context context;
 
     float[] met = {
             6f, 3.5f, 4.5f,
@@ -80,6 +87,8 @@ public class ActivityPickerFragment extends Fragment {
         super.onCreate(savedInstanceState);
         init(savedInstanceState);
 
+
+
         if (savedInstanceState != null)
             onRestoreInstanceState(savedInstanceState);
     }
@@ -87,6 +96,8 @@ public class ActivityPickerFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        context = inflater.getContext();
         View rootView = inflater.inflate(R.layout.fragment_activity_picker, container, false);
         initInstances(rootView, savedInstanceState);
         return rootView;
@@ -103,6 +114,8 @@ public class ActivityPickerFragment extends Fragment {
         // Note: State of variable initialized here could not be saved
         //       in onSavedInstanceState
 
+        db = new DatabaseHelper(getActivity());
+
         gridView = (GridView) rootView.findViewById(R.id.gridview);
         ActPickerListAdapter adapter = new ActPickerListAdapter(getContext(), web, imageId);
         gridView.setAdapter(adapter);
@@ -111,6 +124,11 @@ public class ActivityPickerFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+                int Date_id = ((ActivityPickerActivity)context).Date_id;
+                db.addDateForActivity(Date_id,position);
+                Log.d("Biw","Date_id = "+Date_id+" , Activity_id = "+position);
+                Toast.makeText(context,"Date_id = "+Date_id+" , Activity_id = "+position,Toast.LENGTH_SHORT).show();
+                getActivity().finish();
             }
         });
     }

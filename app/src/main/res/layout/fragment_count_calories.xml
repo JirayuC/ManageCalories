@@ -3,7 +3,17 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
+    <TextView
+        android:id="@+id/txt_activity_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:padding="50dp"
+        android:textColor="#000000"
+        android:textSize="20dp"
+        android:text="ACTIVITY"
+        />
     <TextView
         android:id="@+id/textTimer"
         android:layout_width="wrap_content"

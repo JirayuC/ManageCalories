@@ -5,6 +5,8 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.AttributeSet;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.collegienproject.rank4.managecalories.R;
@@ -23,6 +25,9 @@ import java.util.Date;
 public class DateListItem extends BaseCustomViewGroup {
 
     TextView tvdateid, tvdatetime;
+    View rootView;
+
+    LinearLayout lnl_row;
     public DateListItem(Context context) {
         super(context);
         initInflate();
@@ -52,13 +57,22 @@ public class DateListItem extends BaseCustomViewGroup {
     }
 
     private void initInflate() {
-        inflate(getContext(), R.layout.list_item_date, this);
+        rootView = inflate(getContext(), R.layout.list_item_date, this);
+    }
+
+    public View getRootView(){
+        return rootView;
     }
 
     private void initInstances() {
         tvdateid = (TextView) findViewById(R.id.tvIdDate);
         tvdatetime = (TextView) findViewById(R.id.tvDateTime);
+        lnl_row = (LinearLayout) findViewById(R.id.lnl_row);
         // findViewById here
+    }
+
+    public void setColorToday(){
+        lnl_row.setBackgroundResource(R.color.today_color);
     }
 
     private void initWithAttrs(AttributeSet attrs, int defStyleAttr, int defStyleRes) {
@@ -103,7 +117,7 @@ public class DateListItem extends BaseCustomViewGroup {
     }
 
     public void setDateText(Date date){
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         String format = formatter.format(date);
         tvdatetime.setText(dateThai(format));
     }

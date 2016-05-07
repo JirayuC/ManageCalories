@@ -13,9 +13,14 @@ public class CaloriesCountActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calories_count);
 
+        Bundle bundle = getIntent().getExtras();
+        float met = bundle.getFloat("met");
+        String activity_name = bundle.getString("activity_name");
+        int DFA_id = bundle.getInt("DFA_id");
+
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.contentContainer, CaloriesCountFragment.newInstance())
+                    .add(R.id.contentContainer, CaloriesCountFragment.newInstance(DFA_id,met,activity_name))
                     .commit();
         }
     }

@@ -90,7 +90,7 @@ public class MainFragment extends Fragment {
         });
 
 
-                FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.addButton);
+        FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.addButton);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

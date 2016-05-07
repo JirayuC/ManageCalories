@@ -103,10 +103,6 @@ public class ProgramInfoFragment extends Fragment implements NumberPicker.OnValu
             }
         });
 
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/master
         btnDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -196,7 +192,8 @@ public class ProgramInfoFragment extends Fragment implements NumberPicker.OnValu
 
                         DateDao dat = new DateDao();
                         dat.setDatetime(date);
-                        date_pri.add(db.addDate(dat));
+
+                        date_pri.add(db.addDate(dat,db.getMaxProgramId()+1));
                     }
 
 

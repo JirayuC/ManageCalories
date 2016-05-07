@@ -1,5 +1,7 @@
 package com.collegienproject.rank4.managecalories.fragment;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -11,6 +13,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.collegienproject.rank4.managecalories.R;
+import com.collegienproject.rank4.managecalories.activity.CreateActActivity;
 import com.collegienproject.rank4.managecalories.adapter.ShowDateListAdapter;
 import com.collegienproject.rank4.managecalories.dao.DateDao;
 import com.collegienproject.rank4.managecalories.dao.ProgramDao;
@@ -28,7 +31,7 @@ public class PlanDateListFragment extends Fragment {
     ListView listView;
     ShowDateListAdapter listAdapter;
     DatabaseHelper dateList;
-
+    Context context;
 
     public interface FragmentListener{
         void onDateItemClicked(DateDao model);
@@ -62,6 +65,8 @@ public class PlanDateListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        context = inflater.getContext();
         View rootView = inflater.inflate(R.layout.fragment_plan_date_list, container, false);
         initInstances(rootView, savedInstanceState);
         return rootView;
@@ -83,18 +88,23 @@ public class PlanDateListFragment extends Fragment {
         listView = (ListView) rootView.findViewById(R.id.listViewPlanDate);
 
         dateList = new DatabaseHelper(getActivity());
-        ArrayList<DateDao> detail;
+        final ArrayList<DateDao> detail;
         int x = model.getProgram_id();
         detail = (ArrayList<DateDao>) dateList.getListOfProgramDAO(x);
+
         listAdapter = new ShowDateListAdapter(detail,getActivity());
         listView.setAdapter(listAdapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                FragmentListener listener = (FragmentListener) getActivity();
-                listener.onDateItemClicked(null);
-               // final int InternalPosition = position;
-               // Object o = MyListActivity.this.getListView().getItemAtPosition(InternalPosition);
+//                FragmentListener listener = (FragmentListener) getActivity();
+//                listener.onDateItemClicked(null);
+
+                int date_id = detail.get(position).getDate_id();
+
+                Intent intent = new Intent(context, CreateActActivity.class);
+                intent.putExtra("Date_id",date_id);
+                startActivity(intent);
                 Toast.makeText(getContext(), "" + id, Toast.LENGTH_SHORT).show();
             }
         });

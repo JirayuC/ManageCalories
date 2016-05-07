@@ -6,6 +6,16 @@ package com.collegienproject.rank4.managecalories.dao;
 public class ActivityDao {
     private int Activity_id;
     private String Activity_name;
+    private float Activity_met;
+
+    public float getActivity_met() {
+        return Activity_met;
+    }
+
+    public void setActivity_met(float activity_met) {
+        Activity_met = activity_met;
+    }
+
 
     public ActivityDao(){
 

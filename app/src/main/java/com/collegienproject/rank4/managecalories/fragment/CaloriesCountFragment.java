@@ -1,10 +1,13 @@
 package com.collegienproject.rank4.managecalories.fragment;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +15,11 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.collegienproject.rank4.managecalories.R;
+import com.collegienproject.rank4.managecalories.dao.UserDao;
+import com.collegienproject.rank4.managecalories.sqlite.DatabaseHelper;
+
+import java.util.Date;
+import java.util.Objects;
 
 
 /**
@@ -19,8 +27,14 @@ import com.collegienproject.rank4.managecalories.R;
  */
 public class CaloriesCountFragment extends Fragment {
 
+    DatabaseHelper db;
+    UserDao  userDao;
+
     TextView textTimer;
     TextView textCalories;
+
+    TextView txtActivityName;
+
     Button startButton;
     Button pauseButton;
     Button stopButton;
@@ -30,15 +44,27 @@ public class CaloriesCountFragment extends Fragment {
     long timeSwap = 0L;
     long finalTime = 0L;
 
+    int DFA_id;
+    double BMR;
+    float MET;
+    String activity_name;
+
+    double calorie_Burn;
+
+
 
     public CaloriesCountFragment() {
         super();
     }
 
-    public static CaloriesCountFragment newInstance() {
+    public static CaloriesCountFragment newInstance(int DFA_id,float met,String activity_name) {
         CaloriesCountFragment fragment = new CaloriesCountFragment();
         Bundle args = new Bundle();
+        args.putFloat("met",met);
+        args.putString("activity_name",activity_name);
+        args.putInt("DFA_id",DFA_id);
         fragment.setArguments(args);
+
         return fragment;
     }
 
@@ -46,6 +72,12 @@ public class CaloriesCountFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         init(savedInstanceState);
+
+        activity_name = getArguments().getString("activity_name");
+        MET = getArguments().getFloat("met");
+        DFA_id = getArguments().getInt("DFA_id");
+
+        Log.d("Biw","DFA_id = "+DFA_id+" , activity_name = "+activity_name+" , MET = "+MET);
 
         if (savedInstanceState != null)
             onRestoreInstanceState(savedInstanceState);
@@ -56,7 +88,49 @@ public class CaloriesCountFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_count_calories, container, false);
         initInstances(rootView, savedInstanceState);
+
+        userDao = db.getUser();
+        txtActivityName.setText(activity_name);
+        Log.d("Biw"," Sex = "+userDao.getUser_sex()+" , H = "+userDao.getUser_height()+" , W = "+userDao.getUser_weight()+" , birth = "+userDao.getUser_birthdate());
+
+        calculateBMR();
+
+
         return rootView;
+    }
+
+    private void calculateBMR() {
+        Date birth_date = userDao.getUser_birthdate();
+        int age =  getAge(birth_date.getYear(),birth_date.getMonth(),birth_date.getDay());
+        Log.d("Biw","Age = "+age);
+
+        if(userDao.getUser_sex().equals("male")){
+            BMR = 66+(13.7*userDao.getUser_weight())+(5*userDao.getUser_height())-(6.8*age);
+        }
+        else{
+            BMR = 665+(9.6*userDao.getUser_weight())+(1.8*userDao.getUser_height())-(4.7*age);
+        }
+
+        Log.d("Biw","BMR = "+BMR);
+    }
+
+    public int getAge(int year, int month, int day){
+        Date now = new Date();
+        int nowMonth = now.getMonth();
+        int nowYear = now.getYear();
+        int result = nowYear - year;
+
+        if (month > nowMonth) {
+            result--;
+        }
+        else if (month == nowMonth) {
+            int nowDay = now.getDate();
+
+            if (day > nowDay) {
+                result--;
+            }
+        }
+        return result;
     }
 
     @SuppressWarnings("UnusedParameters")
@@ -69,6 +143,10 @@ public class CaloriesCountFragment extends Fragment {
         // Init 'View' instance(s) with rootView.findViewById here
         // Note: State of variable initialized here could not be saved
         //       in onSavedInstanceState
+
+        db = new DatabaseHelper(getActivity());
+
+        txtActivityName = (TextView) rootView.findViewById(R.id.txt_activity_name);
 
         textTimer = (TextView) rootView.findViewById(R.id.textTimer);
         textCalories = (TextView) rootView.findViewById(R.id.textCalories);
@@ -100,12 +178,38 @@ public class CaloriesCountFragment extends Fragment {
                 timeSwap = 0;
                 timeInMillies = 0;
                 myHandler.removeCallbacks(updateTimerMethod);
+
+                displayDialog();
             }
         });
 
 
 
 
+    }
+
+    private void displayDialog() {
+        AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
+        alertDialog.setTitle("Save");
+        alertDialog.setMessage("Do you save you burn calories?");
+        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Save ",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        db.activitySuccess(DFA_id, (float)calorie_Burn);
+                        dialog.dismiss();
+                        getActivity().finish();
+                    }
+                });
+        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Cancel",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        dialog.dismiss();
+                        getActivity().finish();
+                    }
+                });
+
+        alertDialog.show();
     }
 
     @Override
@@ -125,9 +229,12 @@ public class CaloriesCountFragment extends Fragment {
             timeInMillies = SystemClock.uptimeMillis() - startTime;
             finalTime = timeSwap + timeInMillies;
 
-            int seconds = (int) (finalTime / 1000);
-            int minutes = seconds / 60;
-            seconds = seconds % 60;
+            int sum_seconds = (int) (finalTime / 1000);
+            Log.d("benz","sum_seconds = "+sum_seconds+" s");
+
+
+            int minutes = sum_seconds / 60;
+            int seconds = sum_seconds % 60;
             minutes = minutes % 60;
             int hours = minutes / 24;
             textTimer.setText("" + String.format("%02d",hours) + ":"
@@ -135,21 +242,18 @@ public class CaloriesCountFragment extends Fragment {
                     + String.format("%02d", seconds));
             myHandler.postDelayed(this, 0);
 
-            textCalories.setText(""+ String.valueOf(Calorie_Burn(seconds)));
-        }
 
-        private double Calorie_Burn(long time){
+            textCalories.setText(""+ String.format("%.3f",Calorie_Burn(sum_seconds)));
 
-            int BMR = 1670;
-            float MET=5.5f;
-            double calorie_Burn;
-            time=time/3600;
-            calorie_Burn = (BMR/24) * MET * time;
-            return calorie_Burn;
         }
 
     };
 
+    private double Calorie_Burn(long time){
+        calorie_Burn = (BMR/24) * MET * (time/3600.0f);
+        Log.d("benz","calorie_Burn = "+calorie_Burn);
+        return calorie_Burn;
+    }
 
 
 }
