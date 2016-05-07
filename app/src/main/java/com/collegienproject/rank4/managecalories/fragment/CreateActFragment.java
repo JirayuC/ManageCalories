@@ -1,13 +1,16 @@
 package com.collegienproject.rank4.managecalories.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.collegienproject.rank4.managecalories.R;
+import com.collegienproject.rank4.managecalories.activity.ActivityPickerActivity;
 
 
 /**
@@ -53,6 +56,15 @@ public class CreateActFragment extends Fragment {
         // Init 'View' instance(s) with rootView.findViewById here
         // Note: State of variable initialized here could not be saved
         //       in onSavedInstanceState
+
+        FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.addActButton);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), ActivityPickerActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override

@@ -81,6 +81,7 @@ public class CaloriesCountFragment extends Fragment {
             public void onClick(View v) {
                 startTime = SystemClock.uptimeMillis();
                 myHandler.postDelayed(updateTimerMethod,0);
+                startButton.setEnabled(false);
             }
         });
 
@@ -89,6 +90,7 @@ public class CaloriesCountFragment extends Fragment {
             public void onClick(View v) {
                 timeSwap += timeInMillies;
                 myHandler.removeCallbacks(updateTimerMethod);
+                startButton.setEnabled(true);
             }
         });
 
@@ -132,16 +134,22 @@ public class CaloriesCountFragment extends Fragment {
                     + String.format("%02d", minutes) + ":"
                     + String.format("%02d", seconds));
             myHandler.postDelayed(this, 0);
+
+            textCalories.setText(""+ String.valueOf(Calorie_Burn(seconds)));
+        }
+
+        private double Calorie_Burn(long time){
+
+            int BMR = 1670;
+            float MET=5.5f;
+            double calorie_Burn;
+            time=time/3600;
+            calorie_Burn = (BMR/24) * MET * time;
+            return calorie_Burn;
         }
 
     };
 
-    private  Runnable ubdateCalomerMethod = new Runnable() {
-        @Override
-        public void run() {
 
-
-        }
-    };
 
 }

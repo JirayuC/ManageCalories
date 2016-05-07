@@ -11,6 +11,12 @@ import com.collegienproject.rank4.managecalories.R;
 import com.inthecheesefactory.thecheeselibrary.view.BaseCustomViewGroup;
 import com.inthecheesefactory.thecheeselibrary.view.state.BundleSavedState;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 /**
  * Created by nuuneoi on 11/16/2014.
  */
@@ -98,8 +104,41 @@ public class ProgramListItem extends BaseCustomViewGroup {
         tvProgramName.setText(text);
     }
 
-    public void setDateText(String date){
-        tvDate.setText(date);
+    public void setDateText(Date date){
+
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        String format = formatter.format(date);
+
+        tvDate.setText(dateThai(format));
     }
+
+
+    public static String dateThai(String strDate)
+    {
+        String Months[] = {
+                "ม.ค", "ก.พ", "มี.ค", "เม.ย",
+                "พ.ค", "มิ.ย", "ก.ค", "ส.ค",
+                "ก.ย", "ต.ค", "พ.ย", "ธ.ค"};
+
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+
+        int year=0,month=0,day=0;
+        try {
+            Date date = df.parse(strDate);
+            Calendar c = Calendar.getInstance();
+            c.setTime(date);
+
+            year = c.get(Calendar.YEAR);
+            month = c.get(Calendar.MONTH);
+            day = c.get(Calendar.DATE);
+
+        } catch (ParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        return String.format("%s %s %s", day,Months[month],year+543);
+    }
+
 
 }

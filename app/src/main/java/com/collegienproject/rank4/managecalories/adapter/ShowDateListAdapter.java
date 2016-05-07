@@ -21,6 +21,7 @@ public class ShowDateListAdapter extends BaseAdapter{
 
     List<DateDao> DateList = new ArrayList<DateDao>();
 
+
     int lastPosition = -1;
     public ShowDateListAdapter(List<DateDao> dateList, FragmentActivity activity) {
         this.DateList = dateList;
@@ -54,7 +55,7 @@ public class ShowDateListAdapter extends BaseAdapter{
 
         DateDao date = (DateDao) getItem(position);
         item.setIdDate(String.valueOf(date.getDate_id()));
-        item.setDateText(String.valueOf(date.getDatetime()));
+        item.setDateText(date.getDatetime());
 
         if(position> lastPosition) {
             Animation anim = AnimationUtils.loadAnimation(parent.getContext(),

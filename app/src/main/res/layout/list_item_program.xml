@@ -32,21 +32,12 @@
                 android:background="#77FFFFFF"
                 android:paddingRight="24dp">
                 
-                <ImageView
-                    android:id="@+id/item_listview_authorIcon"
-                    android:layout_width="50dip"
-                    android:layout_height="50dip"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="5dp"
-                    android:padding="3dp"
-                    android:scaleType="fitStart"
-                    android:src="@drawable/logo"/>
+
 
                 <TextView
                     android:id="@+id/tvProgramName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/item_listview_authorIcon"
                     android:gravity="center_vertical"
                     android:text="วิ่ง 20 km"
                     android:textColor="#000000"
@@ -58,11 +49,9 @@
                     android:id="@+id/tvDate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/tvProgramName"
                     android:layout_marginBottom="8dp"
-                    android:layout_toRightOf="@+id/item_listview_authorIcon"
-                    android:gravity="center_vertical"
-                    android:paddingLeft="4dip"
+                    android:paddingLeft="10dp"
+                    android:layout_below="@+id/tvProgramName"
                     android:text="Date.."
                     android:textColor="#FFA500"
                     android:paddingRight="10dp"
@@ -70,6 +59,7 @@
                     android:paddingTop="5dp"
                     android:textSize="18sp"
                     android:textStyle="bold"/>
+
 
 
             </RelativeLayout>

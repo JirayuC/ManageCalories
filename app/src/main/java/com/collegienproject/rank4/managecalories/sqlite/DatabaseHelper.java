@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.collegienproject.rank4.managecalories.dao.ActivityDao;
 import com.collegienproject.rank4.managecalories.dao.DateDao;
 import com.collegienproject.rank4.managecalories.dao.ProgramDao;
 import com.collegienproject.rank4.managecalories.dao.UserDao;
@@ -122,6 +123,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             db.execSQL(CREATE_PROGRAM_TABLE);
             db.execSQL(CREATE_DATESET_TABLE);
             db.execSQL(CREATE_DATEFORPROGRAM_TABLE);
+            db.execSQL(CREATE_ACTIVITY_TABLE);
+            db.execSQL(CREATE_DATEFORACTIVITY_TABLE);
             Log.d("Database operations","Table created...");
         }catch (SQLException e){
             e.printStackTrace();
@@ -236,6 +239,76 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return listPrg;
 
     }
+    public List<DateDao> getListOfProgramDAO(int index){
+        List<DateDao> listDate = new ArrayList<DateDao>();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String selectQuery =  "SELECT * " +
+                " FROM " + TABLE_DATEFORPROGRAM +
+                " left join "+ TABLE_DATESET +
+                " on " + COLUMN_DATEDFPID +"="+ COLUMN_DATEID +
+                " WHERE " + COLUMN_PROGRAMDFPID +
+                "=?" ;
+        String[] arg = {Float.toString(index+1)};
+        Log.e("-*----------*------->",selectQuery);
+        Cursor cursor = db.rawQuery(selectQuery, arg);
+        // looping through all rows and adding to list
+        DateFormat df = DateFormat.getDateInstance(DateFormat.FULL, Locale.US);
+        if (cursor!=null && cursor.moveToFirst()) {
+            do {
+                DateDao dat = new DateDao();
+                dat.setDate_id(cursor.getInt(cursor.getColumnIndex(COLUMN_DATEID)));
+                Date date = null;
+                try {
+                    date = df.parse(cursor.getString(cursor.getColumnIndex(COLUMN_DATETIME)));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                dat.setDatetime(date);
+                listDate.add(dat);
+
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+        return listDate;
+    }
+    public ProgramDao ModelProgram(int position) {
+
+        //Open connection to read only
+       // List<ProgramDao> listPrg = new ArrayList<ProgramDao>();
+        ProgramDao model = new ProgramDao();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String selectQuery =  "SELECT * " +
+                " FROM " + TABLE_PROGRAM +
+                " where " + COLUMN_PROGRAMID + "=?";
+
+        String[] args = {Float.toString(position)};
+        Cursor cursor = db.rawQuery(selectQuery, args);
+        // looping through all rows and adding to list
+        DateFormat df = DateFormat.getDateInstance(DateFormat.FULL, Locale.US);
+        if (cursor!=null && cursor.moveToFirst()) {
+            do {
+                model.setProgram_name(cursor.getString(cursor.getColumnIndex(COLUMN_PROGRAMNAME)));
+                model.setProgram_id(cursor.getInt(cursor.getColumnIndex(COLUMN_PROGRAMID)));
+                Date date = null;
+                try {
+                    date = df.parse(cursor.getString(cursor.getColumnIndex(COLUMN_STARTDATE)));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                model.setStart_date(date);
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+        return model;
+
+    }
+
 
     public int addDate(DateDao date){
 
@@ -313,4 +386,43 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return listDate;
 
     }
+
+    public DateDao GetDateByProgram(int index_program, int position){
+        return null;
+    }
+
+
+    public int addActivity(ActivityDao act , int[] date_pri){
+        int activity_pri = -1;
+        SQLiteDatabase db = this.getWritableDatabase();
+        try {
+            ContentValues cv = new ContentValues();
+            cv.put(COLUMN_ACTIVITYNAME,act.getActivity_name());
+
+
+            activity_pri = (int) db.insert(TABLE_ACTIVITY, COLUMN_ACTIVITYID,cv);
+            for(int i : date_pri){
+                createDateAct(activity_pri,i);
+            }
+
+            Log.d("Database operation", "One Row Inserted...");
+
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return activity_pri;
+    }
+
+    private int createDateAct(long Activity_id, long date_id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_DATEIDGROUP,date_id);
+        values.put(COLUMN_ACTIVITYIDGROUP,Activity_id);
+        int id = (int)db.insert(TABLE_DATEFORACTIVITY, null, values);
+
+        return id;
+
+    }
+
 }

@@ -20,7 +20,7 @@ import android.widget.NumberPicker;
 import android.widget.Toast;
 
 import com.collegienproject.rank4.managecalories.R;
-import com.collegienproject.rank4.managecalories.activity.ActivityInfoActivity;
+import com.collegienproject.rank4.managecalories.activity.MainActivity;
 import com.collegienproject.rank4.managecalories.dao.DateDao;
 import com.collegienproject.rank4.managecalories.dao.ProgramDao;
 import com.collegienproject.rank4.managecalories.sqlite.DatabaseHelper;
@@ -183,7 +183,6 @@ public class ProgramInfoFragment extends Fragment implements NumberPicker.OnValu
                     }
 
 
-
                     db = new DatabaseHelper(getActivity());
 
                     List<Integer> date_pri = new ArrayList<Integer>();
@@ -227,7 +226,7 @@ public class ProgramInfoFragment extends Fragment implements NumberPicker.OnValu
                 } finally {
                     if(didItWork){
                         Toast.makeText(getContext(), "created Program Successful", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(getActivity(),ActivityInfoActivity.class);
+                        Intent intent = new Intent(getActivity(),MainActivity.class);
                         startActivity(intent);
                         getActivity().finish();
 

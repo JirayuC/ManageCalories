@@ -11,8 +11,6 @@ import com.collegienproject.rank4.managecalories.R;
 import com.collegienproject.rank4.managecalories.dao.ProgramDao;
 import com.collegienproject.rank4.managecalories.fragment.MainFragment;
 
-import java.util.ArrayList;
-
 public class MainActivity extends AppCompatActivity
         implements MainFragment.FragmentListener {
 
@@ -45,6 +43,7 @@ public class MainActivity extends AppCompatActivity
 
         toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        toolbar.setTitle("แผนออกกำลังกายของฉัน");
 
     }
 
@@ -71,8 +70,11 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onProgramItemClicked(ArrayList<ProgramDao> list) {
+    public void onProgramItemClicked(ProgramDao model) {
+
         Intent intent = new Intent(MainActivity.this, ActivityInfoActivity.class);
+        intent.putExtra("model",model);
         startActivity(intent);
+        finish();
     }
 }

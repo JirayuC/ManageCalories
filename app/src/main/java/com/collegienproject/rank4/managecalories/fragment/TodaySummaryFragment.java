@@ -72,6 +72,7 @@ public class TodaySummaryFragment extends Fragment {
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         // Save Instance (Fragment level's variables) State here
+
     }
 
     @SuppressWarnings("UnusedParameters")

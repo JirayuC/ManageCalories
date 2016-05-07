@@ -3,11 +3,8 @@ package com.collegienproject.rank4.managecalories.adapter;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.BaseAdapter;
 
-import com.collegienproject.rank4.managecalories.R;
 import com.collegienproject.rank4.managecalories.dao.ProgramDao;
 import com.collegienproject.rank4.managecalories.view.ProgramListItem;
 
@@ -45,7 +42,7 @@ public class ProgramListAdapter extends BaseAdapter {
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return  0;
     }
 
     @Override
@@ -58,15 +55,15 @@ public class ProgramListAdapter extends BaseAdapter {
 
 
         ProgramDao program = (ProgramDao) getItem(position);
-        item.setDateText(String.valueOf(program.getStart_date()));
+        item.setDateText(program.getStart_date());
         item.setNameText(program.getProgram_name());
 
-        if(position> lastPosition) {
+        /*if(position> lastPosition) {
             Animation anim = AnimationUtils.loadAnimation(parent.getContext(),
                     R.anim.up_from_bottom);
             item.startAnimation(anim);
             lastPosition = position;
-        }
+        }*/
         return item;
     }
 

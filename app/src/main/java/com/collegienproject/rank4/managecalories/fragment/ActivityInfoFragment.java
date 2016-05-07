@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.collegienproject.rank4.managecalories.R;
+import com.collegienproject.rank4.managecalories.dao.ProgramDao;
 import com.inthecheesefactory.thecheeselibrary.view.SlidingTabLayout;
 
 
@@ -19,6 +20,7 @@ import com.inthecheesefactory.thecheeselibrary.view.SlidingTabLayout;
 public class ActivityInfoFragment extends Fragment {
 
     ViewPager viewPager;
+    ProgramDao   model;
     private SlidingTabLayout slidingTabLayout;
 
 
@@ -26,9 +28,10 @@ public class ActivityInfoFragment extends Fragment {
         super();
     }
 
-    public static ActivityInfoFragment newInstance() {
+    public static ActivityInfoFragment newInstance(ProgramDao model ) {
         ActivityInfoFragment fragment = new ActivityInfoFragment();
         Bundle args = new Bundle();
+        args.putParcelable("model",model);
         fragment.setArguments(args);
         return fragment;
     }
@@ -37,7 +40,7 @@ public class ActivityInfoFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         init(savedInstanceState);
-
+         model = getArguments().getParcelable("model");
         if (savedInstanceState != null)
             onRestoreInstanceState(savedInstanceState);
     }
@@ -70,7 +73,7 @@ public class ActivityInfoFragment extends Fragment {
                     case 0:
                         return TodaySummaryFragment.newInstance();
                     case 1:
-                        return PlanDateListFragment.newInstance();
+                        return PlanDateListFragment.newInstance(model);
                     case 2:
                         return StatisticsFragment.newInstance();
                     default:
@@ -116,5 +119,6 @@ public class ActivityInfoFragment extends Fragment {
     private void onRestoreInstanceState(Bundle savedInstanceState) {
         // Restore Instance (Fragment level's variables) State here
     }
+
 
 }

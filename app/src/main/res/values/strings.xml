@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">โปรแกรมการออกกำลังกายของฉัน</string>
+    <string name="app_name">Act Burn</string>
     <string name="open_drawer">Open Menu</string>
     <string name="close_drawer">Close Menu</string>
     <string name="title_activity_loginn">Sign in</string>

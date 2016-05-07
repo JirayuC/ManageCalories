@@ -1,11 +1,14 @@
 package com.collegienproject.rank4.managecalories.dao;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.Date;
 
 /**
  * Created by JirayuPC on 08 เม.ย. 2559.
  */
-public class ProgramDao{
+public class ProgramDao implements Parcelable {
     private int Program_id;
     private String Program_name;
     private Date Start_date;
@@ -25,6 +28,25 @@ public class ProgramDao{
         Week_num = week_num;
         Goal = goal;
     }
+
+    protected ProgramDao(Parcel in) {
+        Program_id = in.readInt();
+        Program_name = in.readString();
+        Week_num = in.readInt();
+        Goal = in.readInt();
+    }
+
+    public static final Creator<ProgramDao> CREATOR = new Creator<ProgramDao>() {
+        @Override
+        public ProgramDao createFromParcel(Parcel in) {
+            return new ProgramDao(in);
+        }
+
+        @Override
+        public ProgramDao[] newArray(int size) {
+            return new ProgramDao[size];
+        }
+    };
 
     public Date getStart_date() {
         return Start_date;
@@ -72,6 +94,20 @@ public class ProgramDao{
 
     public void setProgram_name(String program_name) {
         Program_name = program_name;
+    }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(Program_id);
+        dest.writeString(Program_name);
+        dest.writeInt(Week_num);
+        dest.writeInt(Goal);
     }
 
 

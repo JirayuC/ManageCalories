@@ -29,7 +29,7 @@ public class MainFragment extends Fragment {
     DatabaseHelper myList ;
 
     public interface FragmentListener{
-        void onProgramItemClicked(ArrayList<ProgramDao> list);
+        void onProgramItemClicked(ProgramDao model);
     }
 
 
@@ -82,22 +82,20 @@ public class MainFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                ArrayList<ProgramDao> list = (ArrayList<ProgramDao>) myList.getProgramList();
-                FragmentListener listener = (FragmentListener) getActivity();
-                listener.onProgramItemClicked(list);
 
+                ProgramDao model = myList.ModelProgram(position);
+                FragmentListener listener = (FragmentListener) getActivity();
+                listener.onProgramItemClicked(model);
             }
         });
 
 
-        FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.addButton);
+                FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.addButton);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), ProgramInfoActivity.class);
                 startActivity(intent);
-
-
 
             }
         });
