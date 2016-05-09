@@ -71,9 +71,9 @@ public class DateListItem extends BaseCustomViewGroup {
         // findViewById here
     }
 
-    public void setColorToday(){
+   /* public void setColorToday(){
         lnl_row.setBackgroundResource(R.color.today_color);
-    }
+    }*/
 
     private void initWithAttrs(AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         /*
@@ -112,9 +112,9 @@ public class DateListItem extends BaseCustomViewGroup {
     }
 
 
-    public void setIdDate(String text){
+    /*public void setIdDate(String text){
         tvdateid.setText(text);
-    }
+    } */
 
     public void setDateText(Date date){
         DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");

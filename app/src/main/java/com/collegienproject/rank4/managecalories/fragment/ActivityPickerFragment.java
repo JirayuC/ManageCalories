@@ -27,32 +27,18 @@ public class ActivityPickerFragment extends Fragment {
     DatabaseHelper db;
     Context context;
 
-    float[] met = {
-            6f, 3.5f, 4.5f,
-            5.5f, 11.1f, 7.2f,
-            3f, 13.4f, 7f,
-            11.5f, 7f, 8f,
-            12.9f, 6.5f, 5.1f,
-            7f, 10f, 4f,
-            12.6f, 10.3f, 4.5f,
-            9.02f, 4.7f, 6.5f,
-            4.5f, 13.3f, 4.1f,
-            15f, 6f, 3.4f,
-            10.9f, 3.2f ,12.9f
-
-    };
     int[] imageId = {
-            R.drawable.playing_football, R.drawable.hurdles, R.drawable.archery,
-            R.drawable.javelin, R.drawable.american_football, R.drawable.long_jumping,
-            R.drawable.baseball_shot, R.drawable.mountain_climbing, R.drawable.basketball,
-            R.drawable.playing_rugby, R.drawable.beach_volleyball, R.drawable.playing_tennis,
-            R.drawable.cricket_catch, R.drawable.playing_volleyball, R.drawable.cycling,
-            R.drawable.river_rafting, R.drawable.fencing, R.drawable.running_marathon,
-            R.drawable.golfing, R.drawable.shot_put, R.drawable.high_jump,
-            R.drawable.skateboarding, R.drawable.shot_put, R.drawable.high_jump,
-            R.drawable.skateboarding, R.drawable.shot_put, R.drawable.high_jump,
-            R.drawable.skateboarding, R.drawable.shot_put, R.drawable.high_jump,
-            R.drawable.skateboarding, R.drawable.shot_put
+            R.drawable.ic_aerobic, R.drawable.ic_badminton2, R.drawable.ic_badminton,
+            R.drawable.ic_baseball, R.drawable.ic_basketball, R.drawable.ic_biker,
+            R.drawable.ic_bowling, R.drawable.ic_boxer, R.drawable.ic_canoe,
+            R.drawable.ic_cross_country_skiing, R.drawable.ic_man_in_hike, R.drawable.ic_fencing,
+            R.drawable.ic_ice_skating, R.drawable.ic_american_football, R.drawable.ic_golf,
+            R.drawable.ic_gymnast, R.drawable.ic_handball, R.drawable.ic_home_calisthenics,
+            R.drawable.ic_rugby, R.drawable.ic_football, R.drawable.ic_softball,
+            R.drawable.ic_swimming, R.drawable.ic_pingpong, R.drawable.ic_tennis_singer,
+            R.drawable.ic_tennis, R.drawable.ic_marathon, R.drawable.high_jump,
+            R.drawable.long_jumping, R.drawable.ic_volleyball, R.drawable.ic_walking,
+            R.drawable.ic_weight_tainning, R.drawable.ic_yoga, R.drawable.ic_running
     };
 
     String[] web = {
@@ -128,6 +114,7 @@ public class ActivityPickerFragment extends Fragment {
                 db.addDateForActivity(Date_id,position);
                 Log.d("Biw","Date_id = "+Date_id+" , Activity_id = "+position);
                 Toast.makeText(context,"Date_id = "+Date_id+" , Activity_id = "+position,Toast.LENGTH_SHORT).show();
+                db.closeDB();
                 getActivity().finish();
             }
         });

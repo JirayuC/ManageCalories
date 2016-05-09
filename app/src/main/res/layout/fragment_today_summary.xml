@@ -10,7 +10,7 @@
         android:id="@+id/card_view"
         android:layout_gravity="center"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         card_view:cardCornerRadius="4dp"
         card_view:cardElevation="2dp"
         android:layout_marginRight="5dp"
@@ -30,48 +30,10 @@
 
 
 
-                <TextView
-                    android:id="@+id/tvProgramName"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="เหลือการออกกำลังกาย 20 วัน"
-                    android:layout_below="@+id/dateNext"
-                    android:layout_marginTop="20dp"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="19sp"
-                    android:textStyle="bold"/>
-
-                <TextView
-                    android:id="@+id/tvId"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/tvProgramName"
-                    android:layout_marginBottom="8dp"
-                    android:gravity="center_horizontal"
-                    android:paddingLeft="4dip"
-                    android:text="อ. 1 เม.ย. - จ. 20 เม.ย."
-                    android:textColor="@color/jet"
-                    android:textSize="13sp"
-                    android:textStyle="bold"/>
-
-                <TextView
-                    android:id="@+id/tvActivity"
-                    android:layout_marginTop="50dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/tvId"
-                    android:gravity="center_horizontal"
-                    android:text="เล่นฟุตบอล"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="25sp"
-                    android:textStyle="bold"/>
-
                 <android.support.v7.widget.AppCompatButton
                     android:id="@+id/btn_savePlay"
                     android:background="#FFA500"
                     android:layout_width="wrap_content"
-                    android:layout_below="@id/tvActivity"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"
                     android:layout_marginBottom="24dp"
@@ -81,30 +43,7 @@
                     android:gravity="center_horizontal"
                     android:layout_centerHorizontal="true"/>
 
-                <TextView
-                    android:id="@+id/tvNext"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/btn_signup"
-                    android:layout_marginLeft="10dp"
-                    android:text="ออกกำลังกายถัดไป"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="15sp"
-                    android:textStyle="bold"/>
 
-                <TextView
-                    android:id="@+id/dateNext"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/tvNext"
-                    android:layout_marginBottom="8dp"
-                    android:layout_marginLeft="10dp"
-
-                    android:paddingLeft="4dip"
-                    android:text="จ. 2 เม.ย. - วิ่ง 3 km"
-                    android:textColor="@color/jet"
-                    android:textSize="13sp"
-                    android:textStyle="bold"/>
 
             </RelativeLayout>
 

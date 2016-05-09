@@ -12,8 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -25,7 +23,6 @@ import com.collegienproject.rank4.managecalories.dao.DateForActivity;
 import com.collegienproject.rank4.managecalories.sqlite.DatabaseHelper;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
 /**
@@ -135,7 +132,7 @@ public class CreateActFragment extends Fragment {
         Log.d("Biw","dateForActivities = "+dateForActivities.size());
         for (DateForActivity d : dateForActivities)
         {
-            Log.d("Biw",""+""+d.getDate_time()+" , "+d.getActivity_name());
+            //Log.d("Biw",""+""+d.getDate_time()+" , "+d.getActivity_name());
             stringArrayAdapter.add("["+d.getStatus()+"] , "+d.getDate_time()+" , "+d.getActivity_name());
         }
 

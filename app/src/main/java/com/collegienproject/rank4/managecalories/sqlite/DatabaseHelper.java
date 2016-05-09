@@ -2,14 +2,12 @@ package com.collegienproject.rank4.managecalories.sqlite;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import com.collegienproject.rank4.managecalories.R;
 import com.collegienproject.rank4.managecalories.dao.ActivityDao;
 import com.collegienproject.rank4.managecalories.dao.DateDao;
 import com.collegienproject.rank4.managecalories.dao.DateForActivity;
@@ -440,10 +438,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
         return listDate;
 
-    }
-
-    public DateDao GetDateByProgram(int index_program, int position) {
-        return null;
     }
 
 

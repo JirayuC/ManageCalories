@@ -103,6 +103,7 @@ public class ActivityInfoFragment extends Fragment {
 
         slidingTabLayout = (SlidingTabLayout) rootView.findViewById(R.id.slidingTabLayout);
         slidingTabLayout.setDistributeEvenly(true);
+        slidingTabLayout.setBackgroundColor(getContext().getResources().getColor(R.color.accent));
         slidingTabLayout.setViewPager(viewPager);
 
 

@@ -238,6 +238,8 @@ public class SignupFragment extends Fragment{
         String name = nameText.getText().toString();
         String email = emailText.getText().toString();
         String date = dateDialog.getText().toString();
+        String weight = weightNum.getText().toString();
+        String height = heightNum.getText().toString();
 
         if (name.isEmpty() || name.length() < 3) {
             nameText.setError("at least 3 characters");
@@ -259,6 +261,39 @@ public class SignupFragment extends Fragment{
         } else {
             dateDialog.setError(null);
         }
+
+        float valueW = 0;
+
+        try {
+            valueW = Float.parseFloat(weightNum.getText().toString());
+        }
+        catch(NumberFormatException ex) {
+            weightNum.setError("enter weight < 300kg please");
+        }
+
+        float valueH = 0;
+        try {
+            valueH = Float.parseFloat(heightNum.getText().toString());
+        }
+        catch(NumberFormatException ex) {
+            heightNum.setError("enter height < 300cm please");
+        }
+
+
+        if (weight.isEmpty()|| valueW > 300.1f ) {
+            weightNum.setError("enter weight < 300kg please");
+            valid = false;
+        } else {
+            weightNum.setError(null);
+        }
+
+        if (height.isEmpty()|| valueH > 300.1f ) {
+            heightNum.setError("enter height < 300cm please");
+            valid = false;
+        } else {
+            heightNum.setError(null);
+        }
+
 
 
         return valid;
