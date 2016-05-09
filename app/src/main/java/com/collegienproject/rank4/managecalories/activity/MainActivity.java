@@ -10,11 +10,14 @@ import android.view.MenuItem;
 import com.collegienproject.rank4.managecalories.R;
 import com.collegienproject.rank4.managecalories.dao.ProgramDao;
 import com.collegienproject.rank4.managecalories.fragment.MainFragment;
+import com.collegienproject.rank4.managecalories.sqlite.DatabaseHelper;
 
 public class MainActivity extends AppCompatActivity
         implements MainFragment.FragmentListener {
 
     android.support.v7.widget.Toolbar toolbar;
+
+    DatabaseHelper db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +26,8 @@ public class MainActivity extends AppCompatActivity
             //Fix screen orientation to Portrait
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }
+
+
         setContentView(R.layout.activity_main);
         initInstances();
 
@@ -30,6 +35,13 @@ public class MainActivity extends AppCompatActivity
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.contentContainer, MainFragment.newInstance())
                     .commit();
+        }
+
+        db = new DatabaseHelper(MainActivity.this);
+        if(!db.isAlreadyUser()){
+            Intent intent = new Intent(MainActivity.this,SignupActivity.class);
+            startActivity(intent);
+            finish();
         }
     }
 
@@ -59,7 +71,7 @@ public class MainActivity extends AppCompatActivity
             case R.id.action_settings:
                 return true;
             case R.id.btn_user_profile:
-                Intent intent = new Intent(this,SignupActivity.class);
+                Intent intent = new Intent(this,UpdateUserActivity.class);
                 startActivity(intent);
                 return true;
         }

@@ -1,27 +1,28 @@
 package com.collegienproject.rank4.managecalories.activity;
 
-import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.collegienproject.rank4.managecalories.R;
 import com.collegienproject.rank4.managecalories.fragment.SignupFragment;
+import com.collegienproject.rank4.managecalories.fragment.UpdateUserFragment;
 
-public class SignupActivity extends AppCompatActivity {
+public class UpdateUserActivity  extends AppCompatActivity {
 
     Toolbar toolbar;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_signup);
+        setContentView(R.layout.activity_update_user);
 
         initInstances();
         if(savedInstanceState == null){
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.contentContainer, SignupFragment.newInstance())
+                    .add(R.id.contentContainer, UpdateUserFragment.newInstance())
                     .commit();
         }
 
@@ -30,6 +31,8 @@ public class SignupActivity extends AppCompatActivity {
     private void initInstances() {
         toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override

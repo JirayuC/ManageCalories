@@ -7,11 +7,13 @@ import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.collegienproject.rank4.managecalories.R;
@@ -38,6 +40,7 @@ public class CaloriesCountFragment extends Fragment {
     Button startButton;
     Button pauseButton;
     Button stopButton;
+    Button btnManual;
     private long startTime = 0L;
     Handler myHandler = new Handler();
     long timeInMillies = 0L;
@@ -153,6 +156,7 @@ public class CaloriesCountFragment extends Fragment {
         startButton = (Button) rootView.findViewById(R.id.btnStart);
         pauseButton = (Button) rootView.findViewById(R.id.btnPause);
         stopButton = (Button) rootView.findViewById(R.id.btnStop);
+        btnManual = (Button) rootView.findViewById(R.id.btnManual);
 
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -183,9 +187,43 @@ public class CaloriesCountFragment extends Fragment {
             }
         });
 
+        btnManual.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                displayInputDialog();
+            }
+        });
 
+    }
 
+    private void displayInputDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Input calories.");
 
+        // Set up the input
+        final EditText input = new EditText(getActivity());
+        // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
+        input.setInputType(InputType.TYPE_CLASS_NUMBER);
+        builder.setView(input);
+
+            // Set up the buttons
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String cal = input.getText().toString();
+                db.activitySuccess(DFA_id, Float.parseFloat(cal));
+                dialog.dismiss();
+                getActivity().finish();
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.show();
     }
 
     private void displayDialog() {

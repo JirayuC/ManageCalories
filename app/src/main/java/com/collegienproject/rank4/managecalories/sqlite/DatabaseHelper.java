@@ -2,6 +2,7 @@ package com.collegienproject.rank4.managecalories.sqlite;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
@@ -19,6 +20,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -68,12 +70,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String TABLE_ACTIVITY = "Activity";
     public static final String COLUMN_ACTIVITYID = "Activity_id";
     public static final String COLUMN_ACTIVITYNAME = "Activity_name";
-public static final String COLUMN_ACTIVITYMET = "Activity_met";
+    public static final String COLUMN_ACTIVITYMET = "Activity_met";
 
 
     private static final String CREATE_USER_TABLE =
             "CREATE TABLE UserProfile(" +
-                    "User_email TEXT PRIMARY KEY NOT NULL," +
+                    "User_id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                    "User_email TEXT," +
                     "User_sex TEXT NOT NULL, " +
                     "User_name TEXT NOT NULL, " +
                     "User_weight REAL NOT NULL, " +
@@ -89,7 +92,7 @@ public static final String COLUMN_ACTIVITYMET = "Activity_met";
                     "Goal INTEGER);";
 
     private static final String CREATE_DATESET_TABLE =
-            "CREATE TABLE "+TABLE_DATESET+" (" +
+            "CREATE TABLE " + TABLE_DATESET + " (" +
                     "Date_id INTEGER PRIMARY KEY AUTOINCREMENT," +
                     "Date_time DATE," +
                     "Program_id INTEGER);";
@@ -103,7 +106,7 @@ public static final String COLUMN_ACTIVITYMET = "Activity_met";
     // "FOREIGN KEY(ProgramDFP_id)REFERENCES UserProgram(Program_id));";
 
     private static final String CREATE_DATEFORACTIVITY_TABLE =
-            "CREATE TABLE "+TABLE_DATEFORACTIVITY+" (" +
+            "CREATE TABLE " + TABLE_DATEFORACTIVITY + " (" +
                     "DFA_id INTEGER PRIMARY KEY AUTOINCREMENT," +
                     "Date_id INTEGER, " +
                     "Activity_id INTEGER," +
@@ -111,13 +114,13 @@ public static final String COLUMN_ACTIVITYMET = "Activity_met";
                     "Status INTEGER);";
 
     private static final String CREATE_ACTIVITY_TABLE =
-            "CREATE TABLE "+TABLE_ACTIVITY+" (" +
+            "CREATE TABLE " + TABLE_ACTIVITY + " (" +
                     "Activity_id INTEGER PRIMARY KEY AUTOINCREMENT," +
                     "Activity_name TEXT," +
                     "Activity_met FLOAT);";
 
 
-    public DatabaseHelper(Context context){
+    public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
@@ -150,7 +153,7 @@ public static final String COLUMN_ACTIVITYMET = "Activity_met";
             9.02f, 4.7f, 6.5f,
             4.5f, 13.3f, 4.1f,
             15f, 6f, 3.4f,
-            10.9f, 3.2f ,12.9f
+            10.9f, 3.2f, 12.9f
 
     };
 
@@ -166,16 +169,16 @@ public static final String COLUMN_ACTIVITYMET = "Activity_met";
             "Tennis Doubles", "Marathon", "High jump",
             "Long jump", "Volleyball", "Walking for exercise",
             "Weight training", "Yoga", "Running"
-    } ;
+    };
 
     private void initActivity(SQLiteDatabase db) {
 
-        for(int i =0;i<array_actiivty_name.length;i++) {
+        for (int i = 0; i < array_actiivty_name.length; i++) {
             ActivityDao activityDao = new ActivityDao();
-            activityDao.setActivity_id(i+1);
+            activityDao.setActivity_id(i + 1);
             activityDao.setActivity_name(array_actiivty_name[i]);
             activityDao.setActivity_met(met[i]);
-            addActivity(db,activityDao);
+            addActivity(db, activityDao);
         }
     }
 
@@ -211,7 +214,7 @@ public static final String COLUMN_ACTIVITYMET = "Activity_met";
     }
 
     public int updateUser(UserDao user) {
-        DateFormat df = new SimpleDateFormat("dd MMMM yyyy");
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COLUMN_USERNAME, user.getUser_name());
@@ -221,9 +224,9 @@ public static final String COLUMN_ACTIVITYMET = "Activity_met";
         values.put(COLUMN_USERHEIGHT, user.getUser_height());
         values.put(COLUMN_SEX, user.getUser_sex());
 
-        return db.update(TABLE_USERS, values, COLUMN_USEREMAIL + "=?",
-                new String[]{String.valueOf(user.getUser_email())});
-    }
+        return db.update(TABLE_USERS, values, "User_id" + " = ?",
+                new String[]{String.valueOf("1")});
+}
 
     public int addProgram(ProgramDao prg, int[] date_pri) {
         int program_pri = -1;
@@ -297,7 +300,7 @@ public static final String COLUMN_ACTIVITYMET = "Activity_met";
                 " on " + COLUMN_DATEDFPID + "=" + COLUMN_DATEID +
                 " WHERE " + COLUMN_PROGRAMDFPID +
                 "=?";
-        String[] arg = {Float.toString(index + 1)};
+        String[] arg = {Float.toString(index)};
         Log.e("-*----------*------->", selectQuery);
         Cursor cursor = db.rawQuery(selectQuery, arg);
         // looping through all rows and adding to list
@@ -324,6 +327,8 @@ public static final String COLUMN_ACTIVITYMET = "Activity_met";
     }
 
     public ProgramDao ModelProgram(int position) {
+
+        position = position + 1;
 
         //Open connection to read only
         // List<ProgramDao> listPrg = new ArrayList<ProgramDao>();
@@ -361,7 +366,7 @@ public static final String COLUMN_ACTIVITYMET = "Activity_met";
     }
 
 
-    public int addDate(DateDao date , int Program_id) {
+    public int addDate(DateDao date, int Program_id) {
 
         int date_pri = -1;
         SQLiteDatabase db = this.getWritableDatabase();
@@ -442,7 +447,7 @@ public static final String COLUMN_ACTIVITYMET = "Activity_met";
     }
 
 
-    public int addActivity(SQLiteDatabase db,ActivityDao act) {
+    public int addActivity(SQLiteDatabase db, ActivityDao act) {
         int activity_pri = -1;
 
         try {
@@ -499,12 +504,12 @@ public static final String COLUMN_ACTIVITYMET = "Activity_met";
         List<DateForActivity> listPrg = new ArrayList<DateForActivity>();
         SQLiteDatabase db = this.getReadableDatabase();
 
-        String selectQuery = "SELECT DFA.DFA_id , DFA.Status , A.* , D.*"+
-                " FROM " + TABLE_DATEFORACTIVITY +" DFA , " +TABLE_ACTIVITY+" A , "+TABLE_DATESET+" D "+
-                " WHERE DFA.Date_id = D.Date_id AND DFA.Activity_id = A.Activity_id AND DFA.Date_id = " +Date_id+
+        String selectQuery = "SELECT DFA.DFA_id , DFA.Status , A.* , D.*" +
+                " FROM " + TABLE_DATEFORACTIVITY + " DFA , " + TABLE_ACTIVITY + " A , " + TABLE_DATESET + " D " +
+                " WHERE DFA.Date_id = D.Date_id AND DFA.Activity_id = A.Activity_id AND DFA.Date_id = " + Date_id +
                 " ";
 
-        Log.d("Biw","selectQuery = "+selectQuery);
+        Log.d("Biw", "selectQuery = " + selectQuery);
 
         Cursor cursor = db.rawQuery(selectQuery, null);
         // looping through all rows and adding to list
@@ -520,7 +525,7 @@ public static final String COLUMN_ACTIVITYMET = "Activity_met";
                 prg.setMet(cursor.getFloat(cursor.getColumnIndex("Activity_met")));
                 prg.setStatus(cursor.getInt(cursor.getColumnIndex("Status")));
 
-                Log.d("Biw","list Added. ");
+                Log.d("Biw", "list Added. ");
                 listPrg.add(prg);
             } while (cursor.moveToNext());
         }
@@ -535,9 +540,9 @@ public static final String COLUMN_ACTIVITYMET = "Activity_met";
         //Open connection to read only
         SQLiteDatabase db = this.getReadableDatabase();
 
-        String selectQuery = "SELECT * FROM "+TABLE_USERS;
+        String selectQuery = "SELECT * FROM " + TABLE_USERS;
 
-        Log.d("Biw","selectQuery = "+selectQuery);
+        Log.d("Biw", "selectQuery = " + selectQuery);
 
         Cursor cursor = db.rawQuery(selectQuery, null);
         // looping through all rows and adding to list
@@ -550,7 +555,7 @@ public static final String COLUMN_ACTIVITYMET = "Activity_met";
 
                 // set birth date.
                 String birth = cursor.getString(cursor.getColumnIndex(COLUMN_BIRTHDATE));
-                Log.d("Biw","Birth = "+birth);
+                Log.d("Biw", "Birth = " + birth);
                 try {
                     Date date = df.parse(birth);
                     userDao.setUser_birthdate(date);
@@ -570,17 +575,17 @@ public static final String COLUMN_ACTIVITYMET = "Activity_met";
         return userDao;
     }
 
-    public int activitySuccess(int DFA_id,float cal) {
+    public int activitySuccess(int DFA_id, float cal) {
 
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("CaloriesReal", cal);
         values.put("Status", 1);
 
-        return  db.update(TABLE_DATEFORACTIVITY, values, "DFA_id="+DFA_id, null);
+        return db.update(TABLE_DATEFORACTIVITY, values, "DFA_id=" + DFA_id, null);
     }
 
-    public int getDateForActivityID(Date date,int Program_id) {
+    public int getDateForActivityID(Date date, int Program_id) {
 
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         String my_date = df.format(date);
@@ -588,12 +593,12 @@ public static final String COLUMN_ACTIVITYMET = "Activity_met";
         //Open connection to read only
         SQLiteDatabase db = this.getReadableDatabase();
 
-        String selectQuery = "SELECT Date_id "+
+        String selectQuery = "SELECT Date_id " +
                 " FROM " + TABLE_DATESET +
-                " WHERE Date_time = '" +my_date+"' AND Program_id = "+Program_id+
+                " WHERE Date_time = '" + my_date + "' AND Program_id = " + Program_id +
                 " ";
 
-        Log.d("Biw","selectQuery = "+selectQuery);
+        Log.d("Biw", "selectQuery = " + selectQuery);
 
         Cursor cursor = db.rawQuery(selectQuery, null);
 
@@ -616,14 +621,14 @@ public static final String COLUMN_ACTIVITYMET = "Activity_met";
         //Open connection to read only
         SQLiteDatabase db = this.getReadableDatabase();
 
-        String selectQuery = "SELECT MAX("+COLUMN_PROGRAMID+") AS max"+
-                " FROM "+TABLE_PROGRAM;
+        String selectQuery = "SELECT MAX(" + COLUMN_PROGRAMID + ") AS max" +
+                " FROM " + TABLE_PROGRAM;
 
-        Log.d("Biw","selectQuery = "+selectQuery);
+        Log.d("Biw", "selectQuery = " + selectQuery);
 
         Cursor cursor = db.rawQuery(selectQuery, null);
 
-        int max =1;
+        int max = 1;
 
         if (cursor != null && cursor.moveToFirst()) {
             do {
@@ -636,5 +641,203 @@ public static final String COLUMN_ACTIVITYMET = "Activity_met";
         return max;
     }
 
+    public float getStatisticCal() {
+        //Open connection to read only
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String selectQuery = "SELECT Goal - (SELECT SUM(CaloriesReal) FROM " + TABLE_DATEFORACTIVITY + ") AS cal  FROM " + TABLE_PROGRAM + "";
+
+        Log.d("Biw", "selectQuery = " + selectQuery);
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        float cal = 0;
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                cal = cursor.getFloat(cursor.getColumnIndex("cal"));
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+        return cal;
+    }
+
+    public float getAVGGoal(SQLiteDatabase db, int Program_id) {
+        //Open connection to read only
+
+        String selectQuery = "SELECT Goal / (SELECT COUNT(*) FROM  " + TABLE_DATESET + " D WHERE D.Program_id = P.Program_id ) AS avg_goal FROM " + TABLE_PROGRAM +
+                " P WHERE Program_id = " + Program_id;
+
+        Log.d("Biw", "selectQuery = " + selectQuery);
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        float cal = 0;
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                cal = cursor.getFloat(cursor.getColumnIndex("avg_goal"));
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        return cal;
+    }
+
+    public int getCountSuccessDate(int Program_id) {
+        //Open connection to read only
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        float avg_goal = getAVGGoal(db, Program_id);
+        Log.d("Biw", "AVG GOAL = " + avg_goal);
+        int count_success = 0;
+        String selectQuery = "SELECT SUM(CaloriesReal) AS cal FROM " + TABLE_DATEFORACTIVITY + " GROUP BY Date_id";
+
+        Log.d("Biw", "selectQuery = " + selectQuery);
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        float cal = 0;
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                cal = cursor.getFloat(cursor.getColumnIndex("cal"));
+                if (cal >= avg_goal) {
+                    count_success++;
+                }
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+        return count_success;
+    }
+
+    public int getCountDate(int Program_id) {
+        //Open connection to read only
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        int count = 0;
+        String selectQuery = "SELECT COUNT(*) as count FROM " + TABLE_DATESET + " WHERE Program_id = " + Program_id;
+
+        Log.d("Biw", "selectQuery = " + selectQuery);
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                count = cursor.getInt(cursor.getColumnIndex("count"));
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+        return count;
+    }
+
+    public String getDateCurrent() {
+        Calendar cal = Calendar.getInstance();
+        //cal.add(Calendar.DATE, 1);
+        SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+        return format1.format(cal.getTime());
+    }
+
+
+    public int getCountMissDate(int Program_id) {
+        //Open connection to read only
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String date_today = getDateCurrent();
+
+        int count_miss = 0;
+
+        // find date_id for today.
+        String selectQuery = "SELECT Date_id FROM " + TABLE_DATESET + " WHERE Program_id = " + Program_id +" AND Date_time = '"+date_today+"'";
+
+        Log.d("Biw", "selectQuery = " + selectQuery);
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        int date_id = 0;
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                date_id = cursor.getInt(cursor.getColumnIndex("Date_id"));
+            } while (cursor.moveToNext());
+        }
+
+
+        Log.d("Biw", "today date_id = " + date_id);
+        // find date less than date_id in dataset.
+        selectQuery = "SELECT Date_id FROM " + TABLE_DATESET + " WHERE Program_id = " + Program_id +" AND Date_id <= "+date_id;
+
+        Log.d("Biw", "selectQuery = " + selectQuery);
+        Cursor cursor2 = db.rawQuery(selectQuery, null);
+
+
+        if (cursor2 != null && cursor2.moveToFirst()) {
+            do {
+               int date_id_2 = cursor2.getInt(cursor2.getColumnIndex("Date_id"));
+
+                //
+                selectQuery = "SELECT IFNULL(SUM(CaloriesReal),0) As cal FROM " + TABLE_DATEFORACTIVITY + " WHERE Date_id = " + date_id_2;
+
+                Log.d("Biw", "selectQuery = " + selectQuery);
+                Cursor cursor3 = db.rawQuery(selectQuery, null);
+
+                if (cursor3 != null && cursor3.moveToFirst()) {
+                    do {
+                        float cal = cursor3.getInt(cursor3.getColumnIndex("cal"));
+                        if(cal <= 0){
+                            count_miss++;
+                        }
+                    } while (cursor3.moveToNext());
+                }
+
+            } while (cursor2.moveToNext());
+        }
+
+        // cal
+
+
+        cursor.close();
+        db.close();
+        return count_miss;
+    }
+
+    public float getGoalCal(int Program_id) {
+        //Open connection to read only
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String selectQuery = "SELECT Goal FROM " + TABLE_PROGRAM + " WHERE Program_id = "+Program_id;
+
+        Log.d("Biw", "selectQuery = " + selectQuery);
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        float cal = 0;
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                cal = cursor.getFloat(cursor.getColumnIndex("Goal"));
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+        return cal;
+    }
+
+    public boolean isAlreadyUser() {
+        //Open connection to read only
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String selectQuery = "SELECT COUNT(*) as count FROM "+TABLE_USERS;
+
+        Log.d("Biw", "selectQuery = " + selectQuery);
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        float cal = 0;
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                cal = cursor.getFloat(cursor.getColumnIndex("count"));
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+        return cal > 0;
+    }
 
 }

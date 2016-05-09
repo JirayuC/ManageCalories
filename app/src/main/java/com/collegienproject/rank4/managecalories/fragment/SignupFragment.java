@@ -2,6 +2,7 @@ package com.collegienproject.rank4.managecalories.fragment;
 
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -17,6 +18,7 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.collegienproject.rank4.managecalories.R;
+import com.collegienproject.rank4.managecalories.activity.MainActivity;
 import com.collegienproject.rank4.managecalories.dao.UserDao;
 import com.collegienproject.rank4.managecalories.sqlite.DatabaseHelper;
 
@@ -166,7 +168,7 @@ public class SignupFragment extends Fragment{
                     float heightCon = Float.parseFloat(height);
                     user.setUser_height(heightCon);
 
-                    DateFormat df = new SimpleDateFormat("dd MMMM yyyy");
+                    DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
                     try {
                         Date date1 = df.parse(date);
                         user.setUser_birthdate(date1);
@@ -175,7 +177,6 @@ public class SignupFragment extends Fragment{
                     }
 
                     db.addUser(user);
-
                     db.closeDB();
 
 
@@ -193,6 +194,7 @@ public class SignupFragment extends Fragment{
                                         onSignupSuccess();
                                         // onSignupFailed();
                                         progressDialog.dismiss();
+
                                     }
                                 }, 3000);
                     }
@@ -216,6 +218,9 @@ public class SignupFragment extends Fragment{
         signupButton.setEnabled(true);
 
         Toast.makeText(getContext(), "Account Successfully Created ", Toast.LENGTH_LONG).show();
+        Intent intent = new Intent(getActivity(),MainActivity.class);
+        startActivity(intent);
+        getActivity().finish();
     }
 
     private void onSignupFailed() {
@@ -281,11 +286,14 @@ public class SignupFragment extends Fragment{
     };
 
 
-    private void updateLabel() {
+    String mydate;
+    private void updateLabel()
 
-        String myFormat = "dd MMMM yyyy"; //In which you need put here
+    {
+
+        String myFormat = "yyyy-MM-dd"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-
+//mydate = myCalendar.ge
         dateDialog.setText(sdf.format(myCalendar.getTime()));
     }
 

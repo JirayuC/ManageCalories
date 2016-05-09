@@ -75,7 +75,7 @@ public class ActivityInfoFragment extends Fragment {
                     case 1:
                         return PlanDateListFragment.newInstance(model);
                     case 2:
-                        return StatisticsFragment.newInstance();
+                        return StatisticsFragment.newInstance(model);
                     default:
                         return null;
                 }

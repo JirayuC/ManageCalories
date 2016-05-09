@@ -16,13 +16,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".activity.MainActivity"></activity>
         <activity
             android:name=".activity.SignupActivity"
             android:theme="@style/AppTheme.Dark"
@@ -43,7 +37,15 @@
             android:theme="@style/AppThemeWithActionBar" />
         <activity
             android:name=".activity.ActivityPickerActivity"
-            android:theme="@style/AppThemeWithActionBar"/>
+            android:theme="@style/AppThemeWithActionBar" />
+        <activity android:name=".FirstActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".activity.UpdateUserActivity"></activity>
     </application>
 
 </manifest>
