@@ -3,11 +3,8 @@ package com.collegienproject.rank4.managecalories.adapter;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.BaseAdapter;
 
-import com.collegienproject.rank4.managecalories.R;
 import com.collegienproject.rank4.managecalories.dao.ActivityDao;
 import com.collegienproject.rank4.managecalories.view.ActPickListItem;
 
@@ -29,8 +26,8 @@ public class ActPickerListAdapter extends BaseAdapter {
 
 
     public ActPickerListAdapter(List<ActivityDao> detail, Context context, List<ActivityDao> imageId) {
-        this.ActList = imageId;
         this.ActList = detail;
+        this.ActList = imageId;
 
     }
 
@@ -66,12 +63,12 @@ public class ActPickerListAdapter extends BaseAdapter {
         item.setActText(act.getActivity_name());
 
 
-        if(position> lastPosition) {
+        /*if(position> lastPosition) {
             Animation anim = AnimationUtils.loadAnimation(parent.getContext(),
                     R.anim.up_from_bottom);
             item.startAnimation(anim);
             lastPosition = position;
-        }
+        }*/
         return item;
     }
 

@@ -122,8 +122,12 @@ public class DateListItem extends BaseCustomViewGroup {
         tvdatetime.setText(dateThai(format));
     }
 
-    public static String dateThai(String strDate)
-    {
+    public static String dateThai(String strDate) {
+
+        String Day[] = {
+                "วันอาทิตย์ที่", "วันจันทร์ที่", "วันอังคารที่",
+                "วันพุธที่", "วันพฤหัสบดีที่", "วันศุกร์ที่", "วันเสาร์ที่"};
+
         String Months[] = {
                 "ม.ค", "ก.พ", "มี.ค", "เม.ย",
                 "พ.ค", "มิ.ย", "ก.ค", "ส.ค",
@@ -131,7 +135,7 @@ public class DateListItem extends BaseCustomViewGroup {
 
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
-        int year=0,month=0,day=0;
+        int year=0,month=0,day=0,dayofweek=0;
         try {
             Date date = df.parse(strDate);
             Calendar c = Calendar.getInstance();
@@ -140,13 +144,14 @@ public class DateListItem extends BaseCustomViewGroup {
             year = c.get(Calendar.YEAR);
             month = c.get(Calendar.MONTH);
             day = c.get(Calendar.DATE);
+            dayofweek = c.get(Calendar.DAY_OF_WEEK);
 
         } catch (ParseException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
-        return String.format("%s %s %s", day,Months[month],year+543);
+        return String.format("%s %s %s %s", Day[dayofweek-1],day,Months[month],year+543);
     }
 
 

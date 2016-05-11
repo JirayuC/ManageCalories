@@ -21,7 +21,6 @@ import com.collegienproject.rank4.managecalories.dao.UserDao;
 import com.collegienproject.rank4.managecalories.sqlite.DatabaseHelper;
 
 import java.util.Date;
-import java.util.Objects;
 
 
 /**
@@ -198,20 +197,22 @@ public class CaloriesCountFragment extends Fragment {
 
     private void displayInputDialog(){
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("Input calories.");
+        builder.setTitle("กรอกเวลาที่ทำได้");
 
         // Set up the input
         final EditText input = new EditText(getActivity());
         // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
         input.setInputType(InputType.TYPE_CLASS_NUMBER);
+        input.setHint("เวลา(นาที)");
         builder.setView(input);
 
             // Set up the buttons
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                String cal = input.getText().toString();
-                db.activitySuccess(DFA_id, Float.parseFloat(cal));
+                String time = input.getText().toString();
+                int cal = (int) Calorie_Burn_Manual(Long.parseLong(time));
+                db.activitySuccess(DFA_id, Float.parseFloat(String.valueOf(cal)));
                 dialog.dismiss();
                 getActivity().finish();
             }
@@ -290,6 +291,12 @@ public class CaloriesCountFragment extends Fragment {
     private double Calorie_Burn(long time){
         calorie_Burn = (BMR/24) * MET * (time/3600.0f);
         Log.d("benz","calorie_Burn = "+calorie_Burn);
+        return calorie_Burn;
+    }
+
+    private double Calorie_Burn_Manual(long time){
+        calorie_Burn = (BMR/24) * MET * (time/60.0f);
+        Log.d("benz","calorie_Burn22 = "+calorie_Burn);
         return calorie_Burn;
     }
 

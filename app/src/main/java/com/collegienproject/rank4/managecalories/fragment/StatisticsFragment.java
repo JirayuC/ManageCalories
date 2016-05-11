@@ -1,6 +1,7 @@
 package com.collegienproject.rank4.managecalories.fragment;
 
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -89,8 +90,9 @@ public class StatisticsFragment extends Fragment {
         float goal = db.getGoalCal(model.getProgram_id());
         Log.d("Biw","goal = "+goal);
         progressBar_cal.setProgress((int)((cal/goal)*100));
-        progressBar_cal.getProgressDrawable().setColorFilter(
-                Color.RED, android.graphics.PorterDuff.Mode.SRC_IN);
+        progressBar_cal.getProgressDrawable().setColorFilter(Color.RED, PorterDuff.Mode.SRC_IN);
+
+
     }
 
     @Override

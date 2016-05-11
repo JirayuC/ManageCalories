@@ -1,5 +1,6 @@
 package com.collegienproject.rank4.managecalories.fragment;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
@@ -27,6 +28,7 @@ import com.collegienproject.rank4.managecalories.sqlite.DatabaseHelper;
 
 import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -357,6 +359,7 @@ public class ProgramInfoFragment extends Fragment implements NumberPicker.OnValu
     }
 
 
+    @SuppressLint("ValidFragment")
     public class SelectDateFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
 
         @Override
@@ -388,10 +391,46 @@ public class ProgramInfoFragment extends Fragment implements NumberPicker.OnValu
             cal.set(year, month, day, 0, 0, 0);
             Date chosenDate = cal.getTime();
 
-            DateFormat df = DateFormat.getDateInstance(DateFormat.FULL, Locale.US);
-            String formattedDate = df.format(chosenDate);
 
-            btnDate.setText(formattedDate);
+            DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            String format = formatter.format(chosenDate);
+
+
+
+            btnDate.setText(dateThai(format));
+        }
+
+        public String dateThai(String strDate)
+        {
+
+            String Day[] = {
+                    "วันอาทิตย์ที่", "วันจันทร์ที่", "วันอังคารที่",
+                    "วันพุธที่", "วันพฤหัสบดีที่", "วันศุกร์ที่", "วันเสาร์ที่"};
+
+            String Months[] = {
+                    "ม.ค", "ก.พ", "มี.ค", "เม.ย",
+                    "พ.ค", "มิ.ย", "ก.ค", "ส.ค",
+                    "ก.ย", "ต.ค", "พ.ย", "ธ.ค"};
+
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+
+            int year=0,month=0,day=0,dayofweek=0;
+            try {
+                Date date = df.parse(strDate);
+                Calendar c = Calendar.getInstance();
+                c.setTime(date);
+
+                year = c.get(Calendar.YEAR);
+                month = c.get(Calendar.MONTH);
+                day = c.get(Calendar.DATE);
+                dayofweek = c.get(Calendar.DAY_OF_WEEK);
+
+            } catch (ParseException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+
+            return String.format("%s %s %s %s", Day[dayofweek-1],day,Months[month],year+543);
         }
 
     }
