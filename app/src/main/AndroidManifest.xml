@@ -31,12 +31,15 @@
             android:theme="@style/AppThemeWithActionBar" />
         <activity
             android:name=".activity.CaloriesCountActivity"
+            android:label="คำนวนแคลอรี่"
             android:theme="@style/AppThemeWithActionBar" />
         <activity
             android:name=".activity.CreateActActivity"
+            android:label="สร้างกิจกรรมออกกำลังกาย"
             android:theme="@style/AppThemeWithActionBar" />
         <activity
             android:name=".activity.ActivityPickerActivity"
+            android:label="เลือกกิจกรรม"
             android:theme="@style/AppThemeWithActionBar" />
         <activity android:name=".FirstActivity">
             <intent-filter>

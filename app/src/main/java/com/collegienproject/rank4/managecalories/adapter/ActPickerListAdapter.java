@@ -1,14 +1,18 @@
 package com.collegienproject.rank4.managecalories.adapter;
 
 import android.content.Context;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.collegienproject.rank4.managecalories.R;
+import com.collegienproject.rank4.managecalories.dao.ActivityDao;
+import com.collegienproject.rank4.managecalories.view.ActPickListItem;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by JirayuPC on 06 พ.ค. 2559.
@@ -16,21 +20,31 @@ import com.collegienproject.rank4.managecalories.R;
 public class ActPickerListAdapter extends BaseAdapter {
 
     private Context mContext;
-    private final String[] web;
-    private final int[] Imageid;
-    public ActPickerListAdapter(Context c, String[] web,int[] Imageid) {
-        mContext = c;
-        this.Imageid = Imageid;
-        this.web = web;
+
+
+    List<ActivityDao> ActList = new ArrayList<ActivityDao>();
+   // List<ActivityDao> ActListi = new ArrayList<ActivityDao>();
+
+    int lastPosition = -1;
+
+
+    public ActPickerListAdapter(List<ActivityDao> detail, Context context, List<ActivityDao> imageId) {
+        this.ActList = imageId;
+        this.ActList = detail;
+
     }
+
     @Override
     public int getCount() {
-        return web.length;
+        if(ActList == null){
+            return 0;
+        }
+        return ActList.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return null;
+        return ActList.get(position);
     }
 
     @Override
@@ -40,23 +54,25 @@ public class ActPickerListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View grid;
-        LayoutInflater inflater = (LayoutInflater) mContext
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        ActPickListItem item;
+        if (convertView != null)
+            item = (ActPickListItem) convertView;
+        else
+            item = new ActPickListItem(parent.getContext());
 
-        if (convertView == null) {
+        ActivityDao act = (ActivityDao) getItem(position);
 
-            grid = new View(mContext);
-            grid = inflater.inflate(R.layout.list_item_activity_picker, null);
-            TextView textView = (TextView) grid.findViewById(R.id.grid_text);
-            ImageView imageView = (ImageView) grid.findViewById(R.id.grid_image);
-            textView.setText(web[position]);
-            imageView.setImageResource(Imageid[position]);
-        } else {
-            grid = (View) convertView;
+        item.setImageView(act.getImage_id());
+        item.setActText(act.getActivity_name());
+
+
+        if(position> lastPosition) {
+            Animation anim = AnimationUtils.loadAnimation(parent.getContext(),
+                    R.anim.up_from_bottom);
+            item.startAnimation(anim);
+            lastPosition = position;
         }
-
-        return grid;
+        return item;
     }
 
 

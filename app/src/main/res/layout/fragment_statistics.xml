@@ -40,10 +40,11 @@
                 <ProgressBar
                     android:id="@+id/progressBar_cal"
                     style="?android:attr/progressBarStyleHorizontal"
+
                     android:layout_width="300dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="30dp"
                     android:visibility="visible"
-                    android:scaleY="3"
+                    android:scaleY="5"
                     />
 
             </LinearLayout>

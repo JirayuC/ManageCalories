@@ -89,6 +89,8 @@ public class StatisticsFragment extends Fragment {
         float goal = db.getGoalCal(model.getProgram_id());
         Log.d("Biw","goal = "+goal);
         progressBar_cal.setProgress((int)((cal/goal)*100));
+        progressBar_cal.getProgressDrawable().setColorFilter(
+                Color.RED, android.graphics.PorterDuff.Mode.SRC_IN);
     }
 
     @Override

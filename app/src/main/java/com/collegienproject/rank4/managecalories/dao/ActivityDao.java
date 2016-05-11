@@ -7,6 +7,11 @@ public class ActivityDao {
     private int Activity_id;
     private String Activity_name;
     private float Activity_met;
+    private int Image_id;
+
+    public ActivityDao(int imageId) {
+        this.Image_id = imageId;
+    }
 
     public float getActivity_met() {
         return Activity_met;
@@ -19,6 +24,14 @@ public class ActivityDao {
 
     public ActivityDao(){
 
+    }
+
+    public int getImage_id() {
+        return Image_id;
+    }
+
+    public void setImage_id(int image_id) {
+        Image_id = image_id;
     }
 
     public int getActivity_id() {

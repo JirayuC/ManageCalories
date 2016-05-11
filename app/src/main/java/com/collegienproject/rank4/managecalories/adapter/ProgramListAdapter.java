@@ -25,6 +25,8 @@ public class ProgramListAdapter extends BaseAdapter {
             this.activity = activity;
     }
 
+
+
     @Override
     public int getCount() {
         if(programList == null){

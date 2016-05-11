@@ -2,6 +2,7 @@ package com.collegienproject.rank4.managecalories.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 
 import com.collegienproject.rank4.managecalories.R;
 import com.collegienproject.rank4.managecalories.fragment.CaloriesCountFragment;
@@ -18,10 +19,26 @@ public class CaloriesCountActivity extends AppCompatActivity {
         String activity_name = bundle.getString("activity_name");
         int DFA_id = bundle.getInt("DFA_id");
 
+
+        initInstances();
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.contentContainer, CaloriesCountFragment.newInstance(DFA_id,met,activity_name))
                     .commit();
         }
+    }
+
+    private void initInstances() {
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId()== android.R.id.home){
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

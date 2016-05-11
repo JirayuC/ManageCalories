@@ -1,0 +1,105 @@
+package com.collegienproject.rank4.managecalories.view;
+
+import android.annotation.TargetApi;
+import android.content.Context;
+import android.os.Bundle;
+import android.os.Parcelable;
+import android.util.AttributeSet;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.collegienproject.rank4.managecalories.R;
+import com.inthecheesefactory.thecheeselibrary.view.BaseCustomViewGroup;
+import com.inthecheesefactory.thecheeselibrary.view.state.BundleSavedState;
+
+/**
+ * Created by nuuneoi on 11/16/2014.
+ */
+public class ActPickListItem extends BaseCustomViewGroup {
+
+    ImageView imageView;
+    TextView textView;
+
+    public ActPickListItem(Context context) {
+        super(context);
+        initInflate();
+        initInstances();
+    }
+
+    public ActPickListItem(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        initInflate();
+        initInstances();
+        initWithAttrs(attrs, 0, 0);
+    }
+
+    public ActPickListItem(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+        initInflate();
+        initInstances();
+        initWithAttrs(attrs, defStyleAttr, 0);
+    }
+
+    @TargetApi(21)
+    public ActPickListItem(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
+        initInflate();
+        initInstances();
+        initWithAttrs(attrs, defStyleAttr, defStyleRes);
+    }
+
+    private void initInflate() {
+        inflate(getContext(), R.layout.list_item_activity_picker, this);
+    }
+
+    private void initInstances() {
+        imageView = (ImageView) findViewById(R.id.imageActivity);
+        textView = (TextView) findViewById( R.id.tvAct);
+        // findViewById here
+    }
+
+    private void initWithAttrs(AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        /*
+        TypedArray a = getContext().getTheme().obtainStyledAttributes(
+                attrs,
+                R.styleable.StyleableName,
+                defStyleAttr, defStyleRes);
+
+        try {
+
+        } finally {
+            a.recycle();
+        }
+        */
+    }
+
+    @Override
+    protected Parcelable onSaveInstanceState() {
+        Parcelable superState = super.onSaveInstanceState();
+
+        BundleSavedState savedState = new BundleSavedState(superState);
+        // Save Instance State(s) here to the 'savedState.getBundle()'
+        // for example,
+        // savedState.getBundle().putString("key", value);
+
+        return savedState;
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Parcelable state) {
+        BundleSavedState ss = (BundleSavedState) state;
+        super.onRestoreInstanceState(ss.getSuperState());
+
+        Bundle bundle = ss.getBundle();
+        // Restore State from bundle here
+    }
+
+    public void setActText(String text){
+        textView.setText(text);
+    }
+
+    public void setImageView(int act){
+        imageView.setImageResource(act);
+    }
+
+}

@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.collegienproject.rank4.managecalories.R;
 import com.collegienproject.rank4.managecalories.dao.ActivityDao;
 import com.collegienproject.rank4.managecalories.dao.DateDao;
 import com.collegienproject.rank4.managecalories.dao.DateForActivity;
@@ -69,6 +70,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_ACTIVITYID = "Activity_id";
     public static final String COLUMN_ACTIVITYNAME = "Activity_name";
     public static final String COLUMN_ACTIVITYMET = "Activity_met";
+    public static final String COLUMN_ACTIVITYIMAGE = "Activity_image";
 
 
     private static final String CREATE_USER_TABLE =
@@ -140,18 +142,32 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    int[] imageId = {
+            R.drawable.ic_aerobic, R.drawable.ic_badminton2, R.drawable.ic_badminton,
+            R.drawable.ic_baseball, R.drawable.ic_basketball, R.drawable.ic_biker,
+            R.drawable.ic_bowling, R.drawable.ic_boxer, R.drawable.ic_canoe,
+            R.drawable.ic_cross_country_skiing, R.drawable.ic_man_in_hike, R.drawable.ic_fencing,
+            R.drawable.ic_ice_skating, R.drawable.ic_american_football, R.drawable.ic_golf,
+            R.drawable.ic_gymnast, R.drawable.ic_handball, R.drawable.ic_home_calisthenics,
+            R.drawable.ic_rugby, R.drawable.ic_football, R.drawable.ic_softball,
+            R.drawable.ic_swimming, R.drawable.ic_pingpong, R.drawable.ic_tennis_singer,
+            R.drawable.ic_tennis, R.drawable.ic_marathon, R.drawable.high_jump,
+            R.drawable.long_jumping, R.drawable.ic_volleyball, R.drawable.ic_walking,
+            R.drawable.ic_weight_tainning, R.drawable.ic_yoga, R.drawable.ic_running
+    };
+
     float[] met = {
-            6f, 3.5f, 4.5f,
-            5.5f, 11.1f, 7.2f,
-            3f, 13.4f, 7f,
-            11.5f, 7f, 8f,
-            12.9f, 6.5f, 5.1f,
-            7f, 10f, 4f,
-            12.6f, 10.3f, 4.5f,
-            9.02f, 4.7f, 6.5f,
-            4.5f, 13.3f, 4.1f,
-            15f, 6f, 3.4f,
-            10.9f, 3.2f, 12.9f
+            3.9f, 3.5f, 4.5f,
+            5.5f, 6f, 5.2f,
+            3f, 6f, 7f,
+            5f, 7f, 8f,
+            4f, 6.5f, 5.1f,
+            7f, 4f, 4f,
+            6f, 5f, 4.5f,
+            4.5f, 4.7f, 6.5f,
+            4.5f, 4.5f, 4.1f,
+            2f, 6f, 3.4f,
+            3f, 3.2f, 2.5f
 
     };
 
@@ -171,9 +187,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private void initActivity(SQLiteDatabase db) {
 
-        for (int i = 0; i < array_actiivty_name.length; i++) {
+        for (int i = 0 ; i < array_actiivty_name.length; i++) {
             ActivityDao activityDao = new ActivityDao();
             activityDao.setActivity_id(i + 1);
+            //activityDao.setImage_id(imageId[i]);
             activityDao.setActivity_name(array_actiivty_name[i]);
             activityDao.setActivity_met(met[i]);
             addActivity(db, activityDao);
@@ -249,6 +266,37 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             e.printStackTrace();
         }
         return program_pri;
+    }
+
+
+    public List<ActivityDao> getActPickerList() {
+
+        //Open connection to read only
+        List<ActivityDao> listAct = new ArrayList<ActivityDao>();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String selectQuery = "SELECT  " +
+                /*COLUMN_ACTIVITYIMAGE + "," +*/
+                COLUMN_ACTIVITYNAME  +
+                " FROM " + TABLE_ACTIVITY;
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        // looping through all rows and adding to list
+
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                ActivityDao prg = new ActivityDao();
+                prg.setActivity_name(cursor.getString(cursor.getColumnIndex(COLUMN_ACTIVITYNAME)));
+                //prg.setImage_id(cursor.getInt(cursor.getColumnIndex(COLUMN_ACTIVITYIMAGE)));
+                listAct.add(prg);
+
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+        return listAct;
+
     }
 
 
@@ -448,6 +496,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             ContentValues cv = new ContentValues();
             cv.put(COLUMN_ACTIVITYNAME, act.getActivity_name());
             cv.put(COLUMN_ACTIVITYMET, act.getActivity_met());
+            //cv.put(COLUMN_ACTIVITYIMAGE, act.getImage_id());
             activity_pri = (int) db.insert(TABLE_ACTIVITY, COLUMN_ACTIVITYID, cv);
 
             Log.d("Database operation", "One Row Inserted...");
@@ -470,7 +519,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public void addDateForActivity(int date_id, int activity_id) {
-        int program_pri = -1;
         SQLiteDatabase db = this.getWritableDatabase();
         try {
             ContentValues cv = new ContentValues();
@@ -506,8 +554,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Log.d("Biw", "selectQuery = " + selectQuery);
 
         Cursor cursor = db.rawQuery(selectQuery, null);
-        // looping through all rows and adding to list
-        DateFormat df = DateFormat.getDateInstance(DateFormat.FULL, Locale.US);
+        // looping through all rows and adding to lis
         if (cursor != null && cursor.moveToFirst()) {
             do {
                 DateForActivity prg = new DateForActivity();
