@@ -175,6 +175,104 @@
                     android:textStyle="bold" />
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center_horizontal">
+
+                <TextView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvProgramName"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_horizontal"
+                    android:paddingLeft="4dip"
+                    android:text="วันที่เผาผลาญแคลอรี่มากที่สุด : "
+                    android:textColor="@color/jet"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_max_cal_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:layout_marginTop="10dp"
+                    android:paddingLeft="4dip"
+                    android:text="0"
+                    android:textColor="@color/jet"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center_horizontal">
+
+                <TextView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvProgramName"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_horizontal"
+                    android:paddingLeft="4dip"
+                    android:text="กีฬาที่เผาผลาญแคลอรี่มากที่สุด : "
+                    android:textColor="@color/jet"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_activity_cal_max"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:layout_marginTop="10dp"
+                    android:paddingLeft="4dip"
+                    android:text="0"
+                    android:textColor="@color/jet"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center_horizontal">
+
+                <TextView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvProgramName"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_horizontal"
+                    android:paddingLeft="4dip"
+                    android:text="วันที่ทำกิจกรรมมากที่สุด : "
+                    android:textColor="@color/jet"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_count_activity_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:layout_marginTop="10dp"
+                    android:paddingLeft="4dip"
+                    android:text="0"
+                    android:textColor="@color/jet"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+
+
             <TextView
                 android:id="@+id/tv_complete"
                 android:layout_width="match_parent"

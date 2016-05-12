@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +15,7 @@ import android.widget.Toast;
 
 import com.collegienproject.rank4.managecalories.R;
 import com.collegienproject.rank4.managecalories.activity.CreateActActivity;
+import com.collegienproject.rank4.managecalories.adapter.CalListAdapter;
 import com.collegienproject.rank4.managecalories.dao.ProgramDao;
 import com.collegienproject.rank4.managecalories.sqlite.DatabaseHelper;
 
@@ -26,6 +29,8 @@ public class TodaySummaryFragment extends Fragment {
 
     Button btnSaveplay;
     DatabaseHelper db;
+
+    RecyclerView recyclerView;
 
     int Program_id;
 
@@ -58,6 +63,17 @@ public class TodaySummaryFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_today_summary, container, false);
         initInstances(rootView, savedInstanceState);
+
+        recyclerView = (RecyclerView) rootView.findViewById(R.id.cal_list);
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setHasFixedSize(true);
+
+        CalListAdapter calListAdapter = new CalListAdapter();
+        recyclerView.setAdapter(calListAdapter);
+
         return rootView;
     }
 

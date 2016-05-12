@@ -30,6 +30,9 @@ public class StatisticsFragment extends Fragment {
     TextView tv_value_unsuccess;
     TextView tv_value_miss;
     TextView tv_complete;
+    TextView tv_value_cal_max;
+    TextView tv_act;
+    TextView tv_act_date;
 
     ProgressBar progressBar_cal;
 
@@ -92,6 +95,14 @@ public class StatisticsFragment extends Fragment {
         progressBar_cal.setProgress((int)((cal/goal)*100));
         progressBar_cal.getProgressDrawable().setColorFilter(Color.RED, PorterDuff.Mode.SRC_IN);
 
+        String date = db.getCountActivityMaxOfDate(model.getProgram_id());
+        tv_value_cal_max.setText(""+date);
+
+        String act = db.getActivityMaxProgram(model.getProgram_id());
+        tv_act.setText(""+act);
+
+        String date_act = db.getDateTakeActMax(model.getProgram_id());
+        tv_act_date.setText(""+date_act);
 
     }
 
@@ -122,6 +133,9 @@ public class StatisticsFragment extends Fragment {
         tv_value_unsuccess = (TextView) rootView.findViewById(R.id.tv_value_unsuccess);
         tv_value_miss = (TextView) rootView.findViewById(R.id.tv_value_miss);
         tv_complete = (TextView) rootView.findViewById(R.id.tv_complete);
+        tv_value_cal_max = (TextView) rootView.findViewById(R.id.tv_max_cal_date);
+        tv_act = (TextView) rootView.findViewById(R.id.tv_activity_cal_max);
+        tv_act_date = (TextView) rootView.findViewById(R.id.tv_count_activity_date);
 
         progressBar_cal = (ProgressBar) rootView.findViewById(R.id.progressBar_cal);
 //        progressBar_cal.getProgressDrawable().setColorFilter(

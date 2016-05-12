@@ -1,11 +1,17 @@
 package com.collegienproject.rank4.managecalories.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
+import com.collegienproject.rank4.managecalories.activity.ActivityPickerActivity;
+import com.collegienproject.rank4.managecalories.activity.CaloriesCountActivity;
 import com.collegienproject.rank4.managecalories.dao.ActivityDao;
+import com.collegienproject.rank4.managecalories.dao.DateForActivity;
 import com.collegienproject.rank4.managecalories.view.ActPickListItem;
 
 import java.util.ArrayList;
@@ -25,11 +31,15 @@ public class ActPickerListAdapter extends BaseAdapter {
     int lastPosition = -1;
 
 
-    public ActPickerListAdapter(List<ActivityDao> detail, Context context, List<ActivityDao> imageId) {
-        this.ActList = detail;
-        this.ActList = imageId;
-
+    public ActPickerListAdapter(List<ActivityDao> detail, Context context, List listRowItems) {
+        //ActivityDao test = new ActivityDao();
+        //test.setActivity_name();
+        //this.ActList.add(test.);
+       //this.ActList = detail;
+        ActList=listRowItems;
     }
+
+
 
     @Override
     public int getCount() {
@@ -61,6 +71,8 @@ public class ActPickerListAdapter extends BaseAdapter {
 
         item.setImageView(act.getImage_id());
         item.setActText(act.getActivity_name());
+        Log.d("actName : ", act.getActivity_name());
+
 
 
         /*if(position> lastPosition) {

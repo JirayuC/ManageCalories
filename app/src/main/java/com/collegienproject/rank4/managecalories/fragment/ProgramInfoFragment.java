@@ -130,9 +130,9 @@ public class ProgramInfoFragment extends Fragment implements NumberPicker.OnValu
                     String week = weekNum.getText().toString();
 
 
-                    DateFormat df = DateFormat.getDateInstance(DateFormat.FULL, Locale.US);
+                    DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
                     int Week = Integer.parseInt(week);
-                    Date strdate = df.parse(prgDateStart);
+                    Date strdate = formatter.parse(prgDateStart);
                     Calendar c = Calendar.getInstance(Locale.US);
                     c.setTime(strdate);
                     ArrayList<Date> dateActivityList = new ArrayList<Date>();
@@ -203,7 +203,7 @@ public class ProgramInfoFragment extends Fragment implements NumberPicker.OnValu
                     prg.setProgram_name(prgName);
 
                     try {
-                        Date date1 = df.parse(prgDateStart);
+                        Date date1 = formatter.parse(prgDateStart);
                         prg.setStart_date(date1);
                     }catch (ParseException e){
                         e.printStackTrace();
@@ -397,7 +397,7 @@ public class ProgramInfoFragment extends Fragment implements NumberPicker.OnValu
 
 
 
-            btnDate.setText(dateThai(format));
+            btnDate.setText(format);
         }
 
         public String dateThai(String strDate)

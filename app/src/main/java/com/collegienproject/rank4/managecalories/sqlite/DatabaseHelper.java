@@ -142,7 +142,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    int[] imageId = {
+   /* int[] imageId = {
             R.drawable.ic_aerobic, R.drawable.ic_badminton2, R.drawable.ic_badminton,
             R.drawable.ic_baseball, R.drawable.ic_basketball, R.drawable.ic_biker,
             R.drawable.ic_bowling, R.drawable.ic_boxer, R.drawable.ic_canoe,
@@ -154,7 +154,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             R.drawable.ic_tennis, R.drawable.ic_marathon, R.drawable.high_jump,
             R.drawable.long_jumping, R.drawable.ic_volleyball, R.drawable.ic_walking,
             R.drawable.ic_weight_tainning, R.drawable.ic_yoga, R.drawable.ic_running
-    };
+    };*/
 
     float[] met = {
             3.9f, 3.5f, 4.5f,
@@ -879,6 +879,71 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cursor.close();
         db.close();
         return cal > 0;
+    }
+
+    public String getCountActivityMaxOfDate(int Program_id) {
+        //Open connection to read only
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String count = null;
+        String selectQuery = "SELECT d.Date_time AS date_result  FROM "+TABLE_DATESET+ " d INNER JOIN " +TABLE_DATEFORACTIVITY+" df ON d.Date_id = df.Date_id WHERE d.Program_id = "+Program_id+" ORDER BY df.CaloriesReal DESC limit 1" ;
+
+        Log.d("Biw", "selectQuery = " + selectQuery);
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                count = cursor.getString(cursor.getColumnIndex("date_result"));
+
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+        return count;
+    }
+
+    public String getActivityMaxProgram(int Program_id) {
+        //Open connection to read only
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String count = null;
+        String selectQuery = "SELECT a.Activity_name AS act_result,SUM(ad.CaloriesReal) FROM "+TABLE_ACTIVITY+" a INNER JOIN " +TABLE_DATEFORACTIVITY+ " ad ON a.Activity_id = ad.Activity_id INNER JOIN "+TABLE_DATESET+" d ON ad.Date_id = d.Date_id  WHERE d.Program_id = "+Program_id+" GROUP BY ad.CaloriesReal ORDER BY SUM(ad.CaloriesReal) DESC limit 1";
+
+        Log.d("Biw", "selectQuery = " + selectQuery);
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                count = cursor.getString(cursor.getColumnIndex("act_result"));
+
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+        return count;
+    }
+
+    public String getDateTakeActMax(int Program_id) {
+        //Open connection to read only
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String count = null;
+        String selectQuery = "SELECT d.Date_time AS date_result ,count(df.Activity_id)  FROM "+TABLE_DATESET+ " d INNER JOIN " +TABLE_DATEFORACTIVITY+" df ON d.Date_id = df.Date_id WHERE d.Program_id = "+Program_id+" GROUP BY df.Date_id  ORDER BY count(df.Activity_id) DESC limit 1" ;
+        Log.d("Biw", "selectQuery = " + selectQuery);
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                count = cursor.getString(cursor.getColumnIndex("date_result"));
+
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+        return count;
     }
 
 }

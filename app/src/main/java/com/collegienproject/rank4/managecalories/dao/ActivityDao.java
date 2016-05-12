@@ -9,8 +9,9 @@ public class ActivityDao {
     private float Activity_met;
     private int Image_id;
 
-    public ActivityDao(int imageId) {
+    public ActivityDao(int imageId, String activity_name) {
         this.Image_id = imageId;
+        this.Activity_name = activity_name;
     }
 
     public float getActivity_met() {
@@ -20,7 +21,6 @@ public class ActivityDao {
     public void setActivity_met(float activity_met) {
         Activity_met = activity_met;
     }
-
 
     public ActivityDao(){
 
