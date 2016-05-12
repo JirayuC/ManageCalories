@@ -1,7 +1,6 @@
 package com.collegienproject.rank4.managecalories.fragment;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -13,7 +12,6 @@ import android.widget.ListView;
 
 import com.collegienproject.rank4.managecalories.R;
 import com.collegienproject.rank4.managecalories.activity.ActivityPickerActivity;
-import com.collegienproject.rank4.managecalories.activity.CaloriesCountActivity;
 import com.collegienproject.rank4.managecalories.adapter.ActPickerListAdapter;
 import com.collegienproject.rank4.managecalories.dao.ActivityDao;
 import com.collegienproject.rank4.managecalories.dao.DateForActivity;
@@ -36,18 +34,18 @@ public class ActivityPickerFragment extends Fragment {
     ArrayList<DateForActivity> dateForActivities;
     //int Date_id;
 
-    static  final int[] imageId = {
-            R.drawable.long_jumping, R.drawable.long_jumping, R.drawable.long_jumping,
-            R.drawable.long_jumping, R.drawable.long_jumping, R.drawable.long_jumping,
-            R.drawable.long_jumping, R.drawable.long_jumping, R.drawable.long_jumping,
-            R.drawable.long_jumping, R.drawable.long_jumping, R.drawable.long_jumping,
-            R.drawable.long_jumping, R.drawable.long_jumping, R.drawable.long_jumping,
-            R.drawable.long_jumping, R.drawable.long_jumping, R.drawable.long_jumping,
-            R.drawable.long_jumping, R.drawable.long_jumping, R.drawable.long_jumping,
-            R.drawable.long_jumping, R.drawable.long_jumping, R.drawable.long_jumping,
-            R.drawable.long_jumping, R.drawable.long_jumping, R.drawable.high_jump,
-            R.drawable.long_jumping, R.drawable.long_jumping, R.drawable.long_jumping,
-            R.drawable.long_jumping, R.drawable.long_jumping, R.drawable.long_jumping
+    static  int[] imageId = {
+            R.drawable.ic_aerobic, R.drawable.ic_badminton2, R.drawable.ic_badminton,
+            R.drawable.ic_baseball, R.drawable.ic_basketball, R.drawable.ic_biker,
+            R.drawable.ic_bowling, R.drawable.ic_boxer, R.drawable.ic_canoe,
+            R.drawable.ic_cross_country_skiing, R.drawable.ic_man_in_hike, R.drawable.ic_fencing,
+            R.drawable.ic_ice_skating, R.drawable.ic_american_football, R.drawable.ic_golf,
+            R.drawable.ic_gymnast, R.drawable.ic_handball, R.drawable.ic_home_calisthenics,
+            R.drawable.ic_rugby, R.drawable.ic_football, R.drawable.ic_softball,
+            R.drawable.ic_swimming, R.drawable.ic_pingpong, R.drawable.ic_tennis_singer,
+            R.drawable.ic_tennis, R.drawable.ic_marathon, R.drawable.high_jump,
+            R.drawable.long_jumping, R.drawable.ic_volleyball, R.drawable.ic_walking,
+            R.drawable.ic_weight_tainning, R.drawable.ic_yoga, R.drawable.ic_running
     };
 
 

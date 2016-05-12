@@ -255,6 +255,7 @@ public class ProgramInfoFragment extends Fragment implements NumberPicker.OnValu
         String goal = goalNum.getText().toString();
         String week = weekNum.getText().toString();
 
+
         if (prgName.isEmpty() || prgName.length() < 3) {
             textNameprg.setError("กรุณากรอกข้อมูล");
             valid = false;
@@ -269,12 +270,7 @@ public class ProgramInfoFragment extends Fragment implements NumberPicker.OnValu
             btnDate.setError(null);
         }
 
-        if (goal.isEmpty()) {
-            goalNum.setError("กรุณากรอกข้อมูลเป้าหมายแคลอรี่");
-            valid = false;
-        } else {
-            goalNum.setError(null);
-        }
+
 
         if (week.isEmpty()) {
             weekNum.setError("กรุณาเลือกจำนวนสัปดาห์");
@@ -297,6 +293,21 @@ public class ProgramInfoFragment extends Fragment implements NumberPicker.OnValu
             Toast.makeText(getContext(), "กรุณาเลือกวันออกกำลังกาย", Toast.LENGTH_SHORT).show();
             valid = false;
 
+        }
+
+        float valueH = 0;
+        try {
+            valueH = Float.parseFloat(goalNum.getText().toString());
+        }
+        catch(NumberFormatException ex) {
+            goalNum.setError("กรุณากรอกแคลอรี่ให้น้อยกว่า 10,000 cal");
+        }
+
+        if (goal.isEmpty()|| valueH > 10000.1f ) {
+            goalNum.setError("กรุณากรอกแคลอรี่ให้น้อยกว่า 10,000 cal");
+            valid = false;
+        } else {
+            goalNum.setError(null);
         }
 
 
@@ -400,38 +411,6 @@ public class ProgramInfoFragment extends Fragment implements NumberPicker.OnValu
             btnDate.setText(format);
         }
 
-        public String dateThai(String strDate)
-        {
-
-            String Day[] = {
-                    "วันอาทิตย์ที่", "วันจันทร์ที่", "วันอังคารที่",
-                    "วันพุธที่", "วันพฤหัสบดีที่", "วันศุกร์ที่", "วันเสาร์ที่"};
-
-            String Months[] = {
-                    "ม.ค", "ก.พ", "มี.ค", "เม.ย",
-                    "พ.ค", "มิ.ย", "ก.ค", "ส.ค",
-                    "ก.ย", "ต.ค", "พ.ย", "ธ.ค"};
-
-            DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-
-            int year=0,month=0,day=0,dayofweek=0;
-            try {
-                Date date = df.parse(strDate);
-                Calendar c = Calendar.getInstance();
-                c.setTime(date);
-
-                year = c.get(Calendar.YEAR);
-                month = c.get(Calendar.MONTH);
-                day = c.get(Calendar.DATE);
-                dayofweek = c.get(Calendar.DAY_OF_WEEK);
-
-            } catch (ParseException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-
-            return String.format("%s %s %s %s", Day[dayofweek-1],day,Months[month],year+543);
-        }
 
     }
 }

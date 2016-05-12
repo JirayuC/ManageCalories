@@ -263,13 +263,7 @@ public class UpdateUserFragment extends Fragment{
                 weightNum.setError("enter weight < 300kg please");
             }
 
-            float valueH = 0;
-            try {
-                valueH = Float.parseFloat(heightNum.getText().toString());
-            }
-            catch(NumberFormatException ex) {
-                heightNum.setError("enter height < 300cm please");
-            }
+
 
 
             if (weight.isEmpty()|| valueW > 300.1f ) {
@@ -277,6 +271,14 @@ public class UpdateUserFragment extends Fragment{
                 valid = false;
             } else {
                 weightNum.setError(null);
+            }
+
+            float valueH = 0;
+            try {
+                valueH = Float.parseFloat(heightNum.getText().toString());
+            }
+            catch(NumberFormatException ex) {
+                heightNum.setError("enter height < 300cm please");
             }
 
             if (height.isEmpty()|| valueH > 300.1f ) {

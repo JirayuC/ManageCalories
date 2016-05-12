@@ -16,6 +16,12 @@ import com.collegienproject.rank4.managecalories.R;
 import com.collegienproject.rank4.managecalories.dao.ProgramDao;
 import com.collegienproject.rank4.managecalories.sqlite.DatabaseHelper;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 
 /**
  * Created by nuuneoi on 11/16/2014.
@@ -155,6 +161,39 @@ public class StatisticsFragment extends Fragment {
     @SuppressWarnings("UnusedParameters")
     private void onRestoreInstanceState(Bundle savedInstanceState) {
         // Restore Instance (Fragment level's variables) State here
+    }
+
+    public String dateThai(String strDate)
+    {
+
+        String Day[] = {
+                "วันอาทิตย์ที่", "วันจันทร์ที่", "วันอังคารที่",
+                "วันพุธที่", "วันพฤหัสบดีที่", "วันศุกร์ที่", "วันเสาร์ที่"};
+
+        String Months[] = {
+                "ม.ค", "ก.พ", "มี.ค", "เม.ย",
+                "พ.ค", "มิ.ย", "ก.ค", "ส.ค",
+                "ก.ย", "ต.ค", "พ.ย", "ธ.ค"};
+
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+
+        int year=0,month=0,day=0,dayofweek=0;
+        try {
+            Date date = df.parse(strDate);
+            Calendar c = Calendar.getInstance();
+            c.setTime(date);
+
+            year = c.get(Calendar.YEAR);
+            month = c.get(Calendar.MONTH);
+            day = c.get(Calendar.DATE);
+            dayofweek = c.get(Calendar.DAY_OF_WEEK);
+
+        } catch (ParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        return String.format("%s %s %s %s", Day[dayofweek-1],day,Months[month],year+543);
     }
 
 }

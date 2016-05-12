@@ -204,6 +204,7 @@ public class CaloriesCountFragment extends Fragment {
         // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
         input.setInputType(InputType.TYPE_CLASS_NUMBER);
         input.setHint("เวลา(นาที)");
+        input.invalidate();
         builder.setView(input);
 
             // Set up the buttons

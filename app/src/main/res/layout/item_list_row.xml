@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     app:cardCornerRadius="2dp"
     android:layout_margin="5dp"
-    android:layout_gravity="2">
+    >
 
     <LinearLayout
         android:orientation="vertical"

@@ -8,7 +8,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import com.collegienproject.rank4.managecalories.R;
 import com.collegienproject.rank4.managecalories.dao.ActivityDao;
 import com.collegienproject.rank4.managecalories.dao.DateDao;
 import com.collegienproject.rank4.managecalories.dao.DateForActivity;
@@ -190,7 +189,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         for (int i = 0 ; i < array_actiivty_name.length; i++) {
             ActivityDao activityDao = new ActivityDao();
             activityDao.setActivity_id(i + 1);
-            //activityDao.setImage_id(imageId[i]);
             activityDao.setActivity_name(array_actiivty_name[i]);
             activityDao.setActivity_met(met[i]);
             addActivity(db, activityDao);
