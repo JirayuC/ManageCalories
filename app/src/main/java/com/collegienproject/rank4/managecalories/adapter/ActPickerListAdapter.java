@@ -1,17 +1,12 @@
 package com.collegienproject.rank4.managecalories.adapter;
 
 import android.content.Context;
-import android.content.Intent;
-import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
-import com.collegienproject.rank4.managecalories.activity.ActivityPickerActivity;
-import com.collegienproject.rank4.managecalories.activity.CaloriesCountActivity;
 import com.collegienproject.rank4.managecalories.dao.ActivityDao;
-import com.collegienproject.rank4.managecalories.dao.DateForActivity;
 import com.collegienproject.rank4.managecalories.view.ActPickListItem;
 
 import java.util.ArrayList;
@@ -22,20 +17,18 @@ import java.util.List;
  */
 public class ActPickerListAdapter extends BaseAdapter {
 
+
     private Context mContext;
 
 
     List<ActivityDao> ActList = new ArrayList<ActivityDao>();
-   // List<ActivityDao> ActListi = new ArrayList<ActivityDao>();
+
 
     int lastPosition = -1;
 
 
     public ActPickerListAdapter(List<ActivityDao> detail, Context context, List listRowItems) {
-        //ActivityDao test = new ActivityDao();
-        //test.setActivity_name();
-        //this.ActList.add(test.);
-       //this.ActList = detail;
+
         ActList=listRowItems;
     }
 

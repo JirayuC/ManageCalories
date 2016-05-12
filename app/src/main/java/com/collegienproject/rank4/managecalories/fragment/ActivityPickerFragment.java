@@ -1,6 +1,7 @@
 package com.collegienproject.rank4.managecalories.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -12,6 +13,7 @@ import android.widget.ListView;
 
 import com.collegienproject.rank4.managecalories.R;
 import com.collegienproject.rank4.managecalories.activity.ActivityPickerActivity;
+import com.collegienproject.rank4.managecalories.activity.CaloriesCountActivity;
 import com.collegienproject.rank4.managecalories.adapter.ActPickerListAdapter;
 import com.collegienproject.rank4.managecalories.dao.ActivityDao;
 import com.collegienproject.rank4.managecalories.dao.DateForActivity;
@@ -120,18 +122,18 @@ public class ActivityPickerFragment extends Fragment {
                 //Log.d("Biw","Date_id = "+Date_id+" , Activity_id = "+position);
                 //Toast.makeText(context,"Date_id = "+Date_id+" , Activity_id = "+position,Toast.LENGTH_SHORT).show();
 
-               /* dateForActivities = (ArrayList<DateForActivity>) db.getDateForActivity(Date_id);
+                dateForActivities = (ArrayList<DateForActivity>) db.getDateForActivity(Date_id);
+
                 float met = dateForActivities.get(position).getMet();
                 String activity_name = dateForActivities.get(position).getActivity_name();
                 int DFA_id = dateForActivities.get(position).getDFA_id();
 
-                Intent intent = new Intent(context, CaloriesCountActivity.class);
+                Intent intent = new Intent(getActivity(), CaloriesCountActivity.class);
                 intent.putExtra("met", met);
                 intent.putExtra("activity_name", activity_name);
                 intent.putExtra("DFA_id", DFA_id);
-                intent.putExtra("Date_id",Date_id);
+                startActivity(intent);
 
-                startActivity(intent);*/
                 getActivity().finish();
             }
         });

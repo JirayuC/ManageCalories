@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import com.collegienproject.rank4.managecalories.dao.ActivityDao;
+import com.collegienproject.rank4.managecalories.dao.CaloriesReal;
 import com.collegienproject.rank4.managecalories.dao.DateDao;
 import com.collegienproject.rank4.managecalories.dao.DateForActivity;
 import com.collegienproject.rank4.managecalories.dao.ProgramDao;
@@ -943,5 +944,105 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
         return count;
     }
+
+    public ArrayList<CaloriesReal> getListCaloriesReal(int Program_id){
+        SQLiteDatabase db = this.getReadableDatabase();
+        ArrayList<CaloriesReal> calList = new ArrayList<CaloriesReal>();
+        Date date = null;
+        float calories=0.f;
+        String selectQuery = "SELECT d.Date_time AS date_result,sum(df.CaloriesReal)AS sumCal  FROM "+TABLE_DATESET+ " d INNER JOIN " +TABLE_DATEFORACTIVITY+" df ON d.Date_id = df.Date_id WHERE d.Program_id = "+Program_id+" GROUP BY  d.Date_time";
+        Log.d("Biw", "selectQuery = " + selectQuery);
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                try {
+                    date = df.parse(cursor.getString(cursor.getColumnIndex("date_result")));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+                calories= Float.parseFloat(cursor.getString(cursor.getColumnIndex("sumCal")));
+                CaloriesReal temp = new CaloriesReal();
+                temp.date=date;
+                temp.cal=calories;
+                calList.add(temp);
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+
+        return  calList;
+    }
+
+    public int getWeek(int Program_id) {
+        //Open connection to read only
+        SQLiteDatabase db = this.getReadableDatabase();
+
+
+        int count = 0;
+
+        String selectQuery = "SELECT Week_num FROM "+TABLE_PROGRAM+" WHERE Program_id = "+Program_id;
+        Log.d("book", "selectQuery = " + selectQuery);
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                count = cursor.getInt(cursor.getColumnIndex("Week_num"));
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+        return count;
+    }
+
+    public int getGoal(int Program_id) {
+        //Open connection to read only
+        SQLiteDatabase db = this.getReadableDatabase();
+
+
+        int count = 0;
+        String selectQuery = "SELECT Goal FROM " + TABLE_PROGRAM + " WHERE Program_id = "+Program_id;
+        Log.d("book", "selectQuery = " + selectQuery);
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                count = cursor.getInt(cursor.getColumnIndex("Goal"));
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+        return count;
+    }
+
+
+    public int getCountWeek(int Program_id) {
+        //Open connection to read only
+        SQLiteDatabase db = this.getReadableDatabase();
+
+
+        int count = 0;
+        String selectQuery = "SELECT COUNT(Date_id) AS Count_date FROM " + TABLE_DATESET + " WHERE Program_id = "+Program_id;
+        Log.d("book", "selectQuery = " + selectQuery);
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                count = cursor.getInt(cursor.getColumnIndex("Count_date"));
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+        return count;
+    }
+
+
+
 
 }

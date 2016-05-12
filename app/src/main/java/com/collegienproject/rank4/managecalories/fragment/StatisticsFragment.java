@@ -102,13 +102,15 @@ public class StatisticsFragment extends Fragment {
         progressBar_cal.getProgressDrawable().setColorFilter(Color.RED, PorterDuff.Mode.SRC_IN);
 
         String date = db.getCountActivityMaxOfDate(model.getProgram_id());
-        tv_value_cal_max.setText(""+date);
+        String date1 = dateThai(date);
+        tv_value_cal_max.setText(""+date1);
 
         String act = db.getActivityMaxProgram(model.getProgram_id());
         tv_act.setText(""+act);
 
         String date_act = db.getDateTakeActMax(model.getProgram_id());
-        tv_act_date.setText(""+date_act);
+        String date2 = dateThai(date_act);
+        tv_act_date.setText(""+date2);
 
     }
 

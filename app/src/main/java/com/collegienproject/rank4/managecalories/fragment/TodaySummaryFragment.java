@@ -4,21 +4,21 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
+import android.widget.ListView;
 
 import com.collegienproject.rank4.managecalories.R;
 import com.collegienproject.rank4.managecalories.activity.CreateActActivity;
 import com.collegienproject.rank4.managecalories.adapter.CalListAdapter;
+import com.collegienproject.rank4.managecalories.dao.CaloriesReal;
 import com.collegienproject.rank4.managecalories.dao.ProgramDao;
 import com.collegienproject.rank4.managecalories.sqlite.DatabaseHelper;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 
@@ -27,10 +27,13 @@ import java.util.Date;
  */
 public class TodaySummaryFragment extends Fragment {
 
+
     Button btnSaveplay;
     DatabaseHelper db;
+    ListView listView;
+    CalListAdapter calListAdapter;
 
-    RecyclerView recyclerView;
+
 
     int Program_id;
 
@@ -63,17 +66,6 @@ public class TodaySummaryFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_today_summary, container, false);
         initInstances(rootView, savedInstanceState);
-
-        recyclerView = (RecyclerView) rootView.findViewById(R.id.cal_list);
-
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setHasFixedSize(true);
-
-        CalListAdapter calListAdapter = new CalListAdapter();
-        recyclerView.setAdapter(calListAdapter);
-
         return rootView;
     }
 
@@ -87,6 +79,7 @@ public class TodaySummaryFragment extends Fragment {
 
         db = new DatabaseHelper(getActivity());
 
+        listView = (ListView) rootView.findViewById(R.id.listViewResultCal);
         // Init 'View' instance(s) with rootView.findViewById here
         // Note: State of variable initialized here could not be saved
         //       in onSavedInstanceState
@@ -101,6 +94,21 @@ public class TodaySummaryFragment extends Fragment {
                 startActivity(intent);
             }
         });
+
+        int numWeek = db.getCountWeek(Program_id);
+
+
+        float goal =db.getGoal(Program_id);
+        float avgCal = goal/numWeek;
+
+        final ArrayList<CaloriesReal> detail;
+        detail = db.getListCaloriesReal(Program_id);
+
+        calListAdapter = new CalListAdapter(detail,getActivity(),avgCal);
+        listView.setAdapter(calListAdapter);
+
+
+
     }
 
     @Override
