@@ -98,8 +98,9 @@ public class TodaySummaryFragment extends Fragment {
         int numWeek = db.getCountWeek(Program_id);
 
 
-        float goal =db.getGoal(Program_id);
-        float avgCal = goal/numWeek;
+        int goal =db.getGoal(Program_id);
+        float avgCal = 0.0f;
+        avgCal = goal / numWeek;
 
         final ArrayList<CaloriesReal> detail;
         detail = db.getListCaloriesReal(Program_id);

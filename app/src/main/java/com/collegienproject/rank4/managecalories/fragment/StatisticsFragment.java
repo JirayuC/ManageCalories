@@ -62,7 +62,9 @@ public class StatisticsFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         init(savedInstanceState);
+
         model = getArguments().getParcelable("model");
+
         if (savedInstanceState != null)
             onRestoreInstanceState(savedInstanceState);
     }
@@ -79,46 +81,19 @@ public class StatisticsFragment extends Fragment {
     private void initView(View rootView) {
 
         // All Cal
-        float cal = db.getStatisticCal();
-        tv_value_cal.setText("" + cal);
 
-        // count success.
-        int count_success = db.getCountSuccessDate(model.getProgram_id());
-        tv_value_success.setText("" + count_success);
-
-        // count unsuccess.
-        int count_unsuccess = db.getCountDate(model.getProgram_id()) - count_success;
-        tv_value_unsuccess.setText(""+count_unsuccess);
-
-        int count_miss = db.getCountMissDate(model.getProgram_id());
-        tv_value_miss.setText(""+count_miss);
-
-        float percent = ((float)count_success/ (count_success + count_unsuccess)) *100;
-        tv_complete.setText(""+String.format("%.2f",percent)+"%");
-
-        float goal = db.getGoalCal(model.getProgram_id());
-        Log.d("Biw","goal = "+goal);
-        progressBar_cal.setProgress((int)((cal/goal)*100));
-        progressBar_cal.getProgressDrawable().setColorFilter(Color.RED, PorterDuff.Mode.SRC_IN);
-
-        String date = db.getCountActivityMaxOfDate(model.getProgram_id());
-        String date1 = dateThai(date);
-        tv_value_cal_max.setText(""+date1);
-
-        String act = db.getActivityMaxProgram(model.getProgram_id());
-        tv_act.setText(""+act);
-
-        String date_act = db.getDateTakeActMax(model.getProgram_id());
-        String date2 = dateThai(date_act);
-        tv_act_date.setText(""+date2);
 
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        initView(rootView);
+        initInstances();
     }
+
+    private void initInstances() {
+    }
+
 
     @SuppressWarnings("UnusedParameters")
     private void init(Bundle savedInstanceState) {
@@ -152,6 +127,39 @@ public class StatisticsFragment extends Fragment {
         // Init 'View' instance(s) with rootView.findViewById here
         // Note: State of variable initialized here could not be saved
         //       in onSavedInstanceState
+
+        float cal = db.getStatisticCal(model.getProgram_id());
+        tv_value_cal.setText("" + cal);
+
+        // count success.
+        int count_success = db.getCountSuccessDate(model.getProgram_id());
+        tv_value_success.setText("" + count_success);
+
+        // count unsuccess.
+        int count_unsuccess = db.getCountDate(model.getProgram_id()) - count_success;
+        tv_value_unsuccess.setText(""+count_unsuccess);
+
+        int count_miss = db.getCountMissDate(model.getProgram_id());
+        tv_value_miss.setText(""+count_miss);
+
+        float percent = ((float)count_success/ (count_success + count_unsuccess)) *100;
+        tv_complete.setText(""+String.format("%.2f",percent)+"%");
+
+        int goal = db.getGoalCal(model.getProgram_id());
+        Log.d("Biw","goal = "+goal);
+        progressBar_cal.setProgress((int)((cal/goal)*100));
+        progressBar_cal.getProgressDrawable().setColorFilter(Color.RED, PorterDuff.Mode.SRC_IN);
+
+        String date = db.getCountActivityMaxOfDate(model.getProgram_id());
+        // String date1 = dateThai(date);
+        tv_value_cal_max.setText(""+date);
+
+        String act = db.getActivityMaxProgram(model.getProgram_id());
+        tv_act.setText(""+act);
+
+        String date_act = db.getDateTakeActMax(model.getProgram_id());
+        //String date2 = dateThai(date_act);
+        tv_act_date.setText(""+date_act);
     }
 
     @Override

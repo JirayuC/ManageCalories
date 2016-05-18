@@ -76,7 +76,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String CREATE_USER_TABLE =
             "CREATE TABLE UserProfile(" +
                     "User_id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                    "User_email TEXT," +
                     "User_sex TEXT NOT NULL, " +
                     "User_name TEXT NOT NULL, " +
                     "User_weight REAL NOT NULL, " +
@@ -213,7 +212,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         try {
             ContentValues values = new ContentValues();
             values.put(COLUMN_USERNAME, user.getUser_name());
-            values.put(COLUMN_USEREMAIL, user.getUser_email());
             values.put(COLUMN_BIRTHDATE, df.format(user.getUser_birthdate()));
             values.put(COLUMN_USERWEIGHT, user.getUser_weight());
             values.put(COLUMN_USERHEIGHT, user.getUser_height());
@@ -230,9 +228,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public int updateUser(UserDao user) {
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         SQLiteDatabase db = this.getWritableDatabase();
+
         ContentValues values = new ContentValues();
         values.put(COLUMN_USERNAME, user.getUser_name());
-        values.put(COLUMN_USEREMAIL, user.getUser_email());
         values.put(COLUMN_BIRTHDATE, df.format(user.getUser_birthdate()));
         values.put(COLUMN_USERWEIGHT, user.getUser_weight());
         values.put(COLUMN_USERHEIGHT, user.getUser_height());
@@ -681,16 +679,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return max;
     }
 
-    public float getStatisticCal() {
+    public float getStatisticCal(int Program_id) {
         //Open connection to read only
         SQLiteDatabase db = this.getReadableDatabase();
 
-        String selectQuery = "SELECT Goal - (SELECT SUM(CaloriesReal) FROM " + TABLE_DATEFORACTIVITY + ") AS cal  FROM " + TABLE_PROGRAM + "";
+        String selectQuery = "SELECT Goal - (SELECT SUM(CaloriesReal) FROM " + TABLE_DATEFORACTIVITY + ") AS cal  FROM " + TABLE_PROGRAM + " WHERE Program_id = " + Program_id;
 
         Log.d("Biw", "selectQuery = " + selectQuery);
         Cursor cursor = db.rawQuery(selectQuery, null);
 
-        float cal = 0;
+        float cal = 0.0f;
         if (cursor != null && cursor.moveToFirst()) {
             do {
                 cal = cursor.getFloat(cursor.getColumnIndex("cal"));
@@ -838,7 +836,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return count_miss;
     }
 
-    public float getGoalCal(int Program_id) {
+    public int getGoalCal(int Program_id) {
         //Open connection to read only
         SQLiteDatabase db = this.getReadableDatabase();
 
@@ -856,7 +854,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         cursor.close();
         db.close();
-        return cal;
+        return (int) cal;
     }
 
     public boolean isAlreadyUser() {
@@ -948,6 +946,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public ArrayList<CaloriesReal> getListCaloriesReal(int Program_id){
         SQLiteDatabase db = this.getReadableDatabase();
         ArrayList<CaloriesReal> calList = new ArrayList<CaloriesReal>();
+
         Date date = null;
         float calories=0.f;
         String selectQuery = "SELECT d.Date_time AS date_result,sum(df.CaloriesReal)AS sumCal  FROM "+TABLE_DATESET+ " d INNER JOIN " +TABLE_DATEFORACTIVITY+" df ON d.Date_id = df.Date_id WHERE d.Program_id = "+Program_id+" GROUP BY  d.Date_time";

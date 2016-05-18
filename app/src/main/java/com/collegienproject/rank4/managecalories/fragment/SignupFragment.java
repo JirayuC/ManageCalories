@@ -37,7 +37,6 @@ public class SignupFragment extends Fragment{
 
     DatabaseHelper db;
     EditText nameText;
-    EditText emailText;
     EditText dateDialog;
     EditText weightNum;
     EditText heightNum;
@@ -87,7 +86,6 @@ public class SignupFragment extends Fragment{
         //       in onSavedInstanceState
 
         nameText = (EditText) rootView.findViewById(R.id.input_name);
-        emailText = (EditText) rootView.findViewById(R.id.input_email);
         dateDialog = (EditText) rootView.findViewById(R.id.input_birthdate);
         signupButton = (Button) rootView.findViewById(R.id.btn_signup);
         weightNum = (EditText) rootView.findViewById(R.id.input_weight);
@@ -147,7 +145,6 @@ public class SignupFragment extends Fragment{
 
 
                     String name = nameText.getText().toString();
-                    String email = emailText.getText().toString();
                     String date = dateDialog.getText().toString();
                     String weight = weightNum.getText().toString();
                     String height = heightNum.getText().toString();
@@ -160,7 +157,6 @@ public class SignupFragment extends Fragment{
                     UserDao user = new UserDao();
                     user.setUser_name(name);
                     user.setUser_sex(userGender);
-                    user.setUser_email(email);
 
                     float weightCon = Float.parseFloat(weight);
                     user.setUser_weight(weightCon);
@@ -236,7 +232,6 @@ public class SignupFragment extends Fragment{
         boolean valid = true;
 
         String name = nameText.getText().toString();
-        String email = emailText.getText().toString();
         String date = dateDialog.getText().toString();
         String weight = weightNum.getText().toString();
         String height = heightNum.getText().toString();
@@ -246,13 +241,6 @@ public class SignupFragment extends Fragment{
             valid = false;
         } else {
             nameText.setError(null);
-        }
-
-        if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            emailText.setError("enter a valid email address");
-            valid = false;
-        } else {
-            emailText.setError(null);
         }
 
         if (date.isEmpty()) {

@@ -133,7 +133,7 @@ public class CreateActFragment extends Fragment {
         for (DateForActivity d : dateForActivities)
         {
             //Log.d("Biw",""+""+d.getDate_time()+" , "+d.getActivity_name());
-            stringArrayAdapter.add("["+d.getStatus()+"] , "+d.getDate_time()+" , "+d.getActivity_name());
+            stringArrayAdapter.add(""+d.getDate_time()+" , "+d.getActivity_name());
         }
 
         listView.setAdapter(stringArrayAdapter);
